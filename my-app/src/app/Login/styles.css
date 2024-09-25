@@ -8,5 +8,6 @@
     min-height: 100vh;
     max-width: 100%;
     background-color: papayawhip; 
-    display: flexbox;
+    display: flex;
+    justify-content: center;
 }
