@@ -1,5 +1,12 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import {species,Specie} from "@/clases/Species"
+import {Pokemon,pokemons} from "@/clases/Pokemon"
+import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
+import {moves, Move} from "@/clases/moves"
+import {Team} from "@/clases/Team"
+import {Trainer} from "@/clases/Trainer"
+import {tirarMoneda,chekTrainerHealtyTeam,damageCalculate,survival} from "@/funciones/funciones"
 
 export default function Home() {
   return (
