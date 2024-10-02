@@ -1,7 +1,7 @@
 import PaginaLoginRegistro from "./paginaLogin";
 
 export default function Home() {
-    return (
+    return (          
         <div>
             <PaginaLoginRegistro></PaginaLoginRegistro>
         </div>

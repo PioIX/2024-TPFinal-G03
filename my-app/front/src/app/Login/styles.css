@@ -1,3 +1,11 @@
+.pixelify-sans{
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal;
+}
+  
+
 .fondo1{
     background-image: url('https://i.pinimg.com/originals/05/8e/cd/058ecdc24a24dd3a7cd9dac963736eb3.jpg');
     background-repeat: no-repeat;
@@ -10,4 +18,13 @@
     background-color: papayawhip; 
     display: flex;
     justify-content: center;
+}
+
+.subtitulo1{
+    float: right;
+    padding-right: 30px;
+    font-size: 50px;
+    color: yellow;
+    text-shadow: black 0.2em 0.2em;
+    font-family: "Pixelify Sans", sans-serif;
 }
