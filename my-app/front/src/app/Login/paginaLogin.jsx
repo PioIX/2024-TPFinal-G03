@@ -2,14 +2,20 @@
 import './styles.css'
 import Image from 'next/image'
 
+const imageLoader = ({ src, width, quality }) => {
+    return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+}  
+
 export default function PaginaLoginRegistro(){
     return(
         <div className='fondo1'>
             <div>
                 <Image 
-                    src='https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/International_Pok%C3%A9mon_logo.svg/640px-International_Pok%C3%A9mon_logo.svg.png'
+                    loader={imageLoader}
+                    src="/pokemonLogo.jpg"
                     width={640}
                     height={235}
+                    alt='hols'
                 /> 
                 <div>
                     <p>hola</p>
