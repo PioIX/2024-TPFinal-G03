@@ -1,21 +1,23 @@
 "use client"
-import {species,Specie} from "@/clases/Species"
-import {Pokemon,pokemons} from "@/clases/Pokemon"
-import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
-import {moves, Move} from "@/clases/moves"
-import {Team} from "@/clases/Team"
-import {Trainer} from "@/clases/Trainer"
+
+const { Move, moves } = require("@/clases/moves")
+const { Pokemon, pokemons } = require("@/clases/Pokemon")
+const { pokemonForms, PokemonForm } = require("@/clases/PokemonForm")
+const { species, Specie } = require("@/clases/Species")
+const { Team,teams } = require("@/clases/Team")
+const { trainers, Trainer } = require("@/clases/Trainer")
+
 console.log(pokemons)
 let Raul = new Trainer("Clara",new Team(pokemons[1],"ou"))
 let player = new Trainer("Player",new Team(pokemons[0],"ou"))
 
 console.log(player)
 
-function tirarMoneda() {
+export function tirarMoneda() {
     return Math.floor(Math.random() * 2);
   }
 
-function chekTrainerHealtyTeam(trainer) {
+export function chekTrainerHealtyTeam(trainer) {
     check=false
     i=0
     while (check==false){
@@ -29,7 +31,7 @@ function chekTrainerHealtyTeam(trainer) {
     }
 }
 
-function damageCalculate(user,enemy,move) {
+export function damageCalculate(user,enemy,move) {
     let e = 1
     let b = 1
     let v = Math.round(Math.random()*(100-85)+parseInt(85))
@@ -40,7 +42,7 @@ function damageCalculate(user,enemy,move) {
     return damage
 }
 
-function survival(pokemon,damage){
+export function survival(pokemon,damage){
     if (pokemon.life <= damage) {
         pokemon.life = 0;
         pokemon.isDefeated = true

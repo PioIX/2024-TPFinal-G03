@@ -6,9 +6,12 @@ import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
 import {moves, Move} from "@/clases/moves"
 import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
-import {tirarMoneda,chekTrainerHealtyTeam,damageCalculate,survival} from "@/funciones/funciones"
+import { damageCalculate } from "@/funciones/funciones";
+
+//console.log(damageCalculate(pokemons[0],pokemons[1],moves[0]))
 
 export default function Home() {
+  console.log("POKEMONES",pokemons)
   return (
     <div className={styles.page}>
       <main className={styles.main}>

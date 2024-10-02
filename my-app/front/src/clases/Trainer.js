@@ -1,6 +1,6 @@
 let idTrainer =1
 
-class Trainer {
+export class Trainer {
     constructor(name,team) {
         this.name = name;
         this.team = team;
@@ -8,3 +8,5 @@ class Trainer {
         idTrainer++;
     }
 }
+
+export let trainers = []

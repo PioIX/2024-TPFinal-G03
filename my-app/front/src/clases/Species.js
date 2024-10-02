@@ -1,13 +1,12 @@
 let idSpecies = 0
-class Specie {
-    constructor(name,forms){
+export class Specie {
+    constructor(name){
         this.name = name;
-        this.forms = forms
         this.id = idSpecies;
         idSpecies++;
     }
 }
- let species = [
-    new Specie("galvantula",["base"]),
-    new Specie("greninja",["base","ash"])
+export let species = [
+    new Specie("galvantula"),
+    new Specie("greninja")
  ]

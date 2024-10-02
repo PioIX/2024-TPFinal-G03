@@ -1,4 +1,4 @@
-class Move {
+export class Move {
     constructor(name,power,accuracy,pp,category,type) {
         this.name = name
         this.power = power;
@@ -10,4 +10,4 @@ class Move {
     
 }
 
-let moves = [new Move ("water gun",40,100,25,"special","water"),new Move("Dragon pulse",85,100,10,"special","dragon"),new Move("Dragon claw",80,100,15,"physical","dragon")]
+export let moves = [new Move ("water gun",40,100,25,"special","water"),new Move("Dragon pulse",85,100,10,"special","dragon"),new Move("Dragon claw",80,100,15,"physical","dragon")]

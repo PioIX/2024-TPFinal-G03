@@ -1,4 +1,6 @@
-import {species,Specie} from "@/clases/Species"
+const { species } = require('@/clases/Species');
+const { pokemonForms } = require('@/clases/PokemonForm');
+
 let idPokemon = 1
 
 function pokeStats(baseStats,evs) {
@@ -16,9 +18,8 @@ function pokeStats(baseStats,evs) {
     return stats
 } 
 
-class Pokemon {
-    constructor(specie,form,moves,evs) {
-        this.specie = specie;
+export class Pokemon {
+    constructor(form,moves,evs,apodo) {
         this.form = form;
         this.evs = evs;
         this.stats = pokeStats(this.form.baseStats,this.evs);
@@ -29,11 +30,13 @@ class Pokemon {
         this.moves = moves;
         this.id = idPokemon;
         this.priority = 0;
+        this.apodo = apodo
         idPokemon++;
     }
 }
 
-let pokemons = [
-    new Pokemon(species[0],pokemonForms[0],0,"",[4,0,0,252,0,252]),
-    new Pokemon(species[1],pokemonForms[1],0,"",[4,0,0,252,0,252])
+
+export let pokemons = [
+    new Pokemon(pokemonForms[0],0,[4,0,0,252,0,252],pokemonForms[0].name),
+    new Pokemon(pokemonForms[1],0,[4,0,0,252,0,252],pokemonForms[1].name)
 ]
