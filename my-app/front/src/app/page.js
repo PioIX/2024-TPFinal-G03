@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import styles from "./page.module.css";
 import {species,Specie} from "@/clases/Species"
@@ -11,7 +13,7 @@ import { damageCalculate } from "@/funciones/funciones";
 //console.log(damageCalculate(pokemons[0],pokemons[1],moves[0]))
 
 export default function Home() {
-  console.log("POKEMONES",pokemons)
+  //console.log("daño de ", pokemons[0].apodo, "hacia ", pokemons[1].apodo, "con ", moves[1].name,damageCalculate(pokemons[0],pokemons[1],moves[1]))
   return (
     <div className={styles.page}>
       <main className={styles.main}>
