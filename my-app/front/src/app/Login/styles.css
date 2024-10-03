@@ -4,7 +4,6 @@
     font-weight: weight;
     font-style: normal;
 }
-  
 
 .fondo1{
     background-image: url('https://i.pinimg.com/originals/05/8e/cd/058ecdc24a24dd3a7cd9dac963736eb3.jpg');
@@ -22,9 +21,34 @@
 
 .subtitulo1{
     float: right;
-    padding-right: 30px;
-    font-size: 50px;
-    color: yellow;
-    text-shadow: black 0.2em 0.2em;
+    font-size: 80px;
+    color: red;
+    padding-right: 10%;
+    height: 10%;
+    text-shadow: black 0.15em 0.15em;
     font-family: "Pixelify Sans", sans-serif;
+}
+
+.botonesLogin{
+    padding-top: 10%;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    max-height: 200px;
+    min-height: 200px;
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.botonRegistroLogin{
+    font-size: 400%;
+    background-color: #feca04;
+    box-shadow: black 0.2em 0.2em;
+    padding: 5px  150px;
+    margin: 35px 0px;
+    border-radius: 80px;
+}
+
+.botonRegistroLogin:hover{
+    background-color:#cfa400;
 }

@@ -8,13 +8,17 @@ export default function PaginaLoginRegistro(){
         <div className='fondo1'>
             <div>
                 <Image 
+                    style={{paddingLeft:"110px"}}
                     src="/imagenes/pokemonLogo.png"
-                    width={440}
-                    height={135}
+                    width={680}
+                    height={205}
                     alt='hols'
                 /> 
                 <div>
-                    <p className='subtitulo1'>chowdown!</p>
+                    <h4 className='subtitulo1'>Chowdawn</h4>
+                    <div className='botonesLogin'>
+                        <button className='botonRegistroLogin'>Login</button>
+                    </div>
                 </div>
             </div>
         </div>
