@@ -50,6 +50,18 @@ const tablaDeTipos={
     ghost:
         {normal:0,fire:1,water:1,grass:1,electric:1,ice:1,fighting:0,poison:0.5,
         ground:1,flying:1,psychic:1,bug:0.5,rock:1,ghost:2,dragon:1,dark:2,steel:1,fairy:1},
+    dragon:
+        {normal:1,fire:0.5,water:0.5,grass:0.5,electric:0.5,ice:2,fighting:1,poison:1,
+        ground:1,flying:1,psychic:1,bug:1,rock:1,ghost:1,dragon:2,dark:1,steel:1,fairy:2},
+    dark:
+        {normal:1,fire:1,water:1,grass:1,electric:1,ice:1,fighting:2,poison:1,
+        ground:1,flying:1,psychic:0,bug:2,rock:1,ghost:0.5,dragon:1,dark:0.5,steel:1,fairy:2},
+    steel:
+        {normal:0.5,fire:2,water:1,grass:0.5,electric:1,ice:0.5,fighting:2,poison:0,
+        ground:2,flying:0.5,psychic:0.5,bug:0.5,rock:0.5,ghost:0,dragon:0.5,dark:1,steel:0.5,fairy:0.5},
+    fairy:
+        {normal:1,fire:1,water:1,grass:1,electric:1,ice:1,fighting:0.5,poison:2,
+        ground:1,flying:1,psychic:1,bug:0.5,rock:1,ghost:1,dragon:0,dark:0.5,steel:2,fairy:1}
 }
 console.log(pokemons)
 let Raul = new Trainer("Clara",new Team(pokemons[1],"ou"))
@@ -76,18 +88,27 @@ export function chekTrainerHealtyTeam(trainer) {
 }
 
 export function damageCalculate(user,enemy,move) {
-    let efectividad = 1
+    let efectividad = calcularEfectividad(move,enemy)
     let boost = 1
     let variacion = Math.round(Math.random()*(100-85)+parseInt(85))
+    let damage = 0
     if (user.form.type1 == move.type|| user.form.type2 == move.type) {
-        b = 1.5
+        boost = 1.5
     }
-    let damage = 0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*user.stats[3]*move.power)/(25*enemy.stats[4]))+2)
+    damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*user.stats[3]*move.power)/(25*enemy.stats[4]))+2))
+    
     return damage
 }
 
 export function calcularEfectividad(move,pokemon){
-    
+    let returnable = 1
+    if (pokemon.form.type2 == "") {
+        returnable = tablaDeTipos[pokemon.form.type1][move.type]
+    }
+    else {
+        returnable = tablaDeTipos[pokemon.form.type1][move.type] * tablaDeTipos[pokemon.form.type2][move.type]
+    }
+    return returnable
 }
 
 export function survival(pokemon,damage){

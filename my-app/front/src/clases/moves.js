@@ -10,4 +10,4 @@ export class Move {
     
 }
 
-export let moves = [new Move ("water gun",40,100,25,"special","water"),new Move("Dragon pulse",85,100,10,"special","dragon"),new Move("Dragon claw",80,100,15,"physical","dragon")]
+export let moves = [new Move ("water gun",40,100,25,"special","water"),new Move("Dragon pulse",85,100,10,"special","dragon"),new Move("Dragon claw",80,100,15,"physical","dragon"), new Move("Thunderbolt",90,100,10,"special","electric")]

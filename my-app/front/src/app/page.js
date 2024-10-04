@@ -10,10 +10,10 @@ import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
 import { damageCalculate } from "@/funciones/funciones";
 
-//console.log(damageCalculate(pokemons[0],pokemons[1],moves[0]))
+//console.log(damageCalculate(pokemons[1],pokemons[0],moves[0]))
 
 export default function Home() {
-  //console.log("daño de ", pokemons[0].apodo, "hacia ", pokemons[1].apodo, "con ", moves[1].name,damageCalculate(pokemons[0],pokemons[1],moves[1]))
+  console.log("daño de ", pokemons[0].apodo, "hacia ", pokemons[1].apodo, "con ", moves[0].name,damageCalculate(pokemons[0],pokemons[1],moves[0]))
   return (
     <div className={styles.page}>
       <main className={styles.main}>
