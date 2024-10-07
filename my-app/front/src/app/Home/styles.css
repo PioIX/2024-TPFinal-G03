@@ -6,7 +6,7 @@
 }
 
 .fondo1{
-    background-image: url('https://i.pinimg.com/originals/05/8e/cd/058ecdc24a24dd3a7cd9dac963736eb3.jpg');
+    background-image: url('https://img.freepik.com/fotos-premium/ilustracion-paisaje-fondo-vectorial-anime_1190079-1125.jpg');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -21,11 +21,11 @@
 
 .subtitulo1{
     float: right;
-    font-size: 80px;
-    color: red;
-    padding-right: 10%;
+    font-size: 60px;
+    color: yellow;
+    padding-right: 20%;
     height: 10%;
-    text-shadow: black 0.15em 0.15em;
+    text-shadow: #3366af 0.15em 0.15em;
     font-family: "Pixelify Sans", sans-serif;
 }
 
@@ -47,6 +47,7 @@
     padding: 5px  150px;
     margin: 35px 0px;
     border-radius: 80px;
+    border: 0;
 }
 
 .botonRegistroLogin:hover{
