@@ -19,6 +19,20 @@
     justify-content: center;
 }
 
+.fondo2{
+    background-image: url('https://img.freepik.com/fotos-premium/ilustracion-paisaje-fondo-vectorial-anime_1190079-1125.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 100%;
+    background-color: papayawhip; 
+    display: flex;
+    justify-content: left;
+}
+
 .subtitulo1{
     float: right;
     font-size: 60px;
@@ -29,8 +43,18 @@
     font-family: "Pixelify Sans", sans-serif;
 }
 
+.subtitulo2{
+    float: right;
+    font-size: 60px;
+    color: yellow;
+    padding-right: 20%;
+    height: 10%;
+    text-shadow: #3366af 0.15em 0.15em;
+    font-family: "Pixelify Sans", sans-serif;
+}
+
 .botonesLogin{
-    padding-top: 10%;
+    padding-top: 5%;
     display: grid;
     justify-content: center;
     align-items: center;
