@@ -37,6 +37,6 @@ export class Pokemon {
 
 
 export let pokemons = [
-    new Pokemon(pokemonForms[0],0,[4,0,0,252,0,252],pokemonForms[0].name),
-    new Pokemon(pokemonForms[1],0,[4,0,0,252,0,252],pokemonForms[1].name)
+    new Pokemon(pokemonForms[0],[0,1],[4,0,0,252,0,252],pokemonForms[0].name),
+    new Pokemon(pokemonForms[1],[0,2],[4,0,0,252,0,252],pokemonForms[1].name)
 ]
