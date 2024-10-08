@@ -2,33 +2,34 @@
 import '@/app/Home/styles.css'
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
-import Usuarios from '../listaUsuarios'
-
+import Usuarios from "../listaUsuarios"
+import {crearUsuarios} from "@/app/Home/listaUsuarios"
 import Image from 'next/image'
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
     let[nombre, setNombre] = useState('')
+    let[user, setUser] = useState('')
+    let[errorLog, setErrorLog] = useState('')
+
 
     const router = useRouter()
 
-    async function subirUsuario() {
+    async function envioPost() {
         const data = {
-            ID_usuario:2,
-            nombre:"hollo",
-            contrasena:"uw",
-            contactos:"125"
+            ID_carta: document.getElementById("id_carta").value,
+            elixir: document.getElementById("elixir").value,
+            daño: document.getElementById("daño").value,
+            vida: document.getElementById("vida").value
         }
-
-            const response = await fetch('http://localhost:4000/insertarUsuario',{
-            method:'POST',
+        console.log({ data })
+        const response = await fetch('http://localhost:3000/insertarCartas', {
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
         })
-        const result = await response;
-        console.log("POST /insertarUsuario", { data })
     }
 
 
@@ -60,7 +61,7 @@ export default function PaginaRegistro(props){
         let i = buscarUserByUsername(user)
         if (i === false){
             if(contrasenia!=""){
-                Usuarios.push(new crearUsuarios(user,[5],contrasenia))
+                Usuarios.push(new crearUsuarios(user, contrasenia))
                 return 1}
             
             else{
@@ -83,6 +84,8 @@ export default function PaginaRegistro(props){
         setErrorLog('El nombre o la contraseña son incorrectas')
     }
 
+
+
     function registrarsePorBoton() { 
         let result = register(nombre,contrasenia)
         switch(result){
@@ -91,7 +94,7 @@ export default function PaginaRegistro(props){
                 break;
             case 1:
                 let id = iniciarSesion()
-                subirUsuario(id,comprimirContactos(id))
+                subirUsuario(id, nombre, contrasenia)
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')
