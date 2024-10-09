@@ -64,10 +64,10 @@ const tablaDeTipos={
         ground:1,flying:1,psychic:1,bug:0.5,rock:1,ghost:1,dragon:0,dark:0.5,steel:2,fairy:1}
 }
 console.log(pokemons)
-let Raul = new Trainer("Clara",new Team(pokemons[1],"ou"))
-let player = new Trainer("Player",new Team(pokemons[0],"ou"))
 
-console.log(player)
+
+teams.push(new Team([pokemons[1],pokemons[2]],"ou"),new Team(pokemons[0],pokemons[3],"ou"))
+
 
 export function tirarMoneda() {
     return Math.floor(Math.random() * 2);
@@ -120,5 +120,110 @@ export function survival(pokemon,damage){
     else {
         pokemon.life = pokemon.life - damage
         return false
+    }
+}
+
+export function ordenTurno(pokemon1, pokemon2, mov1, mov2) {
+    if (mov1 == "change") {
+        return 1
+    }
+    else if (mov2 == "change") {
+        return 2
+    }
+    else {
+        if (pokemon1.stats[5] > pokemon2.stats[5]) {
+            return 1
+        }
+        else if (pokemon1.stats[5] < pokemon2.stats[5]) {
+            return 2
+        }
+        else {
+            if (tirarMoneda()==1) {
+                return 1
+            }
+            else {
+                return 2
+            }
+        }
+    }
+}
+
+export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
+    let pokemon1 = pkm1
+    let pokemon2 = pkm2
+    let dmg1 = 0
+    let dmg2 =0
+
+   /* let dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
+    let dmg2 = damageCalculate(pokemon2,pokemon1,mov2)*/
+    if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
+        if (mov1 == "change") {
+            console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
+            pokemon1 = pokemonACambiar1}
+        else {
+            dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
+            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+            if (survival(pokemon2,dmg1)) {
+                console.log(pokemon2, " cayó debilitado")
+            }
+        }
+        if (mov2 == "change") {
+            console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
+            pokemon2 = pokemonACambiar2}
+        else if (pokemon2.isDefeated == false) {
+            dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
+            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+            if (survival(pokemon1,dmg2)) {
+                console.log(pokemon1, " cayó debilitado")
+            }
+
+        }
+
+
+    
+        /*console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+        if (!survival(pokemon2,dmg1)) {
+            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+            if (survival(pokemon1,dmg2)) {
+                console.log(pokemon1.apodo, " cayó debilitado")
+            }
+        }
+        else {
+            console.log(pokemon2, " cayó debilitado")
+        }
+    }
+    else {
+        console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+        if (!survival(pokemon1,dmg2)) {
+            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+            if (survival(pokemon2,dmg1)) {
+                console.log(pokemon2.apodo, " cayó debilitado")
+            }
+        }
+        else {
+            console.log(pokemon1.apodo, " cayó debilitado")
+        }*/
+    }
+    else {
+        if (mov2 == "change") {
+            console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
+            pokemon2 = pokemonACambiar2}
+        else {
+            dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
+            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+            if (survival(pokemon1,dmg2)) {
+                console.log(pokemon1, " cayó debilitado")
+            }
+        }
+        if (mov1 == "change") {
+            console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
+            pokemon1 = pokemonACambiar1}
+        else if (pokemon1.isDefeated == false){
+            dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
+            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+            if (survival(pokemon2,dmg1)) {
+                console.log(pokemon2, " cayó debilitado")
+            }
+        }
     }
 }
