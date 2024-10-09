@@ -1,7 +1,7 @@
 const { species } = require('@/clases/Species');
 const { pokemonForms } = require('@/clases/PokemonForm');
 
-let idPokemon = 1
+let idPokemon = 0
 
 function pokeStats(baseStats,evs) {
     let stats = []

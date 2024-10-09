@@ -6,6 +6,8 @@ const { pokemonForms, PokemonForm } = require("@/clases/PokemonForm")
 const { species, Specie } = require("@/clases/Species")
 const { Team,teams } = require("@/clases/Team")
 const { trainers, Trainer } = require("@/clases/Trainer")
+import { useState, useEffect } from "react"
+
 
 const tablaDeTipos={
     normal:
@@ -65,6 +67,8 @@ const tablaDeTipos={
 }
 console.log(pokemons)
 
+//let [pokemonPropio, setPokemonPropio] = useState(pokemons[0])
+//let [pokemonAjeno, setPokemonAjeno] = useState(pokemons[1])
 
 teams.push(new Team([pokemons[1],pokemons[2]],"ou"),new Team(pokemons[0],pokemons[3],"ou"))
 
