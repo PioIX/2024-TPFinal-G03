@@ -17,13 +17,12 @@ export default function PaginaRegistro(props){
 
     async function envioPost() {
         const data = {
-            ID_carta: document.getElementById("id_carta").value,
-            elixir: document.getElementById("elixir").value,
-            daño: document.getElementById("daño").value,
-            vida: document.getElementById("vida").value
+            ID_carta: id,
+            nombre: nombre,
+            contrasenia: contrasenia
         }
         console.log({ data })
-        const response = await fetch('http://localhost:3000/insertarCartas', {
+        const response = await fetch('http://localhost:3000/insertarUsuarios', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -95,6 +94,7 @@ export default function PaginaRegistro(props){
             case 1:
                 let id = iniciarSesion()
                 subirUsuario(id, nombre, contrasenia)
+                console.log(id)
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')
