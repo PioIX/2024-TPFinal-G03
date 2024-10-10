@@ -230,4 +230,5 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
             }
         }
     }
+    return([pokemon1,pokemon2])
 }
