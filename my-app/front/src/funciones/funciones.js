@@ -92,20 +92,37 @@ export function chekTrainerHealtyTeam(trainer) {
 }
 
 function changeStatsCalculate(pokemon,stat) {
-    return (pokemon.stats[stat+1] + pokemon.stats[stat+1] * pokemon.statsChanges[stat])
+    return (pokemon.stats[stat] + pokemon.stats[stat] * pokemon.statsChanges[stat-1])
 }
 
 export function damageCalculate(user,enemy,move) {
+    console.log("HOLAAAA")
     let userStats = {atk:0,def:0,spa:0,spd:0}
     let enemyStats = {atk:0,def:0,spa:0,spd:0}
-    for (let i = 0; i < userStats.length;i++) {
-        userStats[i] = changeStatsCalculate(user,i)
-    }
-    for (let i = 0; i < userStats.length;i++) {
-        enemyStats[i] = changeStatsCalculate(enemy,i)
+    let multiplicadorCritico = 1
+    userStats.atk = changeStatsCalculate(user,1)
+    userStats.def = changeStatsCalculate(user,2)
+    userStats.spa = changeStatsCalculate(user,3)
+    userStats.spd = changeStatsCalculate(user,4)
+    enemyStats.atk = changeStatsCalculate(enemy,1)
+    enemyStats.def = changeStatsCalculate(enemy,2)
+    enemyStats.spa = changeStatsCalculate(enemy,3)
+    enemyStats.spd = changeStatsCalculate(enemy,4)
+
+    if (user.critical == true){
+        if(user.statsChanges[0] < 0 || user.statsChanges[2] < 0){
+            userStats.atk = user.stats[1]
+            userStats.spa = user.stats[3]
+        }
+        if(enemy.statsChanges[1] > 0 || enemy.statsChanges[3] > 0) {
+            enemyStats.def = enemy.stats[2]
+            enemyStats.spd = enemy.stats[4]
+        }
     }
 
-    if (user.status == "burn"){}
+    if (user.status == "burn"){
+        userStats.atk = userStats.atk/2
+    }
 
     let efectividad = calcularEfectividad(move,enemy)
     let boost = 1
@@ -115,12 +132,12 @@ export function damageCalculate(user,enemy,move) {
         boost = 1.5
     }
     if (move.category == "special"){ 
-        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*user.stats[3]*move.power)/(25*enemy.stats[4]))+2))
+        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*userStats.spa*move.power)/(25*enemyStats.spd))+2))
     }
     else if (move.category == "physical") {
-        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*atk*move.power)/(25*enemy.stats[2]))+2))
+        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*userStats.atk*move.power)/(25*enemyStats.def))+2))
     }
-    
+    damage = damage * multiplicadorCritico
     return damage
 }
 
@@ -224,6 +241,7 @@ export function impedimentosMovimiento(pokemon) {
             retorno = paralisys(pokemon)
             break;
     }
+    return retorno
 }
 
 export function dañoPostTurno(pokemon){
@@ -316,6 +334,8 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
     let pokemon2 = pkm2
     let dmg1 = 0
     let dmg2 =0
+    console.log(impedimentosMovimiento(pokemon1))
+    console.log(impedimentosMovimiento(pokemon2))
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
         
         if (mov1 == "change") {
@@ -323,6 +343,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
             pokemon1 = pokemonACambiar1}
         else if(impedimentosMovimiento(pokemon1)) {
             if (Math.round(Math.random()*100) <= mov1.accuracy) {
+                console.log(pokemon1,pokemon2,mov1)
                 dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
                 console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
                 efectoSecundarioPostGolpe(pokemon1,pokemon2,mov1)
@@ -339,6 +360,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
             pokemon2 = pokemonACambiar2}
         else if (pokemon2.isDefeated == false && impedimentosMovimiento(pokemon2)) {
             if (Math.round(Math.random()*100) <= mov2.accuracy) {
+            console.log(pokemon2,pokemon1,mov2)
             dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
             console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
             efectoSecundarioPostGolpe(pokemon2,pokemon1,mov2)

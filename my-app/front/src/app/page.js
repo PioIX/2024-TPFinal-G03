@@ -24,8 +24,6 @@ export default function Home() {
   let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
   let [pokemonACambiarAjeno,setPokemonACambiaraAjeno] = useState()
   let [coco, setCoco] = useState(0)
-  let turnoAlterPropio = 0
-  let turnoAlterAjeno = 0
 
 
   function seleccionarAtaquePropio(event) {
@@ -38,7 +36,7 @@ export default function Home() {
       setTurnoPropio(moves[event.target.value])
       //turnoAlterPropio =moves[event.target.value]
     }
-    console.log(turnoAlterPropio)
+    console.log(turnoPropio)
   }
 
   function seleccionarAtaqueAjeno(event) {
@@ -50,7 +48,7 @@ export default function Home() {
       setTurnoRival(moves[event.target.value])
       //turnoAlterAjeno = moves[event.target.value]
     }
-    console.log(turnoAlterAjeno)
+    console.log(turnoRival)
 
   }
   
@@ -108,7 +106,7 @@ useEffect(()=>{
 
   function iniciarTurno (){
     setCoco(coco + 1)
-    console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoAlterPropio,"turnoRival ",turnoAlterAjeno,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
+    console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
     let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno))
     setPokemonPropio(retorno[0])
     setPokemonAjeno(retorno[1])

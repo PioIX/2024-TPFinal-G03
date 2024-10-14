@@ -3,8 +3,7 @@ const { species } = require('@/clases/Species');
 
 let idPokemonForms = 0
 export class PokemonForm{
-    constructor(baseSpecie,ps,atk,def,spa,spd,spe,weight,type1,type2,name){
-        this.baseSpecie = baseSpecie;
+    constructor(ps,atk,def,spa,spd,spe,weight,type1,type2,name){
         this.baseStats = [ps,atk,def,spa,spd,spe];
         this.weight = weight;
         this.type1 = type1;
@@ -16,6 +15,6 @@ export class PokemonForm{
 }
 
 export let pokemonForms = [
-new PokemonForm(species[0].id,70,77,60,97,60,108,143,"bug","electric","Galvantula"),
-new PokemonForm(species[1],72,95,67,103,71,122,400,"water","dark","Greninja")
+new PokemonForm(70,77,60,97,60,108,14.3,"bug","electric","Galvantula"),
+new PokemonForm(72,95,67,103,71,122,40.0,"water","dark","Greninja")
 ]

@@ -32,6 +32,8 @@ export class Pokemon {
         this.apodo = apodo
         this.combatiendo = false
         this.countDream = 0
+        this.pps = [10,10,10,10]
+        this.critical = false
         idPokemon++;
     }
 }
