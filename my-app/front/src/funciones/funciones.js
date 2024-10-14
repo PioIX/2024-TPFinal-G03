@@ -8,6 +8,8 @@ const { Team,teams } = require("@/clases/Team")
 const { trainers, Trainer } = require("@/clases/Trainer")
 import { useState, useEffect } from "react"
 
+let turnosEnvenenamientoGrave = 0
+
 
 const tablaDeTipos={
     normal:
@@ -65,10 +67,8 @@ const tablaDeTipos={
         {normal:1,fire:1,water:1,grass:1,electric:1,ice:1,fighting:0.5,poison:2,
         ground:1,flying:1,psychic:1,bug:0.5,rock:1,ghost:1,dragon:0,dark:0.5,steel:2,fairy:1}
 }
-console.log(pokemons)
 
-//let [pokemonPropio, setPokemonPropio] = useState(pokemons[0])
-//let [pokemonAjeno, setPokemonAjeno] = useState(pokemons[1])
+
 
 teams.push(new Team([pokemons[1],pokemons[2]],"ou"),new Team(pokemons[0],pokemons[3],"ou"))
 
@@ -91,7 +91,22 @@ export function chekTrainerHealtyTeam(trainer) {
     }
 }
 
+function changeStatsCalculate(pokemon,stat) {
+    return (pokemon.stats[stat+1] + pokemon.stats[stat+1] * pokemon.statsChanges[stat])
+}
+
 export function damageCalculate(user,enemy,move) {
+    let userStats = {atk:0,def:0,spa:0,spd:0}
+    let enemyStats = {atk:0,def:0,spa:0,spd:0}
+    for (let i = 0; i < userStats.length;i++) {
+        userStats[i] = changeStatsCalculate(user,i)
+    }
+    for (let i = 0; i < userStats.length;i++) {
+        enemyStats[i] = changeStatsCalculate(enemy,i)
+    }
+
+    if (user.status == "burn"){}
+
     let efectividad = calcularEfectividad(move,enemy)
     let boost = 1
     let variacion = Math.round(Math.random()*(100-85)+parseInt(85))
@@ -99,7 +114,12 @@ export function damageCalculate(user,enemy,move) {
     if (user.form.type1 == move.type|| user.form.type2 == move.type) {
         boost = 1.5
     }
-    damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*user.stats[3]*move.power)/(25*enemy.stats[4]))+2))
+    if (move.category == "special"){ 
+        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*user.stats[3]*move.power)/(25*enemy.stats[4]))+2))
+    }
+    else if (move.category == "physical") {
+        damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*atk*move.power)/(25*enemy.stats[2]))+2))
+    }
     
     return damage
 }
@@ -119,6 +139,7 @@ export function survival(pokemon,damage){
     if (pokemon.life <= damage) {
         pokemon.life = 0;
         pokemon.isDefeated = true
+        turnosEnvenenamientoGrave = 0
         return true
     }
     else {
@@ -126,6 +147,98 @@ export function survival(pokemon,damage){
         return false
     }
 }
+
+export function calcularVeneno(pokemon){
+    let damage = Math.round(pokemon.stats[0] / 16)
+    console.log(pokemon.apodo, " resiente el envenenamiento.")
+    if(survival(pokemon,damage)) {
+        console.log(pokemon, " cayó debilitado")
+    }
+}
+
+export function burn(pokemon){
+    let damage = Math.round(pokemon.stats[0] / 16)
+    console.log(pokemon.apodo, " resiente las quemaduras.")
+    if(survival(pokemon,damage)) {
+        console.log(pokemon, " cayó debilitado")
+    }
+}
+
+export function calcularVenenoGrave(pokemon){
+    let damage = Math.round(pokemon.stats[0] / 16) + (turnosEnvenenamientoGrave * (pokemon.stats[0] / 16))
+    turnosEnvenenamientoGrave++
+    console.log(pokemon.apodo, " resiente el envenenamiento. Parece que va a peor...")
+    if(survival(pokemon,damage)) {
+        console.log(pokemon, " cayó debilitado")
+    }
+}
+
+export function freeze(pokemon){
+    if(Math.round(Math.random()*100) <= 20) {
+        pokemon.status = ""
+        console.log(pokemon.apodo," se ha descogelado")
+        return true
+    }
+    else {
+        console.log(pokemon.apodo, " sigue congelado")
+        return false
+
+    }
+}
+
+export function dream(pokemon){
+    if (pokemon.countDream == 0) {
+        pokemon.status = ""
+        console.log(pokemon.apodo, " se ha despertado")
+        return true
+    }
+    else {
+        pokemon.countDream = (pokemon.countDream - 1)
+        console.log(pokemon.apodo, " sigue dormido")
+        return false
+
+    }
+}
+
+export function paralisys(pokemon) {
+    if(Math.round(Math.random()*100) <= 25) {
+        return true
+    }
+    else {
+        console.log(pokemon.apodo, " se paralizó")
+        return false
+
+    }
+}
+
+export function impedimentosMovimiento(pokemon) {
+    let retorno = ""
+    switch(pokemon.status) { 
+        case "freeze":
+            retorno = freeze(pokemon)
+            break;
+        case "dream":
+            retorno = dream(pokemon)
+            break;
+        case "paralized":
+            retorno = paralisys(pokemon)
+            break;
+    }
+}
+
+export function dañoPostTurno(pokemon){
+    switch(pokemon.status) {
+        case "burn":
+            burn(pokemon)
+            break;
+        case "poisoned":
+            calcularVeneno(pokemon)
+            break;
+        case "BadlyPoisoned":
+            calcularVenenoGrave(pokemon)
+    }
+}
+
 
 export function ordenTurno(pokemon1, pokemon2, mov1, mov2) {
     if (mov1 == "change") {
@@ -152,21 +265,71 @@ export function ordenTurno(pokemon1, pokemon2, mov1, mov2) {
     }
 }
 
+// TODOS LOS FOKIN EFECTOS SECUNDARIOS 
+function efectoSecundarioPostGolpe(agresor,agredido,move) {
+    switch (move.secondaryEffect) {
+        // CAMBIOS DE ESTADO
+        case "paralisys":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "" && agredido.form.type1 != "electric" && agredido.form.type2 != "electric") {
+                agredido.status = "paralized"
+                console.log(agredido.apodo, " ahora está paralizado")
+            }
+        break;
+        case "freeze":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "" && agredido.form.type1 != "ice" && agredido.form.type2 != "ice" ) {
+                agredido.status = "freeze"
+                console.log(agredido.apodo, " ahora está congelado")
+            }
+        break;
+        case "burn":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "" && agredido.form.type1 != "fire" && agredido.form.type2 != "fire") {
+                agredido.status = "burn"
+                console.log(agredido.apodo, " ahora está quemado")
+            }
+        break;
+        case "poisoned":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "" && agredido.form.type1 != "poison" && agredido.form.type2 != "poison") {
+                agredido.status = "poisoned"
+                console.log(agredido.apodo, " ahora está envenenado")
+            }
+        break;
+        case "BadlyPoisoned":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "" && agredido.form.type1 != "poison" && agredido.form.type2 != "poison") {
+                agredido.status = "BadlyPoisoned"
+                console.log(agredido.apodo, " ahora está gravemente envenenado")
+            }
+        break;
+        case "dream":
+            if (Math.round(Math.random()*100) <= move.probabilities && agredido.status == "") {
+                agredido.status = "dream"
+                console.log(agredido.apodo, " ahora está dormido")
+            }
+        break;
+        //
+    }
+}
+
+
 export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
+    // esta cosa es un pecado de la programación, pero no encuentro otra forma
     let pokemon1 = pkm1
     let pokemon2 = pkm2
     let dmg1 = 0
     let dmg2 =0
-
-   /* let dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
-    let dmg2 = damageCalculate(pokemon2,pokemon1,mov2)*/
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
+        
         if (mov1 == "change") {
             console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
             pokemon1 = pokemonACambiar1}
-        else {
-            dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
-            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+        else if(impedimentosMovimiento(pokemon1)) {
+            if (Math.round(Math.random()*100) <= mov1.accuracy) {
+                dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
+                console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+                efectoSecundarioPostGolpe(pokemon1,pokemon2,mov1)
+            }
+            else {
+                dmg1 = 0
+            }
             if (survival(pokemon2,dmg1)) {
                 console.log(pokemon2, " cayó debilitado")
             }
@@ -174,47 +337,34 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
         if (mov2 == "change") {
             console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
             pokemon2 = pokemonACambiar2}
-        else if (pokemon2.isDefeated == false) {
+        else if (pokemon2.isDefeated == false && impedimentosMovimiento(pokemon2)) {
+            if (Math.round(Math.random()*100) <= mov2.accuracy) {
             dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
             console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+            efectoSecundarioPostGolpe(pokemon2,pokemon1,mov2)
+            }
+           else {
+            dmg2 = 0
+            }
             if (survival(pokemon1,dmg2)) {
                 console.log(pokemon1, " cayó debilitado")
             }
 
         }
-
-
-    
-        /*console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
-        if (!survival(pokemon2,dmg1)) {
-            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
-            if (survival(pokemon1,dmg2)) {
-                console.log(pokemon1.apodo, " cayó debilitado")
-            }
-        }
-        else {
-            console.log(pokemon2, " cayó debilitado")
-        }
-    }
-    else {
-        console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
-        if (!survival(pokemon1,dmg2)) {
-            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
-            if (survival(pokemon2,dmg1)) {
-                console.log(pokemon2.apodo, " cayó debilitado")
-            }
-        }
-        else {
-            console.log(pokemon1.apodo, " cayó debilitado")
-        }*/
     }
     else {
         if (mov2 == "change") {
             console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
             pokemon2 = pokemonACambiar2}
-        else {
-            dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
-            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+        else if (impedimentosMovimiento(pokemon2)) {
+            if (Math.round(Math.random()*100) <= mov2.accuracy) {
+                dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
+                console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
+                efectoSecundarioPostGolpe(pokemon2,pokemon1,mov2)
+                }
+               else {
+                dmg2 = 0
+                }
             if (survival(pokemon1,dmg2)) {
                 console.log(pokemon1, " cayó debilitado")
             }
@@ -222,13 +372,22 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
         if (mov1 == "change") {
             console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
             pokemon1 = pokemonACambiar1}
-        else if (pokemon1.isDefeated == false){
-            dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
-            console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
-            if (survival(pokemon2,dmg1)) {
-                console.log(pokemon2, " cayó debilitado")
+        else if (pokemon1.isDefeated == false && impedimentosMovimiento(pokemon1)){
+            if (Math.round(Math.random()*100) <= mov1.accuracy) {
+                dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
+                console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
+                efectoSecundarioPostGolpe(pokemon1,pokemon2,mov1)
+            }
+            else {
+                dmg1 = 0
             }
         }
+    }
+    if (pokemon1.isDefeated == false) {
+        dañoPostTurno(pokemon1)
+    }
+    if (pokemon2.isDefeated == false) {
+        dañoPostTurno(pokemon2)
     }
     return([pokemon1,pokemon2])
 }

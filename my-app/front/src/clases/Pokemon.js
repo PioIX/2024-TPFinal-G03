@@ -8,10 +8,8 @@ function pokeStats(baseStats,evs) {
     for (let i=0;i<6;i+=1) {
         if (i==0) {
             stats.push(10 + (100/100 * ((baseStats[i]*2) + 31 + evs[i]/4)) + 100)
-            console.log(stats[0])
         }
         else {
-            console.log((5 + (100/100 * ((baseStats[i]*2)+31+evs[i]/4))))
             stats.push((5 + (100/100 * ((baseStats[i]*2)+31+evs[i]/4))))
         }
     }
@@ -23,6 +21,7 @@ export class Pokemon {
         this.form = form;
         this.evs = evs;
         this.stats = pokeStats(this.form.baseStats,this.evs);
+        this.statsChanges = [0,0,0,0,0]
         this.life = this.stats[0];
         this.isDefeated = false;
         this.status = "";
@@ -32,6 +31,7 @@ export class Pokemon {
         this.priority = 0;
         this.apodo = apodo
         this.combatiendo = false
+        this.countDream = 0
         idPokemon++;
     }
 }
@@ -39,7 +39,9 @@ export class Pokemon {
 
 export let pokemons = [
     new Pokemon(pokemonForms[0],[0,1,3],[4,0,0,252,0,252],pokemonForms[0].name),
-    new Pokemon(pokemonForms[1],[0,2],[4,0,0,252,0,252],pokemonForms[1].name),
-    new Pokemon(pokemonForms[1],[0,2],[4,252,0,0,0,252],"raul"),
+    new Pokemon(pokemonForms[1],[0,2,4],[4,0,0,252,0,252],pokemonForms[1].name),
+    new Pokemon(pokemonForms[1],[0,2,4],[4,252,0,0,0,252],"raul"),
     new Pokemon(pokemonForms[0],[0,1,2,3],[4,0,0,252,0,252],"GODvantula")
 ]
+
+pokemons[0].status = "poisoned"
