@@ -2,19 +2,31 @@
 import '@/app/Home/styles.css'
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
-import Usuarios from "../listaUsuarios"
-import {crearUsuarios} from "@/app/Home/listaUsuarios"
+import Usuarios, { crearUsuarios } from "../listaUsuarios"
 import Image from 'next/image'
-import res from 'express/lib/response';
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
     let[nombre, setNombre] = useState('')
     let[user, setUser] = useState('')
     let[errorLog, setErrorLog] = useState('')
+    let [listaUsuariosBackend,setListaUsuariosBackend] = useState([])
 
 
     const router = useRouter()
+
+
+    async function traerLista() {
+        const response = await fetch('http://localhost:3000/traerUsuarios', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        setListaUsuariosBackend(response)
+        return listaUsuariosBackend
+    }
+
 
     async function subirUsuario(id, nombre, contrasenia) {
         const data = {
@@ -44,6 +56,7 @@ export default function PaginaRegistro(props){
         for(let i = 0; i < Usuarios.length; i++){
             if (i != Usuarios[i].id){
                 console.log(Usuarios)
+
                 return i
             } else {
                 i++
@@ -52,11 +65,10 @@ export default function PaginaRegistro(props){
     }
 
     function register(contrasenia) {
-        let i = buscarUserByUsername()
         let check = false
         if (check === false){
             if(contrasenia!=""){
-                return i}
+                return 1}
             
             else{
             return -1}
@@ -67,7 +79,7 @@ export default function PaginaRegistro(props){
     }
 
 
-    function iniciarSesion(){
+    /*function iniciarSesion(){
         for(let i =0;i<Usuarios.length;i++){
             if (Usuarios[i].nombre == nombre && Usuarios[i].contrasenia == contrasenia) {
                 setUser(Usuarios[i].id)
@@ -77,7 +89,7 @@ export default function PaginaRegistro(props){
             }
         }
         setErrorLog('El nombre o la contraseña son incorrectas')
-    }
+    }*/
 
 
 
