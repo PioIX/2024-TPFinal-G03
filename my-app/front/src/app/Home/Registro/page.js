@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import Usuarios from "../listaUsuarios"
 import {crearUsuarios} from "@/app/Home/listaUsuarios"
 import Image from 'next/image'
+import res from 'express/lib/response';
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
@@ -15,9 +16,9 @@ export default function PaginaRegistro(props){
 
     const router = useRouter()
 
-    async function envioPost() {
+    async function subirUsuario(id, nombre, contrasenia) {
         const data = {
-            ID_carta: id,
+            ID_usuario: id,
             nombre: nombre,
             contrasenia: contrasenia
         }
@@ -31,7 +32,6 @@ export default function PaginaRegistro(props){
         })
     }
 
-
     function registrarNombre(event){
         setNombre(event.target.value)
     }
@@ -40,28 +40,23 @@ export default function PaginaRegistro(props){
         setContrasenia(event.target.value)
     }
 
-    function buscarUserByUsername(username) {
-        let i=0;
-        let check =false
-        while (check==false){
-            if (username == Usuarios[i].nombre) {
+    function buscarUserByUsername() {
+        for(let i = 0; i < Usuarios.length; i++){
+            if (i != Usuarios[i].id){
+                console.log(Usuarios)
                 return i
+            } else {
+                i++
             }
-            else {
-                i++;
-                if (i==Usuarios.length) {
-                    return false
-                }
             }
-        }
     }
 
-    function register(user,contrasenia) {
-        let i = buscarUserByUsername(user)
-        if (i === false){
+    function register(contrasenia) {
+        let i = buscarUserByUsername()
+        let check = false
+        if (check === false){
             if(contrasenia!=""){
-                Usuarios.push(new crearUsuarios(user, contrasenia))
-                return 1}
+                return i}
             
             else{
             return -1}
@@ -70,6 +65,7 @@ export default function PaginaRegistro(props){
         return 2
         }
     }
+
 
     function iniciarSesion(){
         for(let i =0;i<Usuarios.length;i++){
@@ -86,13 +82,14 @@ export default function PaginaRegistro(props){
 
 
     function registrarsePorBoton() { 
-        let result = register(nombre,contrasenia)
+        let result = register(contrasenia)
+        console.log(result)
         switch(result){
             case -1:
                 setErrorLog('Los datos incorrectos son ingresados, pruebe poner otra cosarda')
                 break;
-            case 1:
-                let id = iniciarSesion()
+            case i:
+                let id = i
                 subirUsuario(id, nombre, contrasenia)
                 console.log(id)
                 break;

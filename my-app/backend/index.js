@@ -1,3 +1,5 @@
+import { pool } from './db.js';
+
 var express = require('express');
 var bodyParser = require('body-parser');
 
@@ -25,6 +27,8 @@ app.listen(port, function(){
 	console.log('Defined routes:');
 	console.log(`	[GET] http://localhost:${port}/`);
 });
+
+
 
 //POST
 app.post('/insertarUsuarios', async function(req,res) {
