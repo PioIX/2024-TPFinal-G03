@@ -25,7 +25,6 @@ export default function Home() {
   let [pokemonACambiarAjeno,setPokemonACambiaraAjeno] = useState()
   let [coco, setCoco] = useState(0)
 
-
   function seleccionarAtaquePropio(event) {
     if (event.target.value=="change") {
       setTurnoPropio("change")
@@ -78,7 +77,6 @@ function actualizarPokemonPropio(){
     }
   }
       /*preguntar a franco porque no se acutaliza el quipo*/ 
-  console.log(equipoPropio)
   setCoco(coco + 1)
 }
 

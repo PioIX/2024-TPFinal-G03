@@ -11,6 +11,7 @@ import { useState, useEffect } from "react"
 let turnosEnvenenamientoGrave = 0
 
 
+
 const tablaDeTipos={
     normal:
         {normal:1,fire:1,water:1,grass:1,electric:1,ice:1,fighting:2,poison:1,
@@ -92,11 +93,10 @@ export function chekTrainerHealtyTeam(trainer) {
 }
 
 function changeStatsCalculate(pokemon,stat) {
-    return (pokemon.stats[stat] + pokemon.stats[stat] * pokemon.statsChanges[stat-1])
+    return (pokemon.stats[stat] + (pokemon.stats[stat] * pokemon.statsChanges[stat-1])*0.5)
 }
 
 export function damageCalculate(user,enemy,move) {
-    console.log("HOLAAAA")
     let userStats = {atk:0,def:0,spa:0,spd:0}
     let enemyStats = {atk:0,def:0,spa:0,spd:0}
     let multiplicadorCritico = 1
@@ -110,6 +110,7 @@ export function damageCalculate(user,enemy,move) {
     enemyStats.spd = changeStatsCalculate(enemy,4)
 
     if (user.critical == true){
+        multiplicadorCritico =1.5
         if(user.statsChanges[0] < 0 || user.statsChanges[2] < 0){
             userStats.atk = user.stats[1]
             userStats.spa = user.stats[3]
@@ -137,7 +138,7 @@ export function damageCalculate(user,enemy,move) {
     else if (move.category == "physical") {
         damage = Math.round (0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1)*userStats.atk*move.power)/(25*enemyStats.def))+2))
     }
-    damage = damage * multiplicadorCritico
+    damage = Math.round(damage * multiplicadorCritico)
     return damage
 }
 
@@ -229,7 +230,7 @@ export function paralisys(pokemon) {
 }
 
 export function impedimentosMovimiento(pokemon) {
-    let retorno = ""
+    let retorno = true
     switch(pokemon.status) { 
         case "freeze":
             retorno = freeze(pokemon)
@@ -323,6 +324,18 @@ function efectoSecundarioPostGolpe(agresor,agredido,move) {
                 console.log(agredido.apodo, " ahora está dormido")
             }
         break;
+        case "raiseAtk1":
+            if (Math.round(Math.random()*100) <= move.probabilities && agresor.statsChanges[1] < 6) {
+                agresor.statsChanges[0]++
+                console.log("El ataque de ",agresor.apodo, " subio en un nivel")
+            }
+        break;
+        case "raiseDef1":
+            if (Math.round(Math.random()*100) <= move.probabilities && agresor.statsChanges[2] < 6) {
+                agresor.statsChanges[1]++
+                console.log("La defensa de ",agresor.apodo, " subio en un nivel")
+            }
+        break;
         //
     }
 }
@@ -334,8 +347,12 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
     let pokemon2 = pkm2
     let dmg1 = 0
     let dmg2 =0
-    console.log(impedimentosMovimiento(pokemon1))
-    console.log(impedimentosMovimiento(pokemon2))
+    let indice1critico = 4.16
+    let indice2critico = 4.16
+    if (Math.random()*100 <= indice1critico){
+        console.log(pokemon1.apodo, "va a hacer un golpe critico")
+        pokemon1.critical = true
+    }
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
         
         if (mov1 == "change") {
@@ -369,7 +386,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
             dmg2 = 0
             }
             if (survival(pokemon1,dmg2)) {
-                console.log(pokemon1, " cayó debilitado")
+                console.log(pokemon1.apodo, " cayó debilitado")
             }
 
         }
@@ -388,7 +405,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
                 dmg2 = 0
                 }
             if (survival(pokemon1,dmg2)) {
-                console.log(pokemon1, " cayó debilitado")
+                console.log(pokemon1.apodo, " cayó debilitado")
             }
         }
         if (mov1 == "change") {
@@ -403,6 +420,10 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
             else {
                 dmg1 = 0
             }
+            if (survival(pokemon2,dmg1)){
+                console.log(pokemon2.apodo, " cayó debilitado")
+                    
+                }
         }
     }
     if (pokemon1.isDefeated == false) {
