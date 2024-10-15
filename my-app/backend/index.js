@@ -27,9 +27,10 @@ app.listen(port, function(){
 	console.log(`	[GET] http://localhost:${port}/`);
 });
 
-app.get('/traerUsuarios', async function(){
+app.get('/traerUsuarios', async function(req, res){
+	console.log(req.query)
 	let lista = await MySql.realizarQuery(`select * from Usuarios`)
-	return lista
+	res.send(lista)
 })
 
 //POST

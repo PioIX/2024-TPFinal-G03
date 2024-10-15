@@ -11,20 +11,22 @@ export default function PaginaRegistro(props){
     let[user, setUser] = useState('')
     let[errorLog, setErrorLog] = useState('')
     let [listaUsuariosBackend,setListaUsuariosBackend] = useState([])
+    let [ID, setId] = useState(0)
 
 
     const router = useRouter()
 
 
     async function traerLista() {
-        const response = await fetch('http://localhost:3000/traerUsuarios', {
+        const response = await fetch('http://localhost:3001/traerUsuarios', {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         })
-        setListaUsuariosBackend(response)
-        return listaUsuariosBackend
+        const result = await response.json();
+        console.log(result)
+        setListaUsuariosBackend(result)
     }
 
 
@@ -43,7 +45,7 @@ export default function PaginaRegistro(props){
             body: JSON.stringify(data),
         })
     }
-
+    
     function registrarNombre(event){
         setNombre(event.target.value)
     }
@@ -64,18 +66,28 @@ export default function PaginaRegistro(props){
             }
     }
 
-    function register(contrasenia) {
-        let check = false
-        if (check === false){
-            if(contrasenia!=""){
-                return 1}
-            
+    function register(nombre) {
+        console.log(nombre)
+
+        let lista = traerLista()
+        let check = true
+        let check2 = false
+        let i = 0 
+        while (check){
+            if(nombre == lista[i].nombre){
+                check2 = true
+                check = false}
+            else if(i > lista.length){
+                check = false
+            }
             else{
-            return -1}
+                i++
+            }
         }
+        if (check2 == false && i < lista.length){
+            return 1}
         else{
-        return 2
-        }
+            return 2}
     }
 
 
@@ -94,16 +106,23 @@ export default function PaginaRegistro(props){
 
 
     function registrarsePorBoton() { 
-        let result = register(contrasenia)
+        let result = register(nombre)
         console.log(result)
+        let check = true
+        let i = 1
         switch(result){
-            case -1:
-                setErrorLog('Los datos incorrectos son ingresados, pruebe poner otra cosarda')
-                break;
-            case i:
-                let id = i
-                subirUsuario(id, nombre, contrasenia)
-                console.log(id)
+            case 1:
+                console.log(listaUsuariosBackend)
+                while(check){
+                    if (i != listaUsuariosBackend[i].ID_usuario){
+                        setId(i)
+                        check = false
+                    } else {
+                        i++
+                    }
+                }
+                subirUsuario(ID, nombre, contrasenia)
+                console.log(ID)
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')
