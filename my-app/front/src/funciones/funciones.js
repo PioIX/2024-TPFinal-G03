@@ -340,6 +340,34 @@ function efectoSecundarioPostGolpe(agresor,agredido,move) {
     }
 }
 
+function movsDeEstado(pkm1, pkm2, mov) {
+        switch(mov.name) {
+            case "toxic":
+                if ((pkm2.type1 != "poison" || pkm2.type2 != "poison") && (pkm2.type1 != "steel" || pkm2.type2 != "steel") && pkm2.status==""){
+                    pkm2.status = "BadlyPoisoned"
+                } 
+        }
+    }
+
+
+export function ejecutarMovimiento(pkm1, pkm2, mov) {
+    let dmg = 0
+    let indice1critico = 4.16
+    if (Math.round(Math.random()*100) <= mov.accuracy || ((pkm1.type1 == "poison" || pkm1.type2 == "poison") && mov.name == "toxic")) {
+        if (mov.category == "status"){
+            movsDeEstado(pkm1, pkm2, mov)
+        }
+        else {
+            dmg = damageCalculate(pkm1,pkm2,mov1)
+            console.log(pkm1.apodo, " usó ", mov.name, " contra ", pkm2.apodo, " y le hizo ", dmg, " puntos de daño")
+            efectoSecundarioPostGolpe(pkm1,pkm2,mov)
+        }
+    }
+    else{
+        console.log(pkm1, " usó ",mov," pero falló!!!!")}
+}
+
+
 
 export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
