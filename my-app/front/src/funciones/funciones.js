@@ -378,14 +378,31 @@ export function ejecutarMovimiento(pkm1, pkm2, mov) {
         console.log(pkm1, " usó ",mov," pero falló!!!!")}
 }
 
+export function terminarCombate(equipo1,equipo2){
+    let resultado = [true,false,false] 
+    // el primer espacio representa si la batalla sigue
+    // el segundo espacio es si el primer equipo sigue teniendo pokemons, y el tercero es lo mismo con el segundo
+    for (let i = 0; i < equipo1.length; i++) {
+        if (equipo1[i].isDefeated == false) {
+            resultado[1] = true
+        }
+    }
+    for (let i = 0; i < equipo2.length; i++) {
+        if (equipo2[i].isDefeated == false) {
+            resultado[2] = true
+        }
+    }
+    if (resultado[1] == false || resultado[2] == false) {
+        resultado[0] = false
+    }
+    return resultado
+}
 
-
-export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
+export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,equipo1,equipo2) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
     let pokemon1 = pkm1
     let pokemon2 = pkm2
-    let dmg1 = 0
-    let dmg2 =0
+    let comprobarCombate = []
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
         
         if (mov1 == "change") {
@@ -430,5 +447,6 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
     if (pokemon2.isDefeated == false) {
         dañoPostTurno(pokemon2)
     }
-    return([pokemon1,pokemon2])
+    comprobarCombate = terminarCombate(equipo1,equipo2)
+    return([pokemon1,pokemon2,comprobarCombate])
 }

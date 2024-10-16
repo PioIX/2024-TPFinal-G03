@@ -104,17 +104,31 @@ useEffect(()=>{
 }, [pokemonAjeno])
 
 
+function batallaTerminada(){
+
+}
+
 
   function iniciarTurno (){
     setCoco(coco + 1)
     console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
-    let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno))
-    setPokemonPropio(retorno[0])
-    setPokemonAjeno(retorno[1])
-    setCoco(coco + 1)
-    // setCoco es como el coco de TF2, si lo saco deja de actualizarse el useState pokemonPropio y pokemonAjeno. NO TOCAR.
-    
+    if (pokemonPropio != "" && pokemonAjeno != "" && turnoPropio != "" && turnoRival != "") {
+      let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno))
+      setPokemonPropio(retorno[0])
+      setPokemonAjeno(retorno[1])
+      setCoco(coco + 1)
+      setTurnoPropio("")
+      setTurnoRival("")
+      // setCoco es como el coco de TF2, si lo saco deja de actualizarse el useState pokemonPropio y pokemonAjeno. NO TOCAR.
+      if (retorno[2][0] == false) {
+        let ganador = 1
+        if (retorno[2][1] == true) {}
+      }
     }
+    else {
+      console.log("FALTAN DATOS")
+    }
+  }
   
 
   return (
