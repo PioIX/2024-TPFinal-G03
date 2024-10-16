@@ -2,18 +2,17 @@
 import '@/app/Home/styles.css'
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
-import Usuarios, { crearUsuarios } from "../listaUsuarios"
 import Image from 'next/image'
+import { useEffect } from "react";
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
-    let[nombre, setNombre] = useState('')
-    let[user, setUser] = useState('')
+    let[nombreUsuario, setnombreUsuario] = useState('')
     let[errorLog, setErrorLog] = useState('')
-    let [listaUsuariosBackend,setListaUsuariosBackend] = useState([])
+    let [listaUsuariosBackend,setListaUsuariosBackend] = useState()
     let [ID, setId] = useState(0)
 
-
+                    
     const router = useRouter()
 
 
@@ -25,19 +24,19 @@ export default function PaginaRegistro(props){
             },
         })
         const result = await response.json();
-        console.log(result)
         setListaUsuariosBackend(result)
     }
 
+    useEffect(function(){traerLista},[])
 
-    async function subirUsuario(id, nombre, contrasenia) {
+
+    async function subirUsuario(id, nombreUsuario, contrasenia) {
         const data = {
             ID_usuario: id,
-            nombre: nombre,
+            nombre: nombreUsuario,
             contrasenia: contrasenia
         }
-        console.log({ data })
-        const response = await fetch('http://localhost:3000/insertarUsuarios', {
+        const response = await fetch('http://localhost:3001/insertarUsuarios', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -47,7 +46,7 @@ export default function PaginaRegistro(props){
     }
     
     function registrarNombre(event){
-        setNombre(event.target.value)
+        setnombreUsuario(event.target.value)
     }
 
     function registrarContrasenia(event){
@@ -57,8 +56,6 @@ export default function PaginaRegistro(props){
     function buscarUserByUsername() {
         for(let i = 0; i < Usuarios.length; i++){
             if (i != Usuarios[i].id){
-                console.log(Usuarios)
-
                 return i
             } else {
                 i++
@@ -66,25 +63,25 @@ export default function PaginaRegistro(props){
             }
     }
 
-    function register(nombre) {
-        console.log(nombre)
-
-        let lista = traerLista()
+    function register(nombreUsuario) {
+        traerLista()
         let check = true
         let check2 = false
         let i = 0 
+        console.log(listaUsuariosBackend[0])
         while (check){
-            if(nombre == lista[i].nombre){
-                check2 = true
-                check = false}
-            else if(i > lista.length){
+            if(nombreUsuario == listaUsuariosBackend[i].nombre){
+                check = false
+                check2 = true}
+            else if(i > listaUsuariosBackend.length){
                 check = false
             }
             else{
                 i++
             }
         }
-        if (check2 == false && i < lista.length){
+        if (check2 == false){
+            console.log("hol")
             return 1}
         else{
             return 2}
@@ -106,13 +103,11 @@ export default function PaginaRegistro(props){
 
 
     function registrarsePorBoton() { 
-        let result = register(nombre)
-        console.log(result)
+        let result = register(nombreUsuario)
         let check = true
         let i = 1
         switch(result){
             case 1:
-                console.log(listaUsuariosBackend)
                 while(check){
                     if (i != listaUsuariosBackend[i].ID_usuario){
                         setId(i)
@@ -121,8 +116,7 @@ export default function PaginaRegistro(props){
                         i++
                     }
                 }
-                subirUsuario(ID, nombre, contrasenia)
-                console.log(ID)
+                subirUsuario(ID, nombreUsuario, contrasenia)
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')
@@ -144,7 +138,7 @@ export default function PaginaRegistro(props){
                     <div className='botonesLogin'>
                         <input onChange={registrarNombre} placeholder={"Ingrese el nombre"}></input>
                         <input onChange={registrarContrasenia} placeholder={"Ingrese la contraseña"}></input>
-                        <button className='botonRegistroLogin' onClick={registrarsePorBoton}>Registrarse</button>
+                        <button className='botonRegistroLogin' onClick={registrarsePorBoton }>Registrarse</button>
                     </div>
                 </div>
             </div>
