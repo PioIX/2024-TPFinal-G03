@@ -53,19 +53,22 @@ export default function Home() {
   
 function setPokemonACambiarPropioF(event){
   setPokemonACambiarPropio(pokemons[event.target.value])
-  console.log(pokemonACambiarPropio)
+  console.log(pokemons[event.target.value])
+  setTurnoPropio("change")
 }
 
 
 function setPokemonAcambiarAjenoF(event){
   setPokemonACambiaraAjeno(pokemons[event.target.value])
-  console.log(pokemonACambiarAjeno)
+  console.log(pokemons[event.target.value])
+  setTurnoRival("change")
 
 }
 
 function remplazarPokemonPropio(event){
   pokemonPropio.combatiendo = false
   setPokemonPropio(pokemons[event.target.value])
+
 }
 
 function actualizarPokemonPropio(){
@@ -127,14 +130,11 @@ useEffect(()=>{
       : <> {pokemonPropio.moves.map((move)=>(
         <button onClick={seleccionarAtaquePropio} value={move}>{moves[move].name}</button>
       ))}
-
-        <button onClick={seleccionarAtaquePropio} value={"change"}>change</button>
         
       <h3>Equipo propio</h3>
       {equipoPropio.filter(pokemon => pokemon.combatiendo == false).map((pokemon)=>(
         <div>
-          <input type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onChange={setPokemonACambiarPropioF}/>
-          <label for={pokemon.id}>{pokemon.apodo}</label>
+          <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
         </div>
       ))}</>
       }
@@ -151,13 +151,10 @@ useEffect(()=>{
         <button onClick={seleccionarAtaqueAjeno} value={move}>{moves[move].name}</button>
       ))}
 
-        <button onClick={seleccionarAtaqueAjeno} value={"change"}>change</button>
-
       <h3>Equipo ajeno</h3>
       {equipoAjeno.filter(pokemon => pokemon.combatiendo == false).map((pokemon)=>(
         <div>
-          <input type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onChange={setPokemonAcambiarAjenoF}/>
-          <label for={pokemon.id}>{pokemon.apodo}</label>
+          <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}></button>
         </div>
       ))}</>
       }

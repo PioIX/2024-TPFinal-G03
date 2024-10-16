@@ -183,7 +183,7 @@ export function burn(pokemon){
 }
 
 export function calcularVenenoGrave(pokemon){
-    let damage = Math.round(pokemon.stats[0] / 16) + (turnosEnvenenamientoGrave * (pokemon.stats[0] / 16))
+    let damage = Math.round((pokemon.stats[0] / 16) + (turnosEnvenenamientoGrave * (pokemon.stats[0] / 16)))
     turnosEnvenenamientoGrave++
     console.log(pokemon.apodo, " resiente el envenenamiento. Parece que va a peor...")
     if(survival(pokemon,damage)) {
@@ -345,7 +345,11 @@ function movsDeEstado(pkm1, pkm2, mov) {
             case "toxic":
                 if ((pkm2.type1 != "poison" || pkm2.type2 != "poison") && (pkm2.type1 != "steel" || pkm2.type2 != "steel") && pkm2.status==""){
                     pkm2.status = "BadlyPoisoned"
-                } 
+                    console.log(pkm1.apodo, "usó ",mov.name," contra ",pkm2.apodo, ", ahora está gravemente envenenado")
+                }
+                else {
+                    console.log(pkm1.apodo, "usó ",mov.name," contra ",pkm2.apodo, ", pero no le afectó...")
+                }
         }
     }
 
@@ -358,9 +362,16 @@ export function ejecutarMovimiento(pkm1, pkm2, mov) {
             movsDeEstado(pkm1, pkm2, mov)
         }
         else {
-            dmg = damageCalculate(pkm1,pkm2,mov1)
+            if (Math.random()*100 <= indice1critico){
+                console.log(pkm1.apodo, "va a hacer un golpe critico")
+                pkm1.critical = true
+            }
+            dmg = damageCalculate(pkm1,pkm2,mov)
             console.log(pkm1.apodo, " usó ", mov.name, " contra ", pkm2.apodo, " y le hizo ", dmg, " puntos de daño")
             efectoSecundarioPostGolpe(pkm1,pkm2,mov)
+            if (survival(pkm2,dmg)) {
+                console.log(pkm2, " cayó debilitado")
+            }
         }
     }
     else{
@@ -375,83 +386,42 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2) {
     let pokemon2 = pkm2
     let dmg1 = 0
     let dmg2 =0
-    let indice1critico = 4.16
-    let indice2critico = 4.16
-    if (Math.random()*100 <= indice1critico){
-        console.log(pokemon1.apodo, "va a hacer un golpe critico")
-        pokemon1.critical = true
-    }
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
         
         if (mov1 == "change") {
             console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
-            pokemon1 = pokemonACambiar1}
+            pokemon1 = pokemonACambiar1
+            pokemon1.statsChanges=[0,0,0,0,0]
+        }
         else if(impedimentosMovimiento(pokemon1)) {
-            if (Math.round(Math.random()*100) <= mov1.accuracy) {
-                console.log(pokemon1,pokemon2,mov1)
-                dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
-                console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
-                efectoSecundarioPostGolpe(pokemon1,pokemon2,mov1)
-            }
-            else {
-                dmg1 = 0
-            }
-            if (survival(pokemon2,dmg1)) {
-                console.log(pokemon2, " cayó debilitado")
-            }
+            ejecutarMovimiento(pokemon1,pokemon2,mov1) 
         }
         if (mov2 == "change") {
             console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
-            pokemon2 = pokemonACambiar2}
+            pokemon2 = pokemonACambiar2
+            pokemon2.statsChanges=[0,0,0,0,0]
+        }
         else if (pokemon2.isDefeated == false && impedimentosMovimiento(pokemon2)) {
-            if (Math.round(Math.random()*100) <= mov2.accuracy) {
-            console.log(pokemon2,pokemon1,mov2)
-            dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
-            console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
-            efectoSecundarioPostGolpe(pokemon2,pokemon1,mov2)
-            }
-           else {
-            dmg2 = 0
-            }
-            if (survival(pokemon1,dmg2)) {
-                console.log(pokemon1.apodo, " cayó debilitado")
-            }
+            ejecutarMovimiento(pokemon2,pokemon1,mov2)
 
         }
     }
     else {
         if (mov2 == "change") {
             console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
-            pokemon2 = pokemonACambiar2}
+            pokemon2 = pokemonACambiar2
+            pokemon2.statsChanges=[0,0,0,0,0]
+        }
         else if (impedimentosMovimiento(pokemon2)) {
-            if (Math.round(Math.random()*100) <= mov2.accuracy) {
-                dmg2 = damageCalculate(pokemon2,pokemon1,mov2)
-                console.log(pokemon2.apodo, " usó ", mov2.name, " contra ", pokemon1.apodo, " y le hizo ", dmg2, " puntos de daño")
-                efectoSecundarioPostGolpe(pokemon2,pokemon1,mov2)
-                }
-               else {
-                dmg2 = 0
-                }
-            if (survival(pokemon1,dmg2)) {
-                console.log(pokemon1.apodo, " cayó debilitado")
-            }
+            ejecutarMovimiento(pokemon2,pokemon1,mov2)
         }
         if (mov1 == "change") {
             console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
-            pokemon1 = pokemonACambiar1}
+            pokemon1 = pokemonACambiar1
+            pokemon1.statsChanges=[0,0,0,0,0]
+        }
         else if (pokemon1.isDefeated == false && impedimentosMovimiento(pokemon1)){
-            if (Math.round(Math.random()*100) <= mov1.accuracy) {
-                dmg1 = damageCalculate(pokemon1,pokemon2,mov1)
-                console.log(pokemon1.apodo, " usó ", mov1.name, " contra ", pokemon2.apodo, " y le hizo ", dmg1, " puntos de daño")
-                efectoSecundarioPostGolpe(pokemon1,pokemon2,mov1)
-            }
-            else {
-                dmg1 = 0
-            }
-            if (survival(pokemon2,dmg1)){
-                console.log(pokemon2.apodo, " cayó debilitado")
-                    
-                }
+            ejecutarMovimiento(pokemon1,pokemon2,mov1)
         }
     }
     if (pokemon1.isDefeated == false) {
