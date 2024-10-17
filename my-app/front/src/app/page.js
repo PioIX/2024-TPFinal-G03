@@ -23,6 +23,7 @@ export default function Home() {
   let [equipoAjeno, setEquipoAjeno] = useState([pokemons[1],pokemons[2]])
   let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
   let [pokemonACambiarAjeno,setPokemonACambiaraAjeno] = useState()
+  let [ganador, setGanador] = useState("")
   let [coco, setCoco] = useState(0)
 
   function seleccionarAtaquePropio(event) {
@@ -105,9 +106,14 @@ useEffect(()=>{
 
 
 function batallaTerminada(){
-
+ return <h3>holas</h3>
 }
 
+
+useEffect(() =>  {
+  console.log("skibidi")
+  batallaTerminada()
+},[ganador])
 
   function iniciarTurno (){
     setCoco(coco + 1)
@@ -121,8 +127,12 @@ function batallaTerminada(){
       setTurnoRival("")
       // setCoco es como el coco de TF2, si lo saco deja de actualizarse el useState pokemonPropio y pokemonAjeno. NO TOCAR.
       if (retorno[2][0] == false) {
-        let ganador = 1
-        if (retorno[2][1] == true) {}
+        if (retorno[2][1] == true) {
+          setGanador(1)
+        }
+        else {
+          setGanador(2)
+        }
       }
     }
     else {
@@ -133,6 +143,8 @@ function batallaTerminada(){
 
   return (
     <div >
+      {ganador == "" 
+      ? <>
       <h2>{pokemonPropio.apodo}</h2>
 
       <h3>{pokemonPropio.life}/{pokemonPropio.stats[0]}</h3>
@@ -175,6 +187,14 @@ function batallaTerminada(){
       {(pokemonPropio.isDefeated || pokemonAjeno.isDefeated)
       ? <></>
       : <button onClick={iniciarTurno} >iniciar turno</button>
+      }
+      </>
+      : <>
+      {ganador ==1
+      ? <h1>GANASTE</h1>
+      : <h1>PERDISTE</h1>
+      }
+      </>
       }
       
     </div>

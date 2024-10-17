@@ -1,3 +1,5 @@
+import { moves } from './moves';
+
 const { species } = require('@/clases/Species');
 const { pokemonForms } = require('@/clases/PokemonForm');
 
@@ -16,6 +18,14 @@ function pokeStats(baseStats,evs) {
     return stats
 } 
 
+function calcularPPs(moveList){
+    let retorno = []
+    for(let i=0;i<moveList.length1;i++) {
+        retorno.push(moves[moveList[i]].pp)
+    }
+    return retorno
+}
+
 export class Pokemon {
     constructor(form,moves,evs,apodo) {
         this.form = form;
@@ -32,7 +42,7 @@ export class Pokemon {
         this.apodo = apodo
         this.combatiendo = false
         this.countDream = 0
-        this.pps = [10,10,10,10]
+        this.pps = calcularPPs(this.moves)
         this.critical = false
         idPokemon++;
     }
@@ -45,7 +55,5 @@ export let pokemons = [
     new Pokemon(pokemonForms[1],[0,2,4],[4,252,0,0,0,252],"raul"),
     new Pokemon(pokemonForms[0],[0,1,2,3],[4,0,0,252,0,252],"GODvantula")
 ]
-
-pokemons[0].status = "poisoned"
 
 console.log(pokemons)
