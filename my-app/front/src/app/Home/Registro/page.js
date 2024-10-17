@@ -9,25 +9,26 @@ export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
     let[nombreUsuario, setnombreUsuario] = useState('')
     let[errorLog, setErrorLog] = useState('')
-    let [listaUsuariosBackend,setListaUsuariosBackend] = useState()
     let [ID, setId] = useState(0)
-
-                    
+    let [listaUsuariosBackend, setListaUsuariosBackend] = useState([])       
     const router = useRouter()
 
 
-    async function traerLista() {
-        const response = await fetch('http://localhost:3001/traerUsuarios', {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        const result = await response.json();
-        setListaUsuariosBackend(result)
-    }
+        const traerLista = async () => {
+                const response = await fetch('http://localhost:3001/traerUsuarios', {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                const result = await response.json()
+                setListaUsuariosBackend(result) 
+                console.log(result)
+        }
 
-    useEffect(function(){traerLista},[])
+        useEffect(()=>{
+            traerLista()         
+        },[])
 
 
     async function subirUsuario(id, nombreUsuario, contrasenia) {
@@ -64,11 +65,10 @@ export default function PaginaRegistro(props){
     }
 
     function register(nombreUsuario) {
-        traerLista()
         let check = true
         let check2 = false
         let i = 0 
-        console.log(listaUsuariosBackend[0])
+        console.log(listaUsuariosBackend)
         while (check){
             if(nombreUsuario == listaUsuariosBackend[i].nombre){
                 check = false
