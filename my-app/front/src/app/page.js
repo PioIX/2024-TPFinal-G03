@@ -150,16 +150,16 @@ useEffect(() =>  {
       <h3>{pokemonPropio.life}/{pokemonPropio.stats[0]}</h3>
 
       {pokemonPropio.isDefeated 
-      ? <> {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon)=>(
-        <button onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
+      ? <> {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
+        <button key={i} onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
       ))}</>
-      : <> {pokemonPropio.moves.map((move)=>(
-        <button onClick={seleccionarAtaquePropio} value={move}>{moves[move].name}</button>
+      : <> {pokemonPropio.moves.map((move,i)=>(
+        <button onClick={seleccionarAtaquePropio} value={move} key={i}>{moves[move].name}</button>
       ))}
         
       <h3>Equipo propio</h3>
-      {equipoPropio.filter(pokemon => pokemon.combatiendo == false).map((pokemon)=>(
-        <div>
+      {equipoPropio.filter(pokemon => pokemon.combatiendo == false).map((pokemon,i)=>(
+        <div key={i}>
           <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
         </div>
       ))}</>
@@ -170,16 +170,16 @@ useEffect(() =>  {
       <h3>{pokemonAjeno.life}/{pokemonAjeno.stats[0]}</h3>
 
       {pokemonAjeno.isDefeated 
-      ? <> {equipoAjeno.filter(pokemon => pokemon.isDefeated == false).map((pokemon)=>(
-        <button onClick={remplazarPokemonAjeno} value={pokemon.id}>{pokemon.apodo}</button> 
+      ? <> {equipoAjeno.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
+        <button onClick={remplazarPokemonAjeno} value={pokemon.id} key={i}>{pokemon.apodo}</button> 
       ))}</>
-      : <> {pokemonAjeno.moves.map((move)=>(
-        <button onClick={seleccionarAtaqueAjeno} value={move}>{moves[move].name}</button>
+      : <> {pokemonAjeno.moves.map((move,i)=>(
+        <button onClick={seleccionarAtaqueAjeno} key={i} value={move}>{moves[move].name}</button>
       ))}
 
       <h3>Equipo ajeno</h3>
-      {equipoAjeno.filter(pokemon => pokemon.combatiendo == false).map((pokemon)=>(
-        <div>
+      {equipoAjeno.filter(pokemon => pokemon.combatiendo == false).map((pokemon, i)=>(
+        <div key={i}>
           <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}></button>
         </div>
       ))}</>

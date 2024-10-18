@@ -20,7 +20,8 @@ function pokeStats(baseStats,evs) {
 
 function calcularPPs(moveList){
     let retorno = []
-    for(let i=0;i<moveList.length1;i++) {
+    
+    for(let i=0;i<moveList.length;i++) {
         retorno.push(moves[moveList[i]].pp)
     }
     return retorno
