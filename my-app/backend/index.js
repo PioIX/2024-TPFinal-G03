@@ -38,8 +38,8 @@ app.post('/insertarUsuarios', async function(req,res) {
 	console.log(req.body)
 	let result = await MySql.realizarQuery(`select * from Usuarios where ID_usuario=${req.body.ID_usuario};`) 
 	if (result.length == 0){
-		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia)
-		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}'`);
+		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia, puntos)
+		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}', ${req.body.puntos}`);
 		res.send("oki")
 
 	}

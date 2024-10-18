@@ -31,17 +31,17 @@ export default function PaginaRegistro(props){
         },[])
 
 
-    async function subirUsuario(id, nombreUsuario, contrasenia) {
+    async function subirUsuario(id, nombreUsuario, contrasenia, puntos) {
         const data = {
             ID_usuario: id,
             nombre: nombreUsuario,
-            contrasenia: contrasenia
+            contrasenia: contrasenia,
+            puntos: puntos
         }
         const response = await fetch('http://localhost:3001/insertarUsuarios', {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
+
+            
             body: JSON.stringify(data),
         })
     }
@@ -65,22 +65,16 @@ export default function PaginaRegistro(props){
     }
 
     function register(nombreUsuario) {
-        let check = true
-        let check2 = false
+        let check = false
         let i = 0 
-        console.log(listaUsuariosBackend)
-        while (check){
+        while (i > listaUsuariosBackend.length){
+            console.log(listaUsuariosBackend)
             if(nombreUsuario == listaUsuariosBackend[i].nombre){
-                check = false
-                check2 = true}
-            else if(i > listaUsuariosBackend.length){
-                check = false
+                check = true
             }
-            else{
-                i++
-            }
+            i++
         }
-        if (check2 == false){
+        if (check == false){
             console.log("hol")
             return 1}
         else{
@@ -105,9 +99,12 @@ export default function PaginaRegistro(props){
     function registrarsePorBoton() { 
         let result = register(nombreUsuario)
         let check = true
-        let i = 1
+        let i = 0
+        let puntos = 0
         switch(result){
             case 1:
+                console.log(listaUsuariosBackend[i].ID_usuario)
+                
                 while(check){
                     if (i != listaUsuariosBackend[i].ID_usuario){
                         setId(i)
@@ -116,7 +113,7 @@ export default function PaginaRegistro(props){
                         i++
                     }
                 }
-                subirUsuario(ID, nombreUsuario, contrasenia)
+                subirUsuario(ID, nombreUsuario, contrasenia, puntos)
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')

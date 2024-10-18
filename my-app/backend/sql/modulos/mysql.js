@@ -16,11 +16,7 @@ const SQL_CONFIGURATION_DATA =
 	charset: 'UTF8_GENERAL_CI'
 }
 
-/**
- * Realiza una query a la base de datos MySQL indicada en el archivo "mysql.js".
- * @param {String} queryString Query que se desea realizar. Textual como se utilizaría en el MySQL Workbench.
- * @returns Respuesta de la base de datos. Suele ser un vector de objetos.
- */
+
 exports.realizarQuery = async function (queryString)
 {
 	let returnObject;
