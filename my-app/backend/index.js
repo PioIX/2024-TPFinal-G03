@@ -35,8 +35,9 @@ app.get('/traerUsuarios', async function(req, res){
 
 //POST
 app.post('/insertarUsuarios', async function(req,res) {
-	console.log(req.body)
+	console.log("POST /insertarUsuarios req.body:",req)
 	let result = await MySql.realizarQuery(`select * from Usuarios where ID_usuario=${req.body.ID_usuario};`) 
+	console.log(result)
 	if (result.length == 0){
 		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia, puntos)
 		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}', ${req.body.puntos}`);
