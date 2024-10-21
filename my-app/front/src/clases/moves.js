@@ -19,5 +19,5 @@ export let moves = [
     new Move("Thunderbolt",90,100,10,"special","electric","paralisys",10),
     new Move("Sape",900,100,10,"physical","normal"),
     new Move("power-up-punch",40,100,20,"physical","fighting","raiseAtk1",100),
-    new Move("toxic","",90,16,"status","poison","","")
+    new Move("toxic","",90,1,"status","poison","","")
 ]

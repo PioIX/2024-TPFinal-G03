@@ -354,7 +354,7 @@ function movsDeEstado(pkm1, pkm2, mov) {
     }
 
 
-export function ejecutarMovimiento(pkm1, pkm2, mov) {
+export function ejecutarMovimiento(pkm1, pkm2, mov,pp) {
     let dmg = 0
     let indice1critico = 4.16
     if (Math.round(Math.random()*100) <= mov.accuracy || ((pkm1.type1 == "poison" || pkm1.type2 == "poison") && mov.name == "toxic")) {
@@ -373,6 +373,8 @@ export function ejecutarMovimiento(pkm1, pkm2, mov) {
                 console.log(pkm2, " cayó debilitado")
             }
         }
+        console.log(pkm1.pps[pp])
+        pkm1.pps[pp] --
     }
     else{
         console.log(pkm1, " usó ",mov," pero falló!!!!")}
@@ -398,7 +400,7 @@ export function terminarCombate(equipo1,equipo2){
     return resultado
 }
 
-export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,equipo1,equipo2) {
+export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,equipo1,equipo2,movPropio,movRival) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
     let pokemon1 = pkm1
     let pokemon2 = pkm2
@@ -411,7 +413,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
             pokemon1.statsChanges=[0,0,0,0,0]
         }
         else if(impedimentosMovimiento(pokemon1)) {
-            ejecutarMovimiento(pokemon1,pokemon2,mov1) 
+            ejecutarMovimiento(pokemon1,pokemon2,mov1,movPropio) 
         }
         if (mov2 == "change") {
             console.log(pokemon2.apodo, " cambió por ", pokemonACambiar2.apodo)
@@ -419,7 +421,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
             pokemon2.statsChanges=[0,0,0,0,0]
         }
         else if (pokemon2.isDefeated == false && impedimentosMovimiento(pokemon2)) {
-            ejecutarMovimiento(pokemon2,pokemon1,mov2)
+            ejecutarMovimiento(pokemon2,pokemon1,mov2,movRival)
 
         }
     }
@@ -430,7 +432,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
             pokemon2.statsChanges=[0,0,0,0,0]
         }
         else if (impedimentosMovimiento(pokemon2)) {
-            ejecutarMovimiento(pokemon2,pokemon1,mov2)
+            ejecutarMovimiento(pokemon2,pokemon1,mov2,movRival)
         }
         if (mov1 == "change") {
             console.log(pokemon1.apodo, " cambió por ", pokemonACambiar1.apodo)
@@ -438,7 +440,7 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
             pokemon1.statsChanges=[0,0,0,0,0]
         }
         else if (pokemon1.isDefeated == false && impedimentosMovimiento(pokemon1)){
-            ejecutarMovimiento(pokemon1,pokemon2,mov1)
+            ejecutarMovimiento(pokemon1,pokemon2,mov1,movPropio)
         }
     }
     if (pokemon1.isDefeated == false) {

@@ -24,6 +24,8 @@ export default function Home() {
   let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
   let [pokemonACambiarAjeno,setPokemonACambiaraAjeno] = useState()
   let [ganador, setGanador] = useState("")
+  let [movPropio, setMovPropio] = useState("")
+  let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
 
   function seleccionarAtaquePropio(event) {
@@ -33,10 +35,10 @@ export default function Home() {
 
     }
     else {
-      setTurnoPropio(moves[event.target.value])
+      setMovPropio(event.target.value)
+      setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
       //turnoAlterPropio =moves[event.target.value]
     }
-    console.log(turnoPropio)
   }
 
   function seleccionarAtaqueAjeno(event) {
@@ -45,10 +47,10 @@ export default function Home() {
       //turnoAlterAjeno = "change"
     }
     else{
-      setTurnoRival(moves[event.target.value])
+      setMovRival(event.target.value)
+      setTurnoRival(moves[pokemonAjeno.moves[event.target.value]])
       //turnoAlterAjeno = moves[event.target.value]
     }
-    console.log(turnoRival)
 
   }
   
@@ -111,7 +113,7 @@ function batallaTerminada(){
 
 
 useEffect(() =>  {
-  console.log("skibidi")
+  console.log("Martin no deja las menores")
   batallaTerminada()
 },[ganador])
 
@@ -119,7 +121,7 @@ useEffect(() =>  {
     setCoco(coco + 1)
     console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
     if (pokemonPropio != "" && pokemonAjeno != "" && turnoPropio != "" && turnoRival != "") {
-      let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno))
+      let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno,movPropio,movRival))
       setPokemonPropio(retorno[0])
       setPokemonAjeno(retorno[1])
       setCoco(coco + 1)
@@ -136,7 +138,7 @@ useEffect(() =>  {
       }
     }
     else {
-      console.log("FALTAN DATOS")
+      console.log("FALTAN DATOZZ")
     }
   }
   
@@ -154,7 +156,8 @@ useEffect(() =>  {
         <button key={i} onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
       ))}</>
       : <> {pokemonPropio.moves.map((move,i)=>(
-        <button onClick={seleccionarAtaquePropio} value={move} key={i}>{moves[move].name}</button>
+        
+        <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i]==0}>{moves[move].name}</button>
       ))}
         
       <h3>Equipo propio</h3>
@@ -174,7 +177,7 @@ useEffect(() =>  {
         <button onClick={remplazarPokemonAjeno} value={pokemon.id} key={i}>{pokemon.apodo}</button> 
       ))}</>
       : <> {pokemonAjeno.moves.map((move,i)=>(
-        <button onClick={seleccionarAtaqueAjeno} key={i} value={move}>{moves[move].name}</button>
+        <button onClick={seleccionarAtaqueAjeno} key={i} value={i} disabled={pokemonAjeno.pps[i]<0}>{moves[move].name}</button>
       ))}
 
       <h3>Equipo ajeno</h3>
