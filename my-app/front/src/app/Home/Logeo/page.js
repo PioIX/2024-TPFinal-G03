@@ -9,10 +9,11 @@ export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
     let[nombreUsuario, setnombreUsuario] = useState('')
     let[errorLog, setErrorLog] = useState('')
-    let [ID, setID] = useState(0.1)
-    let id = 0.2
+    let [ID, setID] = useState(0)
     let [listaUsuariosBackend, setListaUsuariosBackend] = useState([])       
     const router = useRouter()
+    const [usuarioLog, setUsuarioLog] = useState('')
+    let id = 0 
 
 
         const traerLista = async () => {
@@ -32,22 +33,7 @@ export default function PaginaRegistro(props){
         },[])
 
 
-    async function subirUsuario(ID, nombreUsuario, contrasenia, puntos) {
-        const data = {
-            ID_usuario: ID,
-            nombre: nombreUsuario,
-            contrasenia: contrasenia,
-            puntos: puntos
-        }
-        console.log(data)
-        const response = await fetch('http://localhost:3001/insertarUsuarios', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-    }
+
     
     function registrarNombre(event){
         setnombreUsuario(event.target.value)
@@ -57,46 +43,65 @@ export default function PaginaRegistro(props){
         setContrasenia(event.target.value)
     }
 
+    useEffect(()=>{
+        console.log(ID)
+    },[ID])
+    
 
-    function register(nombreUsuario) {
+    function chequeo(nombreUsuario, usuarioContrasenia) {
         let check = false
         let i = 0 
         while (i < listaUsuariosBackend.length){
             console.log(listaUsuariosBackend)
-            if(nombreUsuario == listaUsuariosBackend[i].nombre){
-                check = true
+            if(nombreUsuario == listaUsuariosBackend[i].nombre && usuarioContrasenia == listaUsuariosBackend[i].contrasenia){
+                console.log("hol")
+                id = i
+                setID(i)
+                return 1}
+                return 1
+            }
+            if (nombreUsuario == listaUsuariosBackend[i].nombre && usuarioContrasenia != listaUsuariosBackend[i].contrasenia){
+                return 2
             }
             i++
+        if(i > listaUsuariosBackend.length){
+            return 3
         }
-        console.log(i)
-        if (check == false){
-            console.log("hol")
-            id = i
-            setID(i)
-            return 1}
-        else{
-            return 2}
     }
 
-    useEffect(()=>{
-        console.log(ID)
-    },[ID])
+
+    /*function iniciarSesion(){
+        for(let i =0;i<Usuarios.length;i++){
+            if (Usuarios[i].nombre == nombre && Usuarios[i].contrasenia == contrasenia) {
+                setUser(Usuarios[i].id)
+                setErrorLog('')
+                console.log(Usuarios[i].id)
+                return Usuarios[i].id
+            }
+        }
+        setErrorLog('El nombre o la contraseña son incorrectas')
+    }*/
 
 
-    function registrarsePorBoton() { 
-        let result = register(nombreUsuario)
+
+    function iniciarSesion() { 
+        let result = chequeo(nombreUsuario, contrasenia)
+        let i = 0
         let puntos = 0
         switch(result){
             case 1:
-                subirUsuario(id, nombreUsuario, contrasenia, puntos)
+                alert("se inicio exitosamente")
                 router.push('/Home/Teambuilder')
+
                 break;
             case 2:
-                setErrorLog('el usuario ya existe')
+                alert('contraseña incorrecta')
                 break;
+            case 3:
+                alert("ningun dato es correcto")
+                break
+            }
         }
-    }
-
     return(
         <div className='fondo2'>
             <div>
@@ -111,7 +116,7 @@ export default function PaginaRegistro(props){
                     <div className='botonesLogin'>
                         <input onChange={registrarNombre} placeholder={"Ingrese el nombre"}></input>
                         <input onChange={registrarContrasenia} placeholder={"Ingrese la contraseña"}></input>
-                        <button className='botonRegistroLogin' onClick={registrarsePorBoton}>Registrarse</button>
+                        <button className='botonRegistroLogin' onClick={iniciarSesion}>Registrarse</button>
                     </div>
                 </div>
             </div>

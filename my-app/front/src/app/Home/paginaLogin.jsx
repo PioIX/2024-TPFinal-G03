@@ -21,7 +21,7 @@ export default function PaginaLoginRegistro(){
                 <div>
                     <h4 className='subtitulo1'>Chowdawn</h4>
                     <div className='botonesLogin'>
-                        <button className='botonRegistroLogin' onClick={() => router.push('@/Login')}>Iniciar sesion</button>
+                        <button className='botonRegistroLogin' onClick={() => router.push('/Home/Logeo')}>Iniciar sesion</button>
                         <button className='botonRegistroLogin' onClick={() => router.push('/Home/Registro')}>Registrarse</button>
                     </div>
                 </div>
