@@ -139,6 +139,7 @@ useEffect(() =>  {
     }
     else {
       console.log("FALTAN DATOZZ")
+      console.log(equipoPropio)
     }
   }
   
@@ -161,7 +162,7 @@ useEffect(() =>  {
       ))}
         
       <h3>Equipo propio</h3>
-      {equipoPropio.filter(pokemon => pokemon.combatiendo == false).map((pokemon,i)=>(
+      {equipoPropio.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon,i)=>(
         <div key={i}>
           <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
         </div>
@@ -181,9 +182,9 @@ useEffect(() =>  {
       ))}
 
       <h3>Equipo ajeno</h3>
-      {equipoAjeno.filter(pokemon => pokemon.combatiendo == false).map((pokemon, i)=>(
+      {equipoAjeno.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon, i)=>(
         <div key={i}>
-          <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}></button>
+          <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}>{pokemon.apodo}</button>
         </div>
       ))}</>
       }
