@@ -89,6 +89,7 @@ export default function PaginaRegistro(props){
         switch(result){
             case 1:
                 subirUsuario(id, nombreUsuario, contrasenia, puntos)
+                alert("Se registro exitosamente")
                 router.push('/Home/Teambuilder')
                 break;
             case 2:
@@ -109,10 +110,10 @@ export default function PaginaRegistro(props){
                 <div>
                     <h4 className='subtitulo1'>Chowdawn</h4>
                     <div className='botonesLogin'>
-                        <input onChange={registrarNombre} placeholder={"Ingrese el nombre"}></input>
-                        <input onChange={registrarContrasenia} placeholder={"Ingrese la contraseña"}></input>
-                        <button className='botonRegistroLogin' onClick={registrarsePorBoton}>Registrarse</button>
+                        <input onChange={registrarNombre} className={"botonInput"} placeholder={"Ingrese el nombre"}></input>
+                        <input onChange={registrarContrasenia} className={"botonInput"} placeholder={"Ingrese la contraseña"}></input>
                     </div>
+                        <button className='botonRegistroLogin' onClick={registrarsePorBoton}>Registrarse</button>
                 </div>
             </div>
         </div>

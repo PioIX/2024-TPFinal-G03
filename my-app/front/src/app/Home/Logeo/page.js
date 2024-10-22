@@ -49,22 +49,22 @@ export default function PaginaRegistro(props){
     
 
     function chequeo(nombreUsuario, usuarioContrasenia) {
-        let check = false
         let i = 0 
-        while (i < listaUsuariosBackend.length){
-            console.log(listaUsuariosBackend)
+        while(i < listaUsuariosBackend.length){
+            console.log(usuarioContrasenia)
             if(nombreUsuario == listaUsuariosBackend[i].nombre && usuarioContrasenia == listaUsuariosBackend[i].contrasenia){
                 console.log("hol")
                 id = i
                 setID(i)
-                return 1}
                 return 1
             }
             if (nombreUsuario == listaUsuariosBackend[i].nombre && usuarioContrasenia != listaUsuariosBackend[i].contrasenia){
                 return 2
             }
-            i++
-        if(i > listaUsuariosBackend.length){
+            i++;
+        }
+        console.log(i)
+        if(i == listaUsuariosBackend.length){
             return 3
         }
     }
@@ -85,14 +85,11 @@ export default function PaginaRegistro(props){
 
 
     function iniciarSesion() { 
-        let result = chequeo(nombreUsuario, contrasenia)
-        let i = 0
-        let puntos = 0
+        let result = chequeo(nombreUsuario, contrasenia)    
         switch(result){
             case 1:
                 alert("se inicio exitosamente")
                 router.push('/Home/Teambuilder')
-
                 break;
             case 2:
                 alert('contraseña incorrecta')
@@ -116,8 +113,8 @@ export default function PaginaRegistro(props){
                     <div className='botonesLogin'>
                         <input onChange={registrarNombre} placeholder={"Ingrese el nombre"}></input>
                         <input onChange={registrarContrasenia} placeholder={"Ingrese la contraseña"}></input>
-                        <button className='botonRegistroLogin' onClick={iniciarSesion}>Registrarse</button>
                     </div>
+                        <button className='botonRegistroLogin' onClick={iniciarSesion}>Iniciar sesion</button>
                 </div>
             </div>
         </div>
