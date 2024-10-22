@@ -8,6 +8,59 @@ const { Team,teams } = require("@/clases/Team")
 const { trainers, Trainer } = require("@/clases/Trainer")
 import { useState, useEffect } from "react"
 
+// Pedido a la POKEAPI
+export async function descargarPokemons() {
+    let check = false
+    let ps = 0
+    let atk = 0
+    let def = 0
+    let spa = 0
+    let spd = 0
+    let spe = 0
+    let weight = 0
+    let type1 = ""
+    let type2 = ""
+    let name = ""
+    let movs = []
+    let pedido = ""
+    for (let x = 1;x<1025;x++) {
+        pedido = 'https://pokeapi.co/api/v2/pokemon/'+x
+        const response = await fetch(pedido,{
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        const result = await response.json();
+        ps = result.stats[0].base_stat
+        atk = result.stats[1].base_stat
+        def = result.stats[2].base_stat
+        spa = result.stats[3].base_stat
+        spd = result.stats[1].base_stat
+        spe = result.stats[1].base_stat
+        weight = result.weight
+        
+        if (result.types.length == 1){
+            type1 = result.types[0].type.name
+            type2 = ""
+        }
+        else {
+            type1 = result.types[0].type.name
+            type2 = result.types[1].type.name
+        }
+        name = result.name
+    
+        movs = []
+        for (let i = 0;i < result.moves.length;i++) {
+            movs.push(result.moves[i].move.name)
+        }
+    
+        pokemonForms.push(new PokemonForm(ps,atk,def,spa,spd,spe,weight,type1,type2,name,movs))
+    }
+    console.log(pokemonForms)
+}
+
+
 let turnosEnvenenamientoGrave = 0
 
 

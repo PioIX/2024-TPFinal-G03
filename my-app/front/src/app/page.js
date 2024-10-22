@@ -7,7 +7,7 @@ import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
 import {moves, Move} from "@/clases/moves"
 import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
-import { damageCalculate, tirarMoneda, turno } from "@/funciones/funciones";
+import { damageCalculate, tirarMoneda, turno,descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 
 
@@ -27,6 +27,11 @@ export default function Home() {
   let [movPropio, setMovPropio] = useState("")
   let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
+
+  useEffect(()=>{
+    descargarPokemons()
+  },[]
+  )
 
   function seleccionarAtaquePropio(event) {
     if (event.target.value=="change") {
