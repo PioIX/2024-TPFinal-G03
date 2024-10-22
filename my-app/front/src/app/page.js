@@ -98,6 +98,12 @@ function remplazarPokemonAjeno(event){
 
 function actualizarPokemonAjeno(){
   pokemonAjeno.combatiendo = true
+  for(let i = 0;i < equipoAjeno.length;i++) {
+    if (equipoAjeno[i] != pokemonAjeno) {
+      equipoAjeno[i].combatiendo = false
+    }
+  }
+      /*preguntar a franco porque no se acutaliza el quipo*/ 
   setCoco(coco + 1)
 }
 
@@ -113,13 +119,12 @@ function batallaTerminada(){
 
 
 useEffect(() =>  {
-  console.log("Martin no deja las menores")
   batallaTerminada()
 },[ganador])
 
   function iniciarTurno (){
     setCoco(coco + 1)
-    console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
+    //console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
     if (pokemonPropio != "" && pokemonAjeno != "" && turnoPropio != "" && turnoRival != "") {
       let retorno = (turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno,movPropio,movRival))
       setPokemonPropio(retorno[0])
@@ -138,7 +143,7 @@ useEffect(() =>  {
       }
     }
     else {
-      console.log("FALTAN DATOZZ")
+      console.log("FALTAN DATOZ")
       console.log(equipoPropio)
     }
   }
