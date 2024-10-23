@@ -28,10 +28,10 @@ export default function Home() {
   let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
 
-  useEffect(()=>{
+ /* useEffect(()=>{
     descargarPokemons()
   },[]
-  )
+  )*/
 
   function seleccionarAtaquePropio(event) {
     if (event.target.value=="change") {
@@ -158,6 +158,9 @@ useEffect(() =>  {
     <div >
       {ganador == "" 
       ? <>
+
+        <button onClick={descargarPokemons}>descargar</button>
+
       <h2>{pokemonPropio.apodo}</h2>
 
       <h3>{pokemonPropio.life}/{pokemonPropio.stats[0]}</h3>

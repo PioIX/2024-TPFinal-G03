@@ -30,12 +30,18 @@ app.listen(port, function(){
 
 
 app.post('/insertarPokemons', async function(req,res) {
-	console.log(req.body)
+	console.log("Pokemos recibido del front:",req.body)
+	console.log(`select * from pokemons where Id=${req.body.Id};`)
 	let result = await MySql.realizarQuery(`select * from pokemons where Id=${req.body.Id};`) 
+
 	if (result.length == 0){
-		await MySql.realizarQuery(`INSERT INTO pokemons (Id,name,ps,atk,def,spa,spd,spe,weight,type1,type2,spriteFront,spriteBack)
-		VALUES (${req.body.Id}, '${req.body.name}',${req.body.ps},${req.body.atk},${req.body.def},${req.body.spa},${req.body.spd},${req.body.spe},${req.body.weight},'${req.body.type1}','${req.body.type2}','${req.body.spriteFront}','${req.body.spriteBack}')`);
-		res.send("oki")
+		let result = await MySql.realizarQuery(`select * from pokemons where Id=${req.body.Id};`) 
+		if (result.length == 0){
+
+			await MySql.realizarQuery(`INSERT INTO pokemons (Id,name,ps,atk,def,spa,spd,spe,weight,type1,type2,spriteFront,spriteBack)
+				VALUES (${req.body.Id}, '${req.body.name}',${req.body.ps},${req.body.atk},${req.body.def},${req.body.spa},${req.body.spd},${req.body.spe},${req.body.weight},'${req.body.type1}','${req.body.type2}','${req.body.spriteFront}','${req.body.spriteBack}')`);
+				res.send("oki")
+		}
 
 	}
 	else{

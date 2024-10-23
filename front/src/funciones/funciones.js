@@ -11,8 +11,11 @@ import { useState, useEffect } from "react"
 // Pedido a la POKEAPI
 
 
+let hoal = 0
+
 async function subirPokemon(pokemon) {
     const data = {
+        Id:pokemon.Id,
         ps:pokemon.ps,
         atk:pokemon.atk,
         def:pokemon.def,
@@ -27,7 +30,6 @@ async function subirPokemon(pokemon) {
         spriteBack:pokemon.spriteBack
 
     }
-    console.log({ data })
     //Envio un pedido POST con un JSON en el body
     
     const response = await fetch('http://localhost:3001/insertarPokemons', {
@@ -37,68 +39,75 @@ async function subirPokemon(pokemon) {
         },
         body: JSON.stringify(data),
     })
-    console.log({ data })
+    
+
 }
 
 
 export async function descargarPokemons() {
-    let check = false
-    let ps = 0
-    let atk = 0
-    let def = 0
-    let spa = 0
-    let spd = 0
-    let spe = 0
-    let weight = 0
-    let type1 = ""
-    let type2 = ""
-    let name = ""
-    let movs = []
-    let pedido = ""
-    let spriteFront = ""
-    let spriteBack = ""
-    let pkmn = {ps:0,atk:0,def:0,spa:0,spd:0,spe:0,weight:0,type1:"",type2:"",name:"",spriteFront:"",spriteBack:""}
-    for (let x = 1;x<3;x++) {
-        pedido = 'https://pokeapi.co/api/v2/pokemon/'+x
-        const response = await fetch(pedido,{
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-        const result = await response.json();
-        ps = result.stats[0].base_stat
-        atk = result.stats[1].base_stat
-        def = result.stats[2].base_stat
-        spa = result.stats[3].base_stat
-        spd = result.stats[1].base_stat
-        spe = result.stats[1].base_stat
-        weight = result.weight
-        spriteFront = result.sprites.front_default
-        spriteBack = result.sprites.back_default
+    if (hoal == 0) {
+        let check = false
+        let id = 0
+        let ps = 0
+        let atk = 0
+        let def = 0
+        let spa = 0
+        let spd = 0
+        let spe = 0
+        let weight = 0
+        let type1 = ""
+        let type2 = ""
+        let name = ""
+        let movs = []
+        let pedido = ""
+        let spriteFront = ""
+        let spriteBack = ""
+        let pkmn = {id:0,ps:0,atk:0,def:0,spa:0,spd:0,spe:0,weight:0,type1:"",type2:"",name:"",spriteFront:"",spriteBack:""}
+        for (let x = 1;x<1026;x++) {
+            pedido = 'https://pokeapi.co/api/v2/pokemon/'+x
+            const response = await fetch(pedido,{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            const result = await response.json();
+            ps = result.stats[0].base_stat
+            atk = result.stats[1].base_stat
+            def = result.stats[2].base_stat
+            spa = result.stats[3].base_stat
+            spd = result.stats[1].base_stat
+            spe = result.stats[1].base_stat
+            weight = result.weight
+            spriteFront = result.sprites.front_default
+            spriteBack = result.sprites.back_default
+            id = result.id
+            
+            if (result.types.length == 1){
+                type1 = result.types[0].type.name
+                type2 = ""
+            }
+            else {
+                type1 = result.types[0].type.name
+                type2 = result.types[1].type.name
+            }
+            name = result.name
         
-        if (result.types.length == 1){
-            type1 = result.types[0].type.name
-            type2 = ""
-        }
-        else {
-            type1 = result.types[0].type.name
-            type2 = result.types[1].type.name
-        }
-        name = result.name
+            pkmn = {Id:id,ps:ps,atk:atk,def:def,spa:spa,spd:spd,spe:spe,weight:weight,type1:type1,type2:type2,name:name,spriteFront:spriteFront,spriteBack:spriteBack}
+            console.log("Imprimo los pokemones recibidos: ",pkmn)
+            subirPokemon(pkmn)
+            console.log(x)
     
-        pkmn = {ps:ps,atk:atk,def:def,spa:spa,spd:spd,spe:spe,weight:weight,type1:type1,type2:type2,name:name,spriteFront:spriteFront,spriteBack:spriteBack}
-        console.log(pkmn)
-        subirPokemon(pkmn)
-        console.log(x)
-
-        /*movs = []
-        for (let i = 0;i < result.moves.length;i++) {
-            movs.push(result.moves[i].move.name)
-        }*/
-    
-        //pokemonForms.push(new PokemonForm(ps,atk,def,spa,spd,spe,weight,type1,type2,name,movs))
+            /*movs = []
+            for (let i = 0;i < result.moves.length;i++) {
+                movs.push(result.moves[i].move.name)
+            }*/
+        
+            //pokemonForms.push(new PokemonForm(ps,atk,def,spa,spd,spe,weight,type1,type2,name,movs))
+        }
     }
+    
+    hoal++
 }
 
 
