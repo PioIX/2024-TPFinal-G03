@@ -1,0 +1,18 @@
+{
+  "name": "football-grid-backend",
+  "version": "1.0.0",
+  "description": "Football grid grupo 3",
+  "main": "Backend.js",
+  "scripts": {
+    "test": "nodemon Backend.js"
+  },
+  "author": "Grupo 3",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mysql2": "^3.10.1",
+    "nodemon": "^3.1.3"
+  }
+}
