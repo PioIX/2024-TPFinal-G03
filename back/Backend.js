@@ -7,7 +7,7 @@ var cors = require('cors');
 var MySql = require('./modulos/mysql.js');
 
 var app = express();
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 3001;
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -29,12 +29,12 @@ app.listen(port, function(){
 });
 
 
-app.post('/insertarUsuarios', async function(req,res) {
+app.post('/insertarPokemons', async function(req,res) {
 	console.log(req.body)
-	let result = await MySql.realizarQuery(`select * from Usuarios where ID_usuario=${req.body.ID_usuario};`) 
+	let result = await MySql.realizarQuery(`select * from pokemons where Id=${req.body.Id};`) 
 	if (result.length == 0){
-		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia, puntos)
-		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}',${req.body.puntos})`);
+		await MySql.realizarQuery(`INSERT INTO pokemons (Id,name,ps,atk,def,spa,spd,spe,weight,type1,type2,spriteFront,spriteBack)
+		VALUES (${req.body.Id}, '${req.body.name}',${req.body.ps},${req.body.atk},${req.body.def},${req.body.spa},${req.body.spd},${req.body.spe},${req.body.weight},'${req.body.type1}','${req.body.type2}','${req.body.spriteFront}','${req.body.spriteBack}')`);
 		res.send("oki")
 
 	}
