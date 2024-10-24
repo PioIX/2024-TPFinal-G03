@@ -110,6 +110,24 @@ export async function descargarPokemons() {
     hoal++
 }
 
+export async function descargarPokemonsBaseDeDatos() {
+    //Llamo a un pedido Get del servidor
+    const response = await fetch('http://127.0.0.1:3000/pokemons', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+
+    //Tengo que usar el await porque la respuesta del servidor es lenta
+    const result = await response.json();
+    console.log(result);
+   
+    for (let i = 1; i < await result.length; i++) {
+        pokemonForms.push(new PokemonForm(result[i].ps,result[i].atk,result[i].def,result[i].spa,result[i].spd,result[i].spe,result[i].weight,result[i].type1,result[i].type2,result[i].name))
+    }
+}
+
 
 let turnosEnvenenamientoGrave = 0
 

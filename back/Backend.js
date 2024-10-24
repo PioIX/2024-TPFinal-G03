@@ -1,7 +1,8 @@
 //seccion recibir datos
 var express = require('express');
 var bodyParser = require('body-parser');
-var cors = require('cors');
+const cors = require('cors')
+
 
 
 var MySql = require('./modulos/mysql.js');
@@ -28,6 +29,13 @@ app.listen(port, function(){
 	console.log(`	[GET] http://localhost:${port}/`);
 });
 
+
+app.get('/pokemons', async function(req,res){
+	console.log(req.query)
+   
+	let	respuesta = await MySql.realizarQuery(`SELECT * FROM pokemons;`);
+	res.send(respuesta)
+})
 
 app.post('/insertarPokemons', async function(req,res) {
 	console.log("Pokemos recibido del front:",req.body)
