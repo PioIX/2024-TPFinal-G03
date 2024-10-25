@@ -6,7 +6,7 @@ import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
 import {moves, Move} from "@/clases/moves"
 import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
-import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos } from "@/funciones/funciones";
+import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos, descargarMovimientos } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 
 
@@ -16,7 +16,8 @@ export default function Home() {
 
   return (
     <div >
-     <button onClick={descargarPokemonsBaseDeDatos}>descargarPokemons</button>
+      <button onClick={descargarMovimientos}>Descargar Movs</button>
+      <button onClick={descargarPokemonsBaseDeDatos}>descargarPokemons</button>
     </div>
   );
 }

@@ -43,8 +43,49 @@ async function subirPokemon(pokemon) {
 
 }
 
+async function subirMov(idPokemon,mov) {
+    const data = {
+        Id:idPokemon,
+        move:mov
 
-export async function descargarPokemons() {
+    }
+    //Envio un pedido POST con un JSON en el body
+    
+    const response = await fetch('http://localhost:3001/insertarMoves', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+
+}
+
+
+export async function descargarMovimientos() {
+    let id = 0
+    let mov = ""
+    let pedido = ""
+    for (let i = 1;i<1026;i++) {
+        pedido = 'https://pokeapi.co/api/v2/pokemon/'+i
+            const response = await fetch(pedido,{
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            const result = await response.json();
+          id = i
+        for (let x = 0;x<result.moves.length;x++) {
+            mov = result.moves[x].move.name
+            console.log(id,mov)
+
+            subirMov(id,mov)
+        }
+    }
+}
+
+/*export async function descargarPokemons() {
     if (hoal == 0) {
         let check = false
         let id = 0
@@ -97,22 +138,15 @@ export async function descargarPokemons() {
             console.log("Imprimo los pokemones recibidos: ",pkmn)
             subirPokemon(pkmn)
             console.log(x)
-    
-            /*movs = []
-            for (let i = 0;i < result.moves.length;i++) {
-                movs.push(result.moves[i].move.name)
-            }*/
-        
-            //pokemonForms.push(new PokemonForm(ps,atk,def,spa,spd,spe,weight,type1,type2,name,movs))
         }
     }
     
     hoal++
-}
+}*/
 
 export async function descargarPokemonsBaseDeDatos() {
     //Llamo a un pedido Get del servidor
-    const response = await fetch('http://127.0.0.1:3000/pokemons', {
+    const response = await fetch('http://localhost:3001/pokemons', {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -126,6 +160,7 @@ export async function descargarPokemonsBaseDeDatos() {
     for (let i = 1; i < await result.length; i++) {
         pokemonForms.push(new PokemonForm(result[i].ps,result[i].atk,result[i].def,result[i].spa,result[i].spd,result[i].spe,result[i].weight,result[i].type1,result[i].type2,result[i].name))
     }
+
 }
 
 

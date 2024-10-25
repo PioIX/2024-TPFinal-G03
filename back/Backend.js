@@ -1,13 +1,18 @@
 //seccion recibir datos
-var express = require('express');
-var bodyParser = require('body-parser');
-const cors = require('cors')
+var express = require ("express"); //Tipo de servidor: Express
+const cors = require('cors');
+var bodyParser = require("body-parser"); //Convierte los JSON
+const MySQL = require("./modulos/mysql.js");//Declaro SQL
+
 
 
 
 var MySql = require('./modulos/mysql.js');
 
-var app = express();
+const app = express();	
+app.use(cors({
+    origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:3001','http://localhost:4000']
+}));
 var port = process.env.PORT || 3001;
 
 app.use(bodyParser.urlencoded({extended:false}));
@@ -37,6 +42,13 @@ app.get('/pokemons', async function(req,res){
 	res.send(respuesta)
 })
 
+app.get('/moves', async function(req,res){
+	console.log(req.query)
+   
+	let	respuesta = await MySql.realizarQuery(`SELECT * FROM moves_pokemons;`);
+	res.send(respuesta)
+})
+
 app.post('/insertarPokemons', async function(req,res) {
 	console.log("Pokemos recibido del front:",req.body)
 	console.log(`select * from pokemons where Id=${req.body.Id};`)
@@ -55,6 +67,20 @@ app.post('/insertarPokemons', async function(req,res) {
 	else{
 		res.send("ya existre")
 	}
+})
+
+app.post('/insertarMoves', async function(req,res) {
+	let result = await MySql.realizarQuery(`select * from moves_pokemons where pokemonId=${req.body.Id};`) 
+	console.log(req.body.move)
+	//let result = await MySql.realizarQuery(`select * from moves_pokemons where pokemonId=${req.body.Id};`) 
+	await MySql.realizarQuery(`INSERT INTO moves_pokemons (pokemonId,move)
+		VALUES (${req.body.Id}, '${req.body.move}')`);
+		res.send("oki")
+})
+
+app.delete('/borrarMoves', async function(req,res) {
+	await MySql.realizarQuery(`DELETE FROM moves_pokemons`)
+	res.send("oki");
 })
 
 /*app.get('/usuarios', async function(req,res){
