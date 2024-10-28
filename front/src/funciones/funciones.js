@@ -155,13 +155,15 @@ function ponerPokemonEnLaLista(pokemon,z,movs) {
     let moves = []
     if (pokemonForms[z] == undefined) {
         for (let i = 0;i<movs.length;i++) {
-            moves.push(movs[i].name)
+            moves.push(movs[i].move)
         }
-        pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name))
+        pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name,moves))
     }
+    moves = []
 }
 
 export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Get del servidor
+    console.log("hoal")
     let Id=0
     let pedido = ""
     const response = await fetch('http://localhost:3001/pokemons', {
@@ -174,10 +176,9 @@ export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Ge
     
     
 
-    for (let i = 0; i < await result.length; i++) {
+    for (let i = 0; i < 9; i++) {
         Id = i+1
-        pedido = 'http://localhost:3001/pokemonMovs/Id='+Id
-    
+        pedido = 'http://localhost:3001/pokemonMovs?Id='+Id
         const responseMovs = await fetch(pedido, {
             method: "GET",
             headers: {
@@ -185,7 +186,7 @@ export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Ge
             },
             // body: JSON.stringify(data),
         })
-        const movs = await response.json();
+        const movs = await responseMovs.json();
         ponerPokemonEnLaLista(result[i],i,movs)
     }
     console.log(pokemonForms)
