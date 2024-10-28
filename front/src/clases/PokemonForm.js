@@ -17,7 +17,6 @@ export class PokemonForm{
     }
 }
 
-export let pokemonForms = [
+export let pokemonForms = []
 /*new PokemonForm(70,77,60,97,60,108,14.3,"bug","electric","Galvantula",[],"",""),
 new PokemonForm(72,95,67,103,71,122,40.0,"water","dark","Greninja",[],"","")*/
-]

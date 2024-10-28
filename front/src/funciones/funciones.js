@@ -46,7 +46,7 @@ async function subirPokemon(pokemon) {
 async function subirMov(idPokemon,mov) {
     const data = {
         Id:idPokemon,
-        move:mov
+        moves:mov
 
     }
     //Envio un pedido POST con un JSON en el body
@@ -62,10 +62,11 @@ async function subirMov(idPokemon,mov) {
 }
 
 
-export async function descargarMovimientos() {
+/*export async function descargarMovimientos() {
     let id = 0
     let mov = ""
     let pedido = ""
+    let moves = []
     for (let i = 1;i<1026;i++) {
         pedido = 'https://pokeapi.co/api/v2/pokemon/'+i
             const response = await fetch(pedido,{
@@ -77,12 +78,19 @@ export async function descargarMovimientos() {
             const result = await response.json();
           id = i
         for (let x = 0;x<result.moves.length;x++) {
-            mov = result.moves[x].move.name
-            console.log(id,mov)
+            moves.push(result.moves[x].move.name)
 
-            subirMov(id,mov)
         }
+        subirMov(id,moves)
+        await sleep(10);
+        moves = []
     }
+}*/
+
+async function sleep(ms) {
+    return new Promise((res) => {
+        setTimeout(() => res(), ms);
+    })
 }
 
 /*export async function descargarPokemons() {
@@ -143,26 +151,58 @@ export async function descargarMovimientos() {
     
     hoal++
 }*/
+function ponerPokemonEnLaLista(pokemon,z) {
+    if (pokemonForms[z] == undefined) {
+        pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name))
+    }
+}
 
-export async function descargarPokemonsBaseDeDatos() {
-    //Llamo a un pedido Get del servidor
+export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Get del servidor
     const response = await fetch('http://localhost:3001/pokemons', {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
         },
     })
-
-    //Tengo que usar el await porque la respuesta del servidor es lenta
     const result = await response.json();
-    console.log(result);
-   
-    for (let i = 1; i < await result.length; i++) {
-        pokemonForms.push(new PokemonForm(result[i].ps,result[i].atk,result[i].def,result[i].spa,result[i].spd,result[i].spe,result[i].weight,result[i].type1,result[i].type2,result[i].name))
-    }
+    
+    
 
+    for (let i = 0; i < await result.length; i++) {
+        const data = {
+            Id: i+1
+        }
+    
+        const responseMovs = await fetch('http://localhost:3001/pokemonMovs', {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            // body: JSON.stringify(data),
+        })
+        const movs = await response.json();
+        ponerPokemonEnLaLista(result[i],i,movs)
+    }
+    console.log(pokemonForms)
+    return pokemonForms
 }
 
+
+export async function pureba(){
+    const data = {
+        Id: 595+1
+    }
+
+    const responseMovs = await fetch('http://localhost:3001/pokemonMovs', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+    result = await responseMovs.json();
+    console.log(responseMovs)
+}
 
 let turnosEnvenenamientoGrave = 0
 

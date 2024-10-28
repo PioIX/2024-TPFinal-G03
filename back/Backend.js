@@ -42,10 +42,10 @@ app.get('/pokemons', async function(req,res){
 	res.send(respuesta)
 })
 
-app.get('/moves', async function(req,res){
-	console.log(req.query)
+app.get('/pokemonMovs', async function(req,res){
+	console.log(req.body)
    
-	let	respuesta = await MySql.realizarQuery(`SELECT * FROM moves_pokemons;`);
+	let	respuesta = await MySql.realizarQuery(`SELECT * FROM moves_pokemons where pokemonId=${req.body.Id};`);
 	res.send(respuesta)
 })
 
@@ -71,11 +71,25 @@ app.post('/insertarPokemons', async function(req,res) {
 
 app.post('/insertarMoves', async function(req,res) {
 	let result = await MySql.realizarQuery(`select * from moves_pokemons where pokemonId=${req.body.Id};`) 
-	console.log(req.body.move)
-	//let result = await MySql.realizarQuery(`select * from moves_pokemons where pokemonId=${req.body.Id};`) 
-	await MySql.realizarQuery(`INSERT INTO moves_pokemons (pokemonId,move)
-		VALUES (${req.body.Id}, '${req.body.move}')`);
-		res.send("oki")
+	console.log(req.body.moves)
+
+	let queryString = 'INSERT INTO moves_pokemons (pokemonId, move) VALUES ';
+
+	for (const move of req.body.moves) {
+		console.log(move)
+		queryString += `(${req.body.Id}, '${move}'), `
+		// MySql.realizarQuery(`INSERT INTO moves_pokemons (pokemonId,move)
+		// VALUES (${req.body.Id}, '${move}')`);
+	}
+
+	console.log(queryString.slice(0, -2));
+
+	MySql.realizarQuery(queryString.slice(0, -2)).catch((error) => {
+		console.log(error);
+		return res.send("oki")
+	});
+
+	return res.send("oki")
 })
 
 app.delete('/borrarMoves', async function(req,res) {
