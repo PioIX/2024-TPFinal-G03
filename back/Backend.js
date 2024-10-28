@@ -42,10 +42,17 @@ app.get('/pokemons', async function(req,res){
 	res.send(respuesta)
 })
 
-app.get('/pokemonMovs', async function(req,res){
-	console.log(req.body)
+app.get('/pokemonsName', async function(req,res){
+	console.log(req.query)
    
-	let	respuesta = await MySql.realizarQuery(`SELECT * FROM moves_pokemons where pokemonId=${req.body.Id};`);
+	let	respuesta = await MySql.realizarQuery(`SELECT name FROM pokemons;`);
+	res.send(respuesta)
+})
+
+app.get('/pokemonMovs', async function(req,res){
+	console.log("ID movPokemons" ,req.query.Id)
+	
+	let	respuesta = await MySql.realizarQuery(`SELECT move FROM moves_pokemons where pokemonId=${req.query.Id};`);
 	res.send(respuesta)
 })
 

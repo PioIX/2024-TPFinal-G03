@@ -151,13 +151,19 @@ async function sleep(ms) {
     
     hoal++
 }*/
-function ponerPokemonEnLaLista(pokemon,z) {
+function ponerPokemonEnLaLista(pokemon,z,movs) {
+    let moves = []
     if (pokemonForms[z] == undefined) {
+        for (let i = 0;i<movs.length;i++) {
+            moves.push(movs[i].name)
+        }
         pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name))
     }
 }
 
 export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Get del servidor
+    let Id=0
+    let pedido = ""
     const response = await fetch('http://localhost:3001/pokemons', {
         method: "GET",
         headers: {
@@ -169,11 +175,10 @@ export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Ge
     
 
     for (let i = 0; i < await result.length; i++) {
-        const data = {
-            Id: i+1
-        }
+        Id = i+1
+        pedido = 'http://localhost:3001/pokemonMovs/Id='+Id
     
-        const responseMovs = await fetch('http://localhost:3001/pokemonMovs', {
+        const responseMovs = await fetch(pedido, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -190,7 +195,7 @@ export async function descargarPokemonsBaseDeDatos() {    //Llamo a un pedido Ge
 
 export async function pureba(){
     const data = {
-        Id: 595+1
+        Id: is+1
     }
 
     const responseMovs = await fetch('http://localhost:3001/pokemonMovs', {
