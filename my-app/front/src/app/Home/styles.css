@@ -126,3 +126,22 @@
     display: grid;
     padding-bottom: 7%;
 }
+
+.divPokemon{
+    background-color: grey;
+    padding-left: 30%;
+}
+
+.fondo3{
+    background-image: url('https://img.freepik.com/fotos-premium/ilustracion-paisaje-fondo-vectorial-anime_1190079-1125.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 100%;
+    background-color: papayawhip; 
+    display: flex;
+    justify-content: center;
+}
