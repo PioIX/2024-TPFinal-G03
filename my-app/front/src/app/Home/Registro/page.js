@@ -112,7 +112,7 @@ export default function PaginaRegistro(props){
                         <input onChange={registrarNombre} className={"botonInput"} placeholder={"Ingrese el nombre"}></input>
                         <p className='p'></p>
                         <input onChange={registrarContrasenia} className={"botonInput"} placeholder={"Ingrese la contraseña"}></input>
-                        <button className='botonRegistroLogin' onClick={registrarsePorBoton}>Registrarse</button>
+                        <button className='botonRegistroLogin' style={{paddingRight: "190px", paddingLeft:"159px"}} onClick={registrarsePorBoton}>Registrarse</button>
                     </div>
                     
             </div>

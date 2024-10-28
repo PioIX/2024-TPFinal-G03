@@ -12,9 +12,9 @@ export default function PaginaLoginRegistro(){
         <div className='fondo1'>
             <div>
                 <Image 
-                    style={{paddingLeft:"180px"}}
+                    style={{paddingLeft:"300px"}}
                     src="/imagenes/pokemonLogo.png"
-                    width={780}
+                    width={850}
                     height={205}
                     alt='hols'
                 /> 
