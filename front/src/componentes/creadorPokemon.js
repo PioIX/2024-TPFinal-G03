@@ -1,8 +1,10 @@
 "use client"
 
 import { moves } from "@/clases/moves"
+import { encontrarMov } from "@/funciones/funciones"
 
 export default function CreadorPokemon(props) {
+    let movs = encontrarMov(props.pokemon.posibleMovs)
     return (
         <div>
             <input onChange={props.funcionNickname} value={props.pokemonName}/>
@@ -11,8 +13,24 @@ export default function CreadorPokemon(props) {
                  <option value={i} key={i} >{pokemon.name}</option>
             ))}
             </select>
-            <select onChange={props.funcionMov1}>
-            {props.pokemon.posibleMovs.map((mov,i)=>(
+            {}
+            <select onChange={props.funcionMov1} id={0}>
+            {movs.map((mov,i)=>(
+                 <option value={mov} key={i} >{mov}</option>
+            ))}
+            </select>
+            <select onChange={props.funcionMov1} id={1}>
+            {movs.map((mov,i)=>(
+                 <option value={mov} key={i} >{mov}</option>
+            ))}
+            </select>
+            <select onChange={props.funcionMov1}id={2}>
+            {movs.map((mov,i)=>(
+                 <option value={mov} key={i} >{mov}</option>
+            ))}
+            </select>
+            <select onChange={props.funcionMov1}  id={3}>
+            {movs.map((mov,i)=>(
                  <option value={mov} key={i} >{mov}</option>
             ))}
             </select>

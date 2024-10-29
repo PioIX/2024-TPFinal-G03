@@ -40,10 +40,11 @@ export default function Home() {
 function registrarMov1(event){
   let movId = (event.target.id)
   let mov=(event.target.value)
+  console.log("movId: ",movId)
+  console.log("mov: ",mov)
   let nuevoArray = [].concat(movs1)
   nuevoArray[movId] = mov
-  setMovs1(nuevoArray)
-
+  setMovs1(nuevoArray)  
 }
 
 function seleccionarPokemon1(event){
