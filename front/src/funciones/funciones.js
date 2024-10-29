@@ -93,7 +93,7 @@ async function sleep(ms) {
     })
 }
 
-/*export async function descargarPokemons() {
+export async function descargarPokemons() {
     if (hoal == 0) {
         let check = false
         let id = 0
@@ -107,7 +107,6 @@ async function sleep(ms) {
         let type1 = ""
         let type2 = ""
         let name = ""
-        let movs = []
         let pedido = ""
         let spriteFront = ""
         let spriteBack = ""
@@ -125,12 +124,12 @@ async function sleep(ms) {
             atk = result.stats[1].base_stat
             def = result.stats[2].base_stat
             spa = result.stats[3].base_stat
-            spd = result.stats[1].base_stat
-            spe = result.stats[1].base_stat
+            spd = result.stats[4].base_stat
+            spe = result.stats[5].base_stat
             weight = result.weight
             spriteFront = result.sprites.front_default
             spriteBack = result.sprites.back_default
-            id = result.id
+            id = (x-1)
             
             if (result.types.length == 1){
                 type1 = result.types[0].type.name
@@ -150,7 +149,7 @@ async function sleep(ms) {
     }
     
     hoal++
-}*/
+}
 function ponerPokemonEnLaLista(pokemon,z,movs) {
     let moves = []
     if (pokemonForms[z] == undefined) {
@@ -208,6 +207,12 @@ export async function pureba(){
     })
     result = await responseMovs.json();
     console.log(responseMovs)
+}
+
+
+export function encontrarMov(pokemon){
+    let check = false
+    let finish = false
 }
 
 let turnosEnvenenamientoGrave = 0

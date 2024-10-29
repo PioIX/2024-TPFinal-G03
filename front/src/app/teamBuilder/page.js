@@ -17,9 +17,11 @@ export default function Home() {
   let [pokemon1,setPokemon1] = useState("")
   let [apodo1,setApodo1] = useState("")
   let [movs1,setMovs1] = useState(["","","",""])
+  let [evsPokemon1,setEvsPokemon1] = useState([0,0,0,0,0,0])
+  let [statPokemon1,setStatPokemon1] = useState([0,0,0,0,0,0])
   let listaFormasPokemon = []
 
-   useEffect(() => {
+  useEffect(() => {
     descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
       setPokemon1(pokemonForms[0]);
     })
@@ -36,14 +38,50 @@ export default function Home() {
 }
 
 function registrarMov1(event){
-  movs1[0]=(event.target.value)
+  let movId = (event.target.id)
+  let mov=(event.target.value)
+  let nuevoArray = [].concat(movs1)
+  nuevoArray[movId] = mov
+  setMovs1(nuevoArray)
+
 }
 
 function seleccionarPokemon1(event){
   setPokemon1(pokemonForms[event.target.value])
   setApodo1(pokemonForms[event.target.value].name)
-  console.log(pokemonForms[event.target.value])
+  for (let i = 0;i<statPokemon1.length;i++) {
+    if (i == 0) {
+      statPokemon1[i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
+    }
+    else {
+      statPokemon1[i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsPokemon1[i]/4)))
+    }
+  }
 }
+
+useEffect (() => {
+  console.log('hoal')
+  if (pokemon1 != "") {
+    for (let i = 0;i<statPokemon1.length;i++) {
+      if (i == 0) {
+        statPokemon1[i] = Math.round((100/100 * ((pokemon1.baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
+      }
+      else {
+        statPokemon1[i] = Math.round(5 + (100/100 * ((pokemon1.baseStats[i]*2)+31+evsPokemon1[i]/4)))
+      }
+    }
+  }
+},[evsPokemon1])
+
+function obtenerEvs(event){
+  let statId = (event.target.id)
+  let evs = parseInt(event.target.value)
+  let nuevoArray = [].concat(evsPokemon1)
+  nuevoArray[statId] = evs
+  setEvsPokemon1(nuevoArray)
+  console.log(nuevoArray)
+}
+
 
   return (
     <div >
@@ -51,10 +89,12 @@ function seleccionarPokemon1(event){
         <option>hoal</option>
         <option>skibidi</option>
       </select>
-      <button onClick={pureba}>Descargar Movs</button>
+      {/* <button onClick={descargarPokemons}>Descargar Pokemons</button> */}
       {pokemon1==""
       ?<></>
-      :<CreadorPokemon pokemonName={apodo1} lista={pokemonForms} pokemon={pokemon1} funcionNickname={registrarApodo} funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1}></CreadorPokemon>
+      :<CreadorPokemon pokemonName={apodo1} lista={pokemonForms} pokemon={pokemon1} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsPokemon1} funcionEvs = {obtenerEvs} statPokemon={statPokemon1}>
+      </CreadorPokemon>
       }
     </div>
   );
