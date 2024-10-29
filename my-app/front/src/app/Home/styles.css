@@ -121,14 +121,14 @@
     padding-left: 25%;
 }
 
-.display{
+.display2{
     width: 100%;
     display: grid;
 }
 
-.divPokemon{
-    background-color: grey;
-    padding-left: 30%;
+.display2{
+    width: 100%;
+    display: inline-flexbox;
 }
 
 .fondo3{
@@ -143,4 +143,25 @@
     background-color: papayawhip; 
     display: flex;
     justify-content: center;
+}
+
+.imagenPokemonTeambuilder{
+    width: 10%;
+    height: 10%;
+    margin-left: 5px;
+}
+
+.botonEquipoSeleccionado{
+    width:80%;
+    border: none;
+    background-color: grey;
+    padding-bottom: 0.1%;
+}
+
+.botonEquipoSeleccionado:hover{
+    background-color: white;
+}
+
+.botonEditar{
+    font-size: 50px;
 }
