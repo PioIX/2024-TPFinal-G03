@@ -3,11 +3,17 @@ import Pokemon from "./Pokemon";
 import { useRouter } from 'next/navigation'
 
 import Image from 'next/image'
+import { useState } from "react";
 
 export default function Home() {
+
+    let[check, setCheck] = useState(true)
+    function editarEquipo(){
+        setCheck('none')
+    }
     return ( 
         <div className='fondo3'>
-            <div className='display'>
+            <div className='display' style={{display:check}}>
                 <div className="imagenChiquita">
                     <div>  
                     <Image 
@@ -26,7 +32,9 @@ export default function Home() {
                     pokemon3={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
                     pokemon4={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
                     pokemon5={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
-                    pokemon6={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}>
+                    pokemon6={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    editarEquipo = {editarEquipo}
+                    >
                     </Pokemon>
                     <Pokemon nombreEquipo={"rgbyiu"} 
                     pokemon1={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
