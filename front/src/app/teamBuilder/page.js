@@ -15,11 +15,15 @@ import CreadorPokemon from "@/componentes/creadorPokemon"
 
 export default function Home() {
   let [equipo,setEquipo] = useState(["","","","","",""])
+  let [apodosEquipo, setApodosEquipos] = useState(["","","","","",""])
+  let [evsEquipo,setEvsEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
+  let [statEquipo,setStatEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
   let [pokemon1,setPokemon1] = useState("")
   let [apodo1,setApodo1] = useState("")
   let [movs1,setMovs1] = useState(["","","",""])
   let [evsPokemon1,setEvsPokemon1] = useState([0,0,0,0,0,0])
   let [statPokemon1,setStatPokemon1] = useState([0,0,0,0,0,0])
+  let [ultimoCambioEvs,setUltimoCambioEvs] = 0
   let listaFormasPokemon = []
 
   useEffect(() => {
@@ -52,49 +56,57 @@ function registrarMov1(event,id){
   setMovs1(nuevoArray)  
 }
 
-function seleccionarPokemon1(event){
-  let nuevoArray = [].concat(statPokemon1)
-  setPokemon1(pokemonForms[event.target.value])
-  setApodo1(pokemonForms[event.target.value].name)
+function seleccionarPokemon1(event,id){
+  let nuevoArrayEquipo = [].concat(equipo)
+  let nuevoArrayApodo = [].concat(apodosEquipo)
+  let nuevoArrayStats = [].concat(statEquipo)
+  nuevoArrayEquipo[id] = pokemonForms[event.target.value]
+  setEquipo(nuevoArrayEquipo)
+  nuevoArrayApodo[id] = pokemonForms[event.target.value].name
+  setApodosEquipos(nuevoArrayApodo)
+  //setPokemon1(pokemonForms[event.target.value])
+  //setApodo1(pokemonForms[event.target.value].name)
   for (let i = 0;i<statPokemon1.length;i++) {
     
     if (i == 0) {
-    nuevoArray[i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
-    setStatPokemon1(nuevoArray)
+      nuevoArrayStats[id][i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsEquipo[id][i]/4)) + 100 + 10)
       //statPokemon1[i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
     }
     else {
-      nuevoArray[i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsPokemon1[i]/4)))
-      setStatPokemon1(nuevoArray)
+      nuevoArrayStats[id][i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsEquipo[id][i]/4)))
       //statPokemon1[i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsPokemon1[i]/4)))
     }
   }
-  console.log(nuevoArray)
+  setStatEquipo(nuevoArrayStats)
+  console.log(nuevoArrayStats)
 }
 
 useEffect (() => {
-  console.log('hoal')
-  let nuevoArray = [].concat(statPokemon1)
-  if (pokemon1 != "") {
+  calcularStats(ultimoCambioEvs)
+},[ultimoCambioEvs])
+
+function calcularStats(id) {
+  let nuevoArray = [].concat(statEquipo)
+  if (equipo[id] != "") {
     for (let i = 0;i<statPokemon1.length;i++) {
       if (i == 0) {
-        nuevoArray[i] = Math.round((100/100 * ((pokemon1.baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
-      setStatPokemon1(nuevoArray)
+        nuevoArray[id][i] = Math.round((100/100 * ((equipo[id].baseStats[i]*2) + 31 + evsEquipo[id][i]/4)) + 100 + 10)
       }
       else {
-        nuevoArray[i] = Math.round(5 + (100/100 * ((pokemon1.baseStats[i]*2)+31+evsPokemon1[i]/4)))
-      setStatPokemon1(nuevoArray)
+        nuevoArray[id][i] = Math.round(5 + (100/100 * ((equipo[id].baseStats[i]*2)+31+evsEquipo[id][i]/4)))
       }
     }
+    setStatEquipo(nuevoArray)
   }
-},[evsPokemon1])
+}
 
-function obtenerEvs(event){
+function obtenerEvs(event,id){
+  setUltimoCambioEvs(id)
   let statId = (event.target.id)
   let evs = parseInt(event.target.value)
-  let nuevoArray = [].concat(evsPokemon1)
-  nuevoArray[statId] = evs
-  setEvsPokemon1(nuevoArray)
+  let nuevoArray = [].concat(evsEquipo)
+  nuevoArray[id][statId] = evs
+  setEvsEquipo(nuevoArray)
   console.log(nuevoArray)
 }
 
@@ -110,7 +122,7 @@ function obtenerEvs(event){
       ?<></>
       :
       <CreadorPokemon pokemonName={apodo1} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo} 
-      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsPokemon1} funcionEvs = {obtenerEvs} statPokemon={statPokemon1}>
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs = {obtenerEvs} statPokemon={statPokemon1}>
       </CreadorPokemon>
     
       }
