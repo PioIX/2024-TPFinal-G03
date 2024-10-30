@@ -7,34 +7,46 @@ import Image from 'next/image'
 export default function Home() {
     return ( 
         <div className='fondo3'>
-            <div className='display2'>
-                <Image 
-                    src="/imagenes/pokemonLogo.png"
-                    width={280}
-                    height={100} 
-                    alt='hols'
-                /> 
-                <h4 className='subtitulo2'>Chowdawn</h4>         
+            <div className='display'>
+                <div className="imagenChiquita">
+                    <div>  
+                    <Image 
+                        src="/imagenes/pokemonLogo.png"
+                        width={280}
+                        height={100} 
+                        alt='hols'
+                    /> 
+                        <h4 className='subtitulo2'>Chowdawn</h4>         
+                    </div>
+                </div>
                 <div>
-                    <Pokemon nombreEquipo={"rgbyiu"} pokemon1={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon2={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon3={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon4={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon5={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon6={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}></Pokemon>
-                    <Pokemon nombreEquipo={"rgbyiu"} pokemon1={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon2={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon3={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon4={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon5={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon6={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}></Pokemon>
-                    <Pokemon nombreEquipo={"rgbyiu"} pokemon1={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon2={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon3={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon4={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon5={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}
-                    pokemon6={"https://creativesharkco.com/cdn/shop/files/SpearowMiniSpritePixelArt.png?v=1719689997"}></Pokemon>
+                    <Pokemon nombreEquipo={"rgbyiu"} 
+                    pokemon1={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon2={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon3={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon4={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon5={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon6={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}>
+                    </Pokemon>
+                    <Pokemon nombreEquipo={"rgbyiu"} 
+                    pokemon1={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon2={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon3={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon4={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon5={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon6={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    ></Pokemon>
+                    <Pokemon nombreEquipo={"rgbyiu"} 
+                    pokemon1={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon2={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon3={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon4={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon5={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}
+                    pokemon6={"https://i.pinimg.com/originals/78/bb/89/78bb891dc2316b6129decc52e728e29b.gif"}></Pokemon>
                 </div>  
+                <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%"}}>
+                    <button className="botonCombate">¡combate!</button>
+                </div>
             </div>
         </div>
     )
