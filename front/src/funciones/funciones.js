@@ -214,7 +214,7 @@ export function encontrarMov(listaMoves){
     let nuevoArray = []
     for (let i = 0;i<moves.length;i++) {
         for (let x = 0;x<listaMoves.length;x++) {
-            if (listaMoves[x] == moves[i].name){
+            if (listaMoves[x] == moves[i].name && !(nuevoArray.includes(listaMoves[x]))){
                 nuevoArray.push(listaMoves[x])
                 // esto puede romper, en caso de hacerlo, probar con slice
             }

@@ -23,7 +23,7 @@ export default function Home() {
   let [movs1,setMovs1] = useState(["","","",""])
   let [evsPokemon1,setEvsPokemon1] = useState([0,0,0,0,0,0])
   let [statPokemon1,setStatPokemon1] = useState([0,0,0,0,0,0])
-  let [ultimoCambioEvs,setUltimoCambioEvs] = 0
+  let [ultimoCambioEvs,setUltimoCambioEvs] = useState(0)
   let listaFormasPokemon = []
 
   useEffect(() => {
@@ -42,8 +42,12 @@ export default function Home() {
     
   },[]) 
 
-  function registrarApodo(event){
-    setApodo1(event.target.value)
+  function registrarApodo(event,id){
+    let nuevoArrayApodo = [].concat(apodosEquipo)
+    nuevoArrayApodo[id] = event.target.value
+    setApodosEquipos(nuevoArrayApodo) 
+  
+    //setApodo1(event.target.value)
 }
 
 function registrarMov1(event,id){
@@ -69,6 +73,7 @@ function seleccionarPokemon1(event,id){
   for (let i = 0;i<statPokemon1.length;i++) {
     
     if (i == 0) {
+      console.log(id)
       nuevoArrayStats[id][i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsEquipo[id][i]/4)) + 100 + 10)
       //statPokemon1[i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
     }
@@ -80,10 +85,6 @@ function seleccionarPokemon1(event,id){
   setStatEquipo(nuevoArrayStats)
   console.log(nuevoArrayStats)
 }
-
-useEffect (() => {
-  calcularStats(ultimoCambioEvs)
-},[ultimoCambioEvs])
 
 function calcularStats(id) {
   let nuevoArray = [].concat(statEquipo)
@@ -98,16 +99,16 @@ function calcularStats(id) {
     }
     setStatEquipo(nuevoArray)
   }
+  console.log(statEquipo[0])
 }
 
 function obtenerEvs(event,id){
-  setUltimoCambioEvs(id)
   let statId = (event.target.id)
   let evs = parseInt(event.target.value)
   let nuevoArray = [].concat(evsEquipo)
   nuevoArray[id][statId] = evs
   setEvsEquipo(nuevoArray)
-  console.log(nuevoArray)
+  calcularStats(id)
 }
 
 
@@ -121,10 +122,26 @@ function obtenerEvs(event,id){
       {equipo[0]==""
       ?<></>
       :
-      <CreadorPokemon pokemonName={apodo1} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo} 
-      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs = {obtenerEvs} statPokemon={statPokemon1}>
+      <>
+      <CreadorPokemon pokemonName={apodosEquipo[0]} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[0]}>
       </CreadorPokemon>
-    
+      <CreadorPokemon pokemonName={apodosEquipo[1]} lista={pokemonForms} id={1} pokemon={equipo[1]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[1]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[1]}>
+      </CreadorPokemon>
+      <CreadorPokemon pokemonName={apodosEquipo[2]} lista={pokemonForms} id={2} pokemon={equipo[2]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[2]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[2]}>
+      </CreadorPokemon>
+      <CreadorPokemon pokemonName={apodosEquipo[3]} lista={pokemonForms} id={3} pokemon={equipo[3]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[3]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[3]}>
+      </CreadorPokemon>
+      <CreadorPokemon pokemonName={apodosEquipo[4]} lista={pokemonForms} id={4} pokemon={equipo[4]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[4]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[4]}>
+      </CreadorPokemon>
+      <CreadorPokemon pokemonName={apodosEquipo[5]} lista={pokemonForms} id={5} pokemon={equipo[5]} funcionNickname={registrarApodo} 
+      funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[5]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[5]}>
+      </CreadorPokemon>
+      </>
       }
     </div>
   );
