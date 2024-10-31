@@ -219,3 +219,13 @@
     border-radius: 80px;
     border: 0;
 }
+
+.nombrePokemon{
+    background-color: gray;
+    width: 20%;
+}
+
+.datosPokemon{
+    width: 80%;
+    background-color: gray;
+}

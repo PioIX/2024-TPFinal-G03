@@ -2,7 +2,7 @@
 import '@/app/Home/styles.css'
 
 
-export default function Pokemon(props){
+export default function Equipospokemon(props){
     
 
     return(
