@@ -223,6 +223,61 @@ export function encontrarMov(listaMoves){
     return nuevoArray
 }
 
+export function comprobarApodo(apodo, id) {
+    let check = true 
+    if (apodo == ""){
+        check = false
+    }
+    if (!check) {
+        console.log("El pokemon número ",id," de tu equipo necesita un apodo")
+    }
+    return check
+}
+
+export function comprobarEvs(evs, id) {
+    let check = true
+    let sumaTotal = 0
+    for (let i = 0;i<evs;i++){
+        sumaTotal += evs[i]
+    }
+    if (sumaTotal < 510) {
+        check = false
+    }
+    if (!check) {
+        console.log("El pokemon número ",id," de tu equipo tiene Evs que superan el máximo de 510 puntos")
+    }
+    return check
+}
+
+export function comprobarPokemones(pokemon) {
+    let check = true 
+    if (pokemon == ""){
+        check = false
+    }
+    if (!check) {
+        console.log("Te falta un pokemon")
+    }
+    return check
+}
+
+export function comprobarMovsRepetidos(movs,id){
+    let chekc = true
+    let contador = 1
+    for (let i =0;i<movs.length;i++) {
+        for (let x = contador;x<movs.length;x++) { 
+            if (movs[i] ==  movs[x]) {
+                chekc=false
+            }
+        }
+    contador++
+    }
+    if (!chekc) {
+        console.log("El pokemon numero ",id," de tu equipo tiene un movimiento repetido")
+    }
+    return chekc
+}
+
+
 let turnosEnvenenamientoGrave = 0
 
 

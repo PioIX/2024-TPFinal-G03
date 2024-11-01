@@ -6,7 +6,7 @@ import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
 import {moves, Move} from "@/clases/moves"
 import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
-import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos, descargarMovimientos, pureba } from "@/funciones/funciones";
+import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos, descargarMovimientos, pureba, comprobarMovsRepetidos, comprobarApodo, comprobarPokemones, comprobarEvs } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import CreadorPokemon from "@/componentes/creadorPokemon"
 
@@ -18,12 +18,8 @@ export default function Home() {
   let [apodosEquipo, setApodosEquipos] = useState(["","","","","",""])
   let [evsEquipo,setEvsEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
   let [statEquipo,setStatEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
-  let [pokemon1,setPokemon1] = useState("")
-  let [apodo1,setApodo1] = useState("")
+  let [movsEquipo,setMovsEquipo] = useState([["","","",""],["","","",""],["","","",""],["","","",""],["","","",""],["","","",""]])
   let [movs1,setMovs1] = useState(["","","",""])
-  let [evsPokemon1,setEvsPokemon1] = useState([0,0,0,0,0,0])
-  let [statPokemon1,setStatPokemon1] = useState([0,0,0,0,0,0])
-  let [ultimoCambioEvs,setUltimoCambioEvs] = useState(0)
   let listaFormasPokemon = []
 
   useEffect(() => {
@@ -51,13 +47,17 @@ export default function Home() {
 }
 
 function registrarMov1(event,id){
-  let movId = (event.target.id)
+  let nuevoArray = [].concat(movsEquipo)
+  nuevoArray[id][event.target.id] = (event.target.value)
+  setMovsEquipo(nuevoArray)
+
+  /*let movId = (event.target.id)
   let mov=(event.target.value)
   console.log("movId: ",movId)
   console.log("mov: ",mov)
   let nuevoArray = [].concat(movs1)
   nuevoArray[movId] = mov
-  setMovs1(nuevoArray)  
+  setMovs1(nuevoArray)  */
 }
 
 function seleccionarPokemon1(event,id){
@@ -70,7 +70,7 @@ function seleccionarPokemon1(event,id){
   setApodosEquipos(nuevoArrayApodo)
   //setPokemon1(pokemonForms[event.target.value])
   //setApodo1(pokemonForms[event.target.value].name)
-  for (let i = 0;i<statPokemon1.length;i++) {
+  for (let i = 0;i<statEquipo[id].length;i++) {
     
     if (i == 0) {
       console.log(id)
@@ -89,7 +89,7 @@ function seleccionarPokemon1(event,id){
 function calcularStats(id) {
   let nuevoArray = [].concat(statEquipo)
   if (equipo[id] != "") {
-    for (let i = 0;i<statPokemon1.length;i++) {
+    for (let i = 0;i<statEquipo[id].length;i++) {
       if (i == 0) {
         nuevoArray[id][i] = Math.round((100/100 * ((equipo[id].baseStats[i]*2) + 31 + evsEquipo[id][i]/4)) + 100 + 10)
       }
@@ -109,6 +109,30 @@ function obtenerEvs(event,id){
   nuevoArray[id][statId] = evs
   setEvsEquipo(nuevoArray)
   calcularStats(id)
+}
+
+function validar() {
+  let check = true
+  let mientras = true
+  let x = 0
+  while (mientras == true && check == true) {
+    for (let i = 0;i<equipo.length;i++) {
+      check = comprobarApodo(apodosEquipo[i],i)
+      check = comprobarMovsRepetidos(movsEquipo[i],i)
+      check = comprobarPokemones(equipo[i])
+      check = comprobarEvs(evsEquipo[i],i)
+    }
+    x++
+    if (x<equipo.length){
+      mientras = false
+    }
+  }
+  if (check==true){
+
+  }
+  else{
+    console.log("Toda la noche está contando oveja")
+  }
 }
 
 
@@ -141,6 +165,7 @@ function obtenerEvs(event,id){
       <CreadorPokemon pokemonName={apodosEquipo[5]} lista={pokemonForms} id={5} pokemon={equipo[5]} funcionNickname={registrarApodo} 
       funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[5]} funcionEvs = {obtenerEvs} statPokemon={statEquipo[5]}>
       </CreadorPokemon>
+      <button onClick={validar}>validar</button>
       </>
       }
     </div>
