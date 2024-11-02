@@ -81,17 +81,18 @@ export default function Teambuilder() {
                 </div>
                 <div>
                     <div>   
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <button className="botonVolverAtras" onClick={editarEquipo}> ←volver atras</button>
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
                         pokemon="isaac"></Pokemon>
                     </div>
                 </div>
