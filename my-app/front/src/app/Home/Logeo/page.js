@@ -102,18 +102,22 @@ export default function PaginaRegistro(props){
         return(
             <div className='fondo2'>
                 <div className='display'>
+                <div className="imagenChiquita">
+                    <div>  
                     <Image 
                         src="/imagenes/pokemonLogo.png"
                         width={280}
-                        height={100}
+                        height={100} 
                         alt='hols'
                     /> 
-                        <h4 className='subtitulo2'>Chowdawn</h4>
+                        <h4 className='subtitulo2'>Chowdawn</h4>         
+                    </div>
+                </div>
                         <div className='divBotones'>
                             <input onChange={registrarNombre} className={"botonInput"} placeholder={"Ingrese el nombre"}></input>
                             <p className='p'></p>
                             <input onChange={registrarContrasenia} className={"botonInput"} placeholder={"Ingrese la contraseña"}></input>
-                            <button className='botonRegistroLogin' onClick={iniciarSesion}>Iniciar sesion</button>
+                            <button className='botonRegistroLogin2' onClick={iniciarSesion}>Iniciar sesion</button>
                         </div>
                         
                 </div>
