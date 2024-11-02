@@ -81,13 +81,18 @@ export default function Teambuilder() {
                 </div>
                 <div>
                     <div>   
-                        <Pokemon></Pokemon>
-                        <Pokemon></Pokemon>
-                        <Pokemon></Pokemon>
-                        <Pokemon></Pokemon>
-                        <Pokemon></Pokemon>
-                        <Pokemon></Pokemon>
-
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
+                        <Pokemon nombrePokemon="ana lisa melpene" imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        pokemon="isaac"></Pokemon>
                     </div>
                 </div>
             </div>
