@@ -1,15 +1,13 @@
 //seccion recibir datos
-var express = require ("express"); //Tipo de servidor: Express
-const cors = require('cors');
-var bodyParser = require("body-parser"); //Convierte los JSON
-const MySQL = require("./modulos/mysql.js");//Declaro SQL
+const express = require('express');						// Para el manejo del web server
+const bodyParser = require('body-parser'); 				// Para el manejo de los strings JSON
+const MySQL = require('./modulos/mysql');				// Añado el archivo mysql.js presente en la carpeta módulos
+const session = require('express-session');				// Para el manejo de las variables de sesión
+const cors = require('cors')
+const app = express();		
 
 
 
-
-var MySql = require('./modulos/mysql.js');
-
-const app = express();	
 app.use(cors({
     origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:3001','http://localhost:4000']
 }));
@@ -19,6 +17,70 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());
 
+const LISTEN_PORT = 3001;								// Puerto por el que estoy ejecutando la página Web
+const server = app.listen(LISTEN_PORT, () => {
+	console.log(`Server running in http://localhost:${LISTEN_PORT}`);
+	console.log('Defined routes:');
+	console.log(`[GET] http://localhost:${LISTEN_PORT}`);
+});;
+
+const io = require('socket.io')(server, {
+	cors: {
+		// IMPORTANTE: REVISAR PUERTO DEL FRONTEND
+		origin: ["http://localhost:3000/","http://localhost:3002/"],            	// Permitir el origen localhost:3000
+		methods: ["GET", "POST", "PUT", "DELETE"],  	// Métodos permitidos
+		credentials: true                           	// Habilitar el envío de cookies
+	}
+});
+
+const sessionMiddleware = session({
+	//Elegir tu propia key secreta
+	secret: "supersarasa",
+	resave: false,
+	saveUninitialized: false
+});
+
+app.use(sessionMiddleware);
+
+io.use((socket, next) => {
+	sessionMiddleware(socket.request, {}, next);
+});
+
+// ---------------------------------------------------------SECCIÓN SOCKET -------------------------------------------
+io.on("connection", (socket) => {
+	const req = socket.request;
+
+	socket.on('joinRoom', data => {
+		console.log("🚀 ~ io.on ~ req.session.room:", req.session.room)
+		console.log(data)
+		if (req.session.room != undefined && req.session.room.length > 0)
+			socket.leave(req.session.room);
+		req.session.room = data.room;
+		socket.join(req.session.room);
+
+		io.to(req.session.room).emit('salaCombate', {room: req.session.room });
+	});
+
+	socket.on('pingAll', data => {
+		console.log("PING ALL: ", data);
+		io.emit('pingAll', { event: "Ping to all", message: data });
+	});
+
+	socket.on('sendMessage', data => {
+		console.log(data)
+		io.to(req.session.room).emit('newMessage', { room: req.session.room, message: data.pokemon1});
+	});
+
+	socket.on('newMessage', data =>{
+		
+	})
+
+	socket.on('disconnect', () => {
+		console.log("Disconnect");
+	})
+});
+
+// --------------------------------------------------------- FIN SECCIÓN SOCKET -------------------------------------------
 
 //seccion GET
 app.get('/', function(req, res){
@@ -103,79 +165,3 @@ app.delete('/borrarMoves', async function(req,res) {
 	await MySql.realizarQuery(`DELETE FROM moves_pokemons`)
 	res.send("oki");
 })
-
-/*app.get('/usuarios', async function(req,res){
-	console.log(req.query)
-   
-	let	respuesta = await MySql.realizarQuery(`SELECT * FROM Usuarios;`);
-	res.send(respuesta)
-})
-
-app.get('/futbolistas', async function(req,res){
-    console.log(req.query)
-   
-	let	respuesta = await MySql.realizarQuery(`SELECT * FROM Futbolistas;`);
-	res.send(respuesta)
-
-})
-
-//seccion POST
-
-app.post('/insertarUsuarios', async function(req,res) {
-	console.log(req.body)
-	let result = await MySql.realizarQuery(`select * from Usuarios where ID_usuario=${req.body.ID_usuario};`) 
-	if (result.length == 0){
-		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia, puntos)
-		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}',${req.body.puntos})`);
-		res.send("oki")
-
-	}
-	else{
-		res.send("ya existre")
-	}
-})
-
-app.post('/insertarFutbolistas', async function(req,res) {
-	console.log("[POST] /insertarFutbolistas BODY:", req.body)
-	let result = await MySql.realizarQuery(`select * from Futbolistas where ID_futbolista=${req.body.ID_futbolista};`) 
-	if (result.length == 0){
-		await MySql.realizarQuery(`INSERT INTO Futbolistas (ID_futbolista, nombre, apellido, ligaActual, posicion, seleccion, equipoActual, numeroEquipacion)
-		VALUES (${req.body.ID_futbolista}, '${req.body.nombre}', '${req.body.apellido}','${req.body.ligaActual}','${req.body.posicion}','${req.body.seleccion}','${req.body.equipoActual}',${req.body.numeroEquipacion})`);
-		res.send("oki")
-
-	}
-	else{
-		res.send("ya existre")
-	}
-})
-
-//seccion PUT
-
-app.put('/modificarUsuarios', async function(req,res) {
-	console.log(req.body)
-	await MySql.realizarQuery(`UPDATE Usuarios SET ID_usuario=${req.body.ID_usuario}, nombre='${req.body.nombre}', contrasenia='${req.body.contrasenia}', puntos=${req.body.puntos}
-	where ID_usuario = ${req.body.ID_usuario}`);
-	res.send("oki")
-})
-
-app.put('/modificarFutbolistas', async function(req,res) {
-	console.log(req.body)
-	await MySql.realizarQuery(`UPDATE Futbolistas SET ID_futbolista=${req.body.ID_futbolista}, nombre='${req.body.nombre}', apellido='${req.body.apellido}', ligaActual='${req.body.ligaActual}', posicion='${req.body.posicion}', seleccion='${req.body.seleccion}', equipoActual='${req.body.equipoActual}', numeroEquipacion=${req.body.numeroEquipacion}
-	where ID_futbolista = ${req.body.ID_futbolista}`);
-	res.send("oki")
-})
-
-
-// seccion delete
-
-app.delete('/borrarJugador', async function(req,res) {
-	console.log(req.body)
-	await MySql.realizarQuery(`DELETE FROM Futbolistas where ID_futbolista=${req.body.ID_futbolista}`)
-	res.send("oki");
-})
-
-app.delete('/borrarUsuario', async function(req,res) {
-	console.log(req.body)
-	await MySql.realizarQuery(`DELETE FROM Usuarios where ID_usuario=${req.body.ID_usuario}`)
-	res.send("oki");
-})*/

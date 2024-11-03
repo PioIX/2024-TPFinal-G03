@@ -9,18 +9,20 @@ import {Trainer} from "@/clases/Trainer"
 import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos, descargarMovimientos, pureba, comprobarMovsRepetidos, comprobarApodo, comprobarPokemones, comprobarEvs } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import CreadorPokemon from "@/componentes/creadorPokemon"
+import { useRouter } from 'next/navigation'
+export let equipoValidado = []
+
 
 
 //console.log(damageCalculate(pokemons[1],pokemons[0],moves[0]))
 
 export default function Home() {
-  let [equipo,setEquipo] = useState(["","","","","",""])
-  let [apodosEquipo, setApodosEquipos] = useState(["","","","","",""])
-  let [evsEquipo,setEvsEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
+  let [equipo,setEquipo] = useState(["",pokemonForms[1],pokemonForms[3],pokemonForms[4],pokemonForms[5],pokemonForms[6]])
+  let [apodosEquipo, setApodosEquipos] = useState(["raul","uwu","skibidi","Raul2","Raulito3","Simon"])
+  let [evsEquipo,setEvsEquipo] = useState([[252,0,252,0,0,0],[252,252,0,0,0,0],[252,0,252,0,0,0],[252,0,0,252,0,0],[0,252,0,0,0,252],[0,252,0,0,0,252]])
   let [statEquipo,setStatEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
-  let [movsEquipo,setMovsEquipo] = useState([["","","",""],["","","",""],["","","",""],["","","",""],["","","",""],["","","",""]])
-  let [movs1,setMovs1] = useState(["","","",""])
-  let listaFormasPokemon = []
+  let [movsEquipo,setMovsEquipo] = useState([[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4]])
+  const router = useRouter()
 
   useEffect(() => {
     descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
@@ -128,7 +130,13 @@ function validar() {
     }
   }
   if (check==true){
-
+    console.log("Equipo validado")
+    console.log(movsEquipo[0])
+    for (let i = 0;i<equipo.length;i++) {
+      equipoValidado.push(new Pokemon(equipo[i],movsEquipo[i],evsEquipo[i],apodosEquipo[i]))
+    }
+    console.log(equipoValidado)
+    router.push("/")
   }
   else{
     console.log("Toda la noche está contando oveja")

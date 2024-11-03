@@ -9,29 +9,65 @@ import {Team} from "@/clases/Team"
 import {Trainer} from "@/clases/Trainer"
 import { damageCalculate, tirarMoneda, turno,descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
+import { equipoValidado } from "./teamBuilder/page";
+import { useSocket } from "@/hooks/useSocket"
 
 
 //console.log(damageCalculate(pokemons[1],pokemons[0],moves[0]))
 
 export default function Home() {
   let [pokemonesCombatientes,setPokemonesCombatientes] = useState([pokemons[0],pokemons[1]])
-  let [pokemonPropio, setPokemonPropio] = useState(pokemons[0])
-  let [pokemonAjeno, setPokemonAjeno] = useState(pokemons[1])
+  let [pokemonPropio, setPokemonPropio] = useState("")
+  let [pokemonAjeno, setPokemonAjeno] = useState("")
   let [turnoPropio, setTurnoPropio] = useState(0)
   let [turnoRival, setTurnoRival] = useState(0)
-  let [equipoPropio, setEquipoPropio] = useState([pokemons[0],pokemons[3]])
-  let [equipoAjeno, setEquipoAjeno] = useState([pokemons[1],pokemons[2]])
+  let [equipoPropio, setEquipoPropio] = useState([])
+  let [equipoAjeno, setEquipoAjeno] = useState([] )
   let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
   let [pokemonACambiarAjeno,setPokemonACambiaraAjeno] = useState()
   let [ganador, setGanador] = useState("")
   let [movPropio, setMovPropio] = useState("")
   let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
+  const [recibidorMensaje, setRecibidorMensaje] = useState("")
+  const [empezarCombate, setEmpezarCombate] = useState(false)
 
- /* useEffect(()=>{
-    descargarPokemons()
+
+  useEffect(()=> {
+    if(!socket) return;
+
+    socket.on("newMessage",(data)=>{
+        console.log("RECIBI MENSAJE: ",data);
+        let newMessage = data.pokemon1;
+        console.log(newMessage)
+        setRecibidorMensaje(newMessage)
+        
+    })
+
+},[socket, isConnected]);
+
+
+ useEffect(()=>{
+    setEquipoPropio(equipoValidado)
+    console.log("SOY EL CONSOLE LOG, MIRENME",equipoValidado)
   },[]
-  )*/
+  )
+
+  function seleccionarPokemonInicial(event){
+    setPokemonPropio(equipoPropio[event.target.value])
+  }
+
+  function unirseAlaSala() {
+    socket.emit('joinRoom',"sala1")
+  }
+
+  function crearMensaje(){
+    let newMessage = {pokemon1:equipoPropio[0].apodo, chat:"sala1"};
+    setUltimoMensaje(newMessage)
+    console.log(newMessage)
+    ListDeMensajes.push(newMessage)
+    //enviarMensaje()
+}
 
   function seleccionarAtaquePropio(event) {
     if (event.target.value=="change") {
@@ -46,7 +82,7 @@ export default function Home() {
     }
   }
 
-  function seleccionarAtaqueAjeno(event) {
+/*  function seleccionarAtaqueAjeno(event) {
     if (event.target.value=="change") {
       setTurnoRival("change")
       //turnoAlterAjeno = "change"
@@ -57,8 +93,8 @@ export default function Home() {
       //turnoAlterAjeno = moves[event.target.value]
     }
 
-  }
-  
+  }*/
+
 function setPokemonACambiarPropioF(event){
   setPokemonACambiarPropio(pokemons[event.target.value])
   console.log(pokemons[event.target.value])
@@ -66,12 +102,12 @@ function setPokemonACambiarPropioF(event){
 }
 
 
-function setPokemonAcambiarAjenoF(event){
+/*function setPokemonAcambiarAjenoF(event){
   setPokemonACambiaraAjeno(pokemons[event.target.value])
   console.log(pokemons[event.target.value])
   setTurnoRival("change")
 
-}
+}*/
 
 function remplazarPokemonPropio(event){
   pokemonPropio.combatiendo = false
@@ -80,7 +116,7 @@ function remplazarPokemonPropio(event){
 }
 
 function actualizarPokemonPropio(){
-
+if (pokemonPropio != "") {
   pokemonPropio.combatiendo = true
   for(let i = 0;i < equipoPropio.length;i++) {
     if (equipoPropio[i] != pokemonPropio) {
@@ -90,32 +126,37 @@ function actualizarPokemonPropio(){
       /*preguntar a franco porque no se acutaliza el quipo*/ 
   setCoco(coco + 1)
 }
+  
+}
 
 useEffect(()=>{
   actualizarPokemonPropio()
   
 }, [pokemonPropio])
 
-function remplazarPokemonAjeno(event){
+/*function remplazarPokemonAjeno(event){
   pokemonAjeno.combatiendo = false
   setPokemonAjeno(pokemons[event.target.value])
-}
+}*/
 
-function actualizarPokemonAjeno(){
-  pokemonAjeno.combatiendo = true
-  for(let i = 0;i < equipoAjeno.length;i++) {
-    if (equipoAjeno[i] != pokemonAjeno) {
-      equipoAjeno[i].combatiendo = false
+
+/*function actualizarPokemonAjeno(){
+  if (pokemonAjeno != "") {
+    pokemonAjeno.combatiendo = true
+    for(let i = 0;i < equipoAjeno.length;i++) {
+      if (equipoAjeno[i] != pokemonAjeno) {
+        equipoAjeno[i].combatiendo = false
+      }
     }
+    setCoco(coco + 1)
   }
-      /*preguntar a franco porque no se acutaliza el quipo*/ 
-  setCoco(coco + 1)
-}
 
-useEffect(()=>{
+}*/
+
+/*useEffect(()=>{
   actualizarPokemonAjeno()
   
-}, [pokemonAjeno])
+}, [pokemonAjeno])*/
 
 
 function batallaTerminada(){
@@ -153,9 +194,21 @@ useEffect(() =>  {
     }
   }
   
-
+  console.log("AA",equipoPropio)
   return (
     <div >
+      {empezarCombate == "" 
+      ? <><h1>Seleccionar primer pokemon</h1>`
+      {equipoPropio.map((pokemon,i)=>(
+        <button key={i} onClick={seleccionarPokemonInicial} value={i}>{pokemon.apodo}</button>
+      ))}
+      <button onClick={unirseAlaSala}>unirseAlaSala</button>
+      <button onClick={crearMensaje()}>Enviar mensaje</button>
+      <h2>{recibidorMensaje}</h2>
+
+
+      </>
+      : <>
       {ganador == "" 
       ? <>
 
@@ -211,6 +264,8 @@ useEffect(() =>  {
       }
       </>
       }
+      
+      </>}
       
     </div>
   );

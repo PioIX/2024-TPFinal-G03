@@ -223,6 +223,23 @@ export function encontrarMov(listaMoves){
     return nuevoArray
 }
 
+export function encontrarMovByNombre(nombre){
+    let check = false
+    let retorno = 0.1
+    let i = 0
+    while (check == false) {
+        if (nombre == moves[i].name) {
+            retorno = parseInt(i)
+            check = true
+        }
+        i++
+        if (i>moves.length) {
+            check = true
+        }
+    }
+    return retorno
+}
+
 export function comprobarApodo(apodo, id) {
     let check = true 
     if (apodo == ""){
@@ -240,7 +257,7 @@ export function comprobarEvs(evs, id) {
     for (let i = 0;i<evs;i++){
         sumaTotal += evs[i]
     }
-    if (sumaTotal < 510) {
+    if (sumaTotal > 510) {
         check = false
     }
     if (!check) {

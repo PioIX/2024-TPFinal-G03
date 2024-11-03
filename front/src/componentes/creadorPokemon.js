@@ -1,7 +1,8 @@
 "use client"
 
 import { moves } from "@/clases/moves"
-import { encontrarMov } from "@/funciones/funciones"
+import { encontrarMov,encontrarMovByNombre } from "@/funciones/funciones"
+import { Fragment } from "react";
 
 export default function CreadorPokemon(props) {
      function handlerMov(event) {
@@ -23,37 +24,37 @@ export default function CreadorPokemon(props) {
             <input onChange={handlerApodo} value={props.pokemonName} id={0}/>
             <select onChange={handlerPokemon} id={0}>
             {props.lista.map((pokemon,i)=>(
-                 <option value={i} key={i} >{pokemon.name}</option>
+                 <option value={i} key={pokemon.name} >{pokemon.name}</option>
             ))}
             </select>
             {}
             <select onChange={handlerMov} id={0}>
             {movs.map((mov,i)=>(
-                 <option value={mov} key={i} >{mov}</option>
+                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
             ))}
             </select>
             <select onChange={handlerMov} id={1}>
             {movs.map((mov,i)=>(
-                 <option value={mov} key={i} >{mov}</option>
+                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
             ))}
             </select>
             <select onChange={handlerMov}id={2}>
             {movs.map((mov,i)=>(
-                 <option value={mov} key={i} >{mov}</option>
+                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
             ))}
             </select>
             <select onChange={handlerMov}  id={3}>
             {movs.map((mov,i)=>(
-                 <option value={mov} key={i} >{mov}</option>
+                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
             ))}
             </select>
             <br></br>
             {props.pokemon.baseStats.map((stat,i)=>(
-                <>
-                 <input onChange={handlerEvs} key={i} type="range" id={i} min="0" max="252" defaultValue={0}/>
+                <Fragment key={i}>
+                 <input onChange={handlerEvs}  type="range" id={i} min="0" max="252" defaultValue={0}/>
                  <label>{props.evsPokemon[i]}</label>
                  <h3>{props.statPokemon[i]}</h3>
-                </>
+                </Fragment>
             ))}
         </div>
     )}
