@@ -224,14 +224,17 @@
     background-color: gray;
     width: 40%;
     background-color: #cbd6e1;
-    border-top-right-radius: 10% 30%;
-    border-top-left-radius: 10% 30%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px
 }
 
 .datosPokemon{
     width: 100%;
     background-color: #dae5f0;
     display: flex;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    border-bottom-left-radius: 22px;
 }
 
 .nombrePokemon2{
@@ -278,4 +281,8 @@
     padding-left: 1%;
     padding-bottom: 1%;
     display: grid;
+}
+
+.valores{
+    font-size: 150%;
 }

@@ -38,7 +38,7 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
@@ -48,7 +48,7 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
@@ -57,7 +57,7 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
