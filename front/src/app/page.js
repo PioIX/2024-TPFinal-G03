@@ -32,6 +32,8 @@ export default function Home() {
   const [recibidorMensaje, setRecibidorMensaje] = useState("")
   const [empezarCombate, setEmpezarCombate] = useState(false)
   const { socket, isConnected } = useSocket();
+  const [ultimoMensaje,setUltimoMensaje] = useState("")
+  const [salaConectada,setSalaConectada] = useState("")
   
 
 
@@ -40,7 +42,7 @@ export default function Home() {
 
     socket.on("newMessage",(data)=>{
         console.log("RECIBI MENSAJE: ",data);
-        let newMessage = data.pokemon1;
+        let newMessage = data.message;
         console.log(newMessage)
         setRecibidorMensaje(newMessage)
         
@@ -55,20 +57,28 @@ export default function Home() {
   },[]
   )
 
+  function enviarMensaje(){
+    if(isConnected) {
+      console.log(ultimoMensaje)
+      socket.emit('sendMessage',{pokemon1:equipoPropio[0].apodo, chat:"sala1"});
+  }
+  }
+
   function seleccionarPokemonInicial(event){
     setPokemonPropio(equipoPropio[event.target.value])
   }
 
   function unirseAlaSala() {
     socket.emit('joinRoom',"sala1")
+    setSalaConectada("sala1")
   }
 
   function crearMensaje(){
     let newMessage = {pokemon1:equipoPropio[0].apodo, chat:"sala1"};
-    setUltimoMensaje(newMessage)
+    setRecibidorMensaje(newMessage.pokemon1)
     console.log(newMessage)
-    ListDeMensajes.push(newMessage)
-    //enviarMensaje()
+    //ListDeMensajes.push(newMessage)
+    enviarMensaje()
 }
 
   function seleccionarAtaquePropio(event) {
@@ -201,10 +211,20 @@ useEffect(() =>  {
     <div >
       {empezarCombate == "" 
       ? <><h1>Seleccionar primer pokemon</h1>`
-      {equipoPropio.map((pokemon,i)=>(
+      {pokemonPropio ==""  
+      ? <>{equipoPropio.map((pokemon,i)=>(
         <button key={i} onClick={seleccionarPokemonInicial} value={i}>{pokemon.apodo}</button>
-      ))}
-      <button onClick={unirseAlaSala}>unirseAlaSala</button>
+      ))}</>
+      :<>
+        <h2>{pokemonPropio.apodo}</h2>
+        {pokemonPropio.moves.map((move,i)=>(
+          <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i]==0}>{moves[move].name}</button>))} 
+      </>
+      }  
+      {salaConectada == ""
+      ? <button onClick={unirseAlaSala}>unirseAlaSala</button>
+      : <></>
+      }
       <button onClick={crearMensaje}>Enviar mensaje</button>
       <h2>{recibidorMensaje}</h2>
 
