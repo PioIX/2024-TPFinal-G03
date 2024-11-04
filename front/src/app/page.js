@@ -31,6 +31,8 @@ export default function Home() {
   let [coco, setCoco] = useState(0)
   const [recibidorMensaje, setRecibidorMensaje] = useState("")
   const [empezarCombate, setEmpezarCombate] = useState(false)
+  const { socket, isConnected } = useSocket();
+  
 
 
   useEffect(()=> {
@@ -203,7 +205,7 @@ useEffect(() =>  {
         <button key={i} onClick={seleccionarPokemonInicial} value={i}>{pokemon.apodo}</button>
       ))}
       <button onClick={unirseAlaSala}>unirseAlaSala</button>
-      <button onClick={crearMensaje()}>Enviar mensaje</button>
+      <button onClick={crearMensaje}>Enviar mensaje</button>
       <h2>{recibidorMensaje}</h2>
 
 

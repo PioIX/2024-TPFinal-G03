@@ -1,7 +1,7 @@
 //seccion recibir datos
 const express = require('express');						// Para el manejo del web server
 const bodyParser = require('body-parser'); 				// Para el manejo de los strings JSON
-const MySQL = require('./modulos/mysql');				// Añado el archivo mysql.js presente en la carpeta módulos
+const MySql = require('./modulos/mysql');				// Añado el archivo mysql.js presente en la carpeta módulos
 const session = require('express-session');				// Para el manejo de las variables de sesión
 const cors = require('cors')
 const app = express();		
@@ -9,9 +9,10 @@ const app = express();
 
 
 app.use(cors({
-    origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:3001','http://localhost:4000']
+    origin: ['http://127.0.0.1:5500', 'http://localhost:3000', 'http://localhost:3001', 'http://localhost:3004','http://localhost:4000']
 }));
 var port = process.env.PORT || 3001;
+var port_socket = process.env.PORT || 3004;	
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
@@ -27,7 +28,7 @@ const server = app.listen(LISTEN_PORT, () => {
 const io = require('socket.io')(server, {
 	cors: {
 		// IMPORTANTE: REVISAR PUERTO DEL FRONTEND
-		origin: ["http://localhost:3000/","http://localhost:3002/"],            	// Permitir el origen localhost:3000
+		origin: ["http://localhost:3000/","http://localhost:3004/"],            	// Permitir el origen localhost:3000
 		methods: ["GET", "POST", "PUT", "DELETE"],  	// Métodos permitidos
 		credentials: true                           	// Habilitar el envío de cookies
 	}
@@ -90,7 +91,7 @@ app.get('/', function(req, res){
 	});
 });
 
-app.listen(port, function(){
+app.listen(port_socket, function(){
 	console.log(`Server running in http://localhost:${port}`);
 	console.log('Defined routes:');
 	console.log(`	[GET] http://localhost:${port}/`);
