@@ -11,6 +11,7 @@ import { useState, useEffect } from "react"
 import CreadorPokemon from "@/componentes/creadorPokemon"
 import { useRouter } from 'next/navigation'
 export let equipoValidado = []
+export let idUser = 0
 
 
 
@@ -22,6 +23,7 @@ export default function Home() {
   let [evsEquipo,setEvsEquipo] = useState([[252,0,252,0,0,0],[252,252,0,0,0,0],[252,0,252,0,0,0],[252,0,0,252,0,0],[0,252,0,0,0,252],[0,252,0,0,0,252]])
   let [statEquipo,setStatEquipo] = useState([[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]])
   let [movsEquipo,setMovsEquipo] = useState([[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4],[0,1,2,4]])
+  const [id, setId] = useState(0)
   const router = useRouter()
 
   useEffect(() => {
@@ -32,13 +34,12 @@ export default function Home() {
         setEquipo(nuevoArray)
       }
     })
-    
-    // setTimeout(() => {
-    //   setPokemon1(listaFormasPokemon[0]);
-    //   console.log(listaFormasPokemon[0])
-    // }, 500);
-    
-  },[]) 
+  },[])
+  
+  
+  function selectId(event){
+    idUser = event.target.value
+  }
 
   function registrarApodo(event,id){
     let nuevoArrayApodo = [].concat(apodosEquipo)
@@ -133,7 +134,7 @@ function validar() {
     console.log("Equipo validado")
     console.log(movsEquipo[0])
     for (let i = 0;i<equipo.length;i++) {
-      equipoValidado.push(new Pokemon(equipo[i],movsEquipo[i],evsEquipo[i],apodosEquipo[i]))
+      equipoValidado.push(new Pokemon(equipo[i],movsEquipo[i],evsEquipo[i],apodosEquipo[i],idUser))
     }
     console.log(equipoValidado)
     router.push("/")
@@ -146,6 +147,7 @@ function validar() {
 
   return (
     <div >
+      <input onChange={selectId} />
       <select>
         <option>hoal</option>
         <option>skibidi</option>

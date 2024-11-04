@@ -75,8 +75,9 @@ io.on("connection", (socket) => {
 
 	});
 
-	socket.on('newMessage', data =>{
-		
+	socket.on('enviarLeadYEquipo', data =>{
+		console.log(data)
+			io.to(req.session.room).emit('eleccionLead', { room: req.session.room, primerPokemon: data.primerPokemon, equipo: data.equipo});
 	})
 
 	socket.on('newMessage', data =>{

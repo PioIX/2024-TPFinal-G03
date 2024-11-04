@@ -10,6 +10,7 @@ import {Trainer} from "@/clases/Trainer"
 import { damageCalculate, tirarMoneda, turno,descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import { equipoValidado } from "./teamBuilder/page";
+import { idUser } from "./teamBuilder/page";
 import { useSocket } from "@/hooks/useSocket"
 
 
@@ -29,6 +30,7 @@ export default function Home() {
   let [movPropio, setMovPropio] = useState("")
   let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
+ 
   const [recibidorMensaje, setRecibidorMensaje] = useState("")
   const [empezarCombate, setEmpezarCombate] = useState(false)
   const { socket, isConnected } = useSocket();
@@ -47,13 +49,26 @@ export default function Home() {
         setRecibidorMensaje(newMessage)
         
     })
+    
+    socket.on("eleccionLead",(data)=>{
+      // console.log("RECIBI MENSAJE: ",data);
+      let primerPokemon = JSON.parse(data.primerPokemon)
+      let equipo = data.equipo
+      console.log(primerPokemon)
+      console.log(equipo)
+      if (primerPokemon.idUser != idUser) {
+        setEquipoAjeno(equipo)
+        setPokemonAjeno(primerPokemon)
+
+      }
+      
+  })
 
 },[socket, isConnected]);
 
 
  useEffect(()=>{
     setEquipoPropio(equipoValidado)
-    console.log("SOY EL CONSOLE LOG, MIRENME",equipoValidado)
   },[]
   )
 
@@ -66,6 +81,10 @@ export default function Home() {
 
   function seleccionarPokemonInicial(event){
     setPokemonPropio(equipoPropio[event.target.value])
+    let primerPokemon = JSON.stringify(equipoPropio[event.target.value])
+    console.log(primerPokemon)
+    socket.emit('enviarLeadYEquipo',{primerPokemon:primerPokemon, equipo:equipoPropio});
+    
   }
 
   function unirseAlaSala() {
@@ -80,6 +99,8 @@ export default function Home() {
     //ListDeMensajes.push(newMessage)
     enviarMensaje()
 }
+
+
 
   function seleccionarAtaquePropio(event) {
     if (event.target.value=="change") {
@@ -206,7 +227,9 @@ useEffect(() =>  {
     }
   }
   
-  console.log("AA",equipoPropio)
+
+
+
   return (
     <div >
       {empezarCombate == "" 
@@ -216,16 +239,55 @@ useEffect(() =>  {
         <button key={i} onClick={seleccionarPokemonInicial} value={i}>{pokemon.apodo}</button>
       ))}</>
       :<>
-        <h2>{pokemonPropio.apodo}</h2>
-        {pokemonPropio.moves.map((move,i)=>(
-          <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i]==0}>{moves[move].name}</button>))} 
+        {pokemonAjeno != ""    
+          ?<>
+              {pokemonPropio.isDefeated 
+            ? <> {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
+              <button key={i} onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
+            ))}</>
+            : <> {pokemonPropio.moves.map((move,i)=>(
+              
+              <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i]==0}>{moves[move].name}</button>
+            ))}
+              
+            <h3>Equipo propio</h3>
+            {equipoPropio.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon,i)=>(
+              <div key={i}>
+                <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
+              </div>
+            ))}</>
+            }
+            <h2>{pokemonAjeno.apodo}</h2>
+
+            <h3>{pokemonAjeno.life}/{pokemonAjeno.stats[0]}</h3>
+
+            {pokemonAjeno.isDefeated 
+            ? <> {equipoAjeno.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
+              <button onClick={remplazarPokemonAjeno} value={pokemon.id} key={i}>{pokemon.apodo}</button> 
+            ))}</>
+            : <> {pokemonAjeno.moves.map((move,i)=>(
+              <button onClick={seleccionarAtaqueAjeno} key={i} value={i} disabled={pokemonAjeno.pps[i]<0}>{moves[move].name}</button>
+            ))}
+
+            <h3>Equipo ajeno</h3>
+            {equipoAjeno.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon, i)=>(
+              <div key={i}>
+                <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}>{pokemon.apodo}</button>
+              </div>
+            ))}</>
+          }
+          </>
+            
+            
+          : <p>Esperá a que el otro jugador elija su pokemon</p>
+        }
       </>
-      }  
+      }
       {salaConectada == ""
       ? <button onClick={unirseAlaSala}>unirseAlaSala</button>
-      : <></>
+      : <><button onClick={crearMensaje}>Enviar mensaje</button></>
       }
-      <button onClick={crearMensaje}>Enviar mensaje</button>
+      
       <h2>{recibidorMensaje}</h2>
 
 
@@ -233,47 +295,6 @@ useEffect(() =>  {
       : <>
       {ganador == "" 
       ? <>
-
-      <h2>{pokemonPropio.apodo}</h2>
-
-      <h3>{pokemonPropio.life}/{pokemonPropio.stats[0]}</h3>
-
-      {pokemonPropio.isDefeated 
-      ? <> {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
-        <button key={i} onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
-      ))}</>
-      : <> {pokemonPropio.moves.map((move,i)=>(
-        
-        <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i]==0}>{moves[move].name}</button>
-      ))}
-        
-      <h3>Equipo propio</h3>
-      {equipoPropio.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon,i)=>(
-        <div key={i}>
-          <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
-        </div>
-      ))}</>
-      }
-
-      <h2>{pokemonAjeno.apodo}</h2>
-
-      <h3>{pokemonAjeno.life}/{pokemonAjeno.stats[0]}</h3>
-
-      {pokemonAjeno.isDefeated 
-      ? <> {equipoAjeno.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
-        <button onClick={remplazarPokemonAjeno} value={pokemon.id} key={i}>{pokemon.apodo}</button> 
-      ))}</>
-      : <> {pokemonAjeno.moves.map((move,i)=>(
-        <button onClick={seleccionarAtaqueAjeno} key={i} value={i} disabled={pokemonAjeno.pps[i]<0}>{moves[move].name}</button>
-      ))}
-
-      <h3>Equipo ajeno</h3>
-      {equipoAjeno.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon, i)=>(
-        <div key={i}>
-          <button type="radio" name="seleccionarPokemonAjeno" value={pokemon.id} onClick={setPokemonAcambiarAjenoF}>{pokemon.apodo}</button>
-        </div>
-      ))}</>
-      }
       {(pokemonPropio.isDefeated || pokemonAjeno.isDefeated)
       ? <></>
       : <button onClick={iniciarTurno} >iniciar turno</button>

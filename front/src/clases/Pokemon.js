@@ -28,7 +28,7 @@ function calcularPPs(moveList){
 }
 
 export class Pokemon {
-    constructor(form,moves,evs,apodo) {
+    constructor(form,moves,evs,apodo,idUser) {
         this.form = form;
         this.evs = evs;
         this.stats = pokeStats(this.form.baseStats,this.evs);
@@ -45,6 +45,7 @@ export class Pokemon {
         this.countDream = 0
         this.pps = calcularPPs(this.moves)
         this.critical = false
+        this.idUser = idUser
         idPokemon++;
     }
 }

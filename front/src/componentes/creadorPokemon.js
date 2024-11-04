@@ -4,6 +4,7 @@ import { moves } from "@/clases/moves"
 import { encontrarMov,encontrarMovByNombre } from "@/funciones/funciones"
 import { Fragment } from "react";
 
+
 export default function CreadorPokemon(props) {
      function handlerMov(event) {
           props.funcionMov1(event, props.id);
