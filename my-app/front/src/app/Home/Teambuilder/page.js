@@ -82,17 +82,17 @@ export default function Teambuilder() {
                 <div>
                     <div>   
                         <button className="botonVolverAtras" onClick={editarEquipo}> ←volver atras</button>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
-                        <Pokemon imagenPokemon={"https://i.redd.it/pszg1zowqm7b1.gif"}
+                        <Pokemon imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
                         pokemon="isaac"></Pokemon>
                     </div>
                 </div>

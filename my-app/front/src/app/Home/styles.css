@@ -244,9 +244,8 @@
 }
 
 .imagenPokemonEditorEquipo{
-    width: 95%;
-    height: 75%;
-    margin-left: 5px;
+    width: 75%;
+    padding-left:15%;
     margin: 5px 5px 5px 5px;
 }
 
@@ -270,4 +269,13 @@
 
 .botonVolverAtras:hover{
     background-color: green;
+}
+
+.estiloSelectorMovimiento{
+    font-size: 220%;
+    width: 100%;
+    border-radius:20px;
+    padding-left: 1%;
+    padding-bottom: 1%;
+    display: grid;
 }
