@@ -46,9 +46,9 @@ export default function Pokemon(props){
                     </div>
                 </div>
                 <div className='datosPokemon'>
-                    <div style={{width:"30%", paddingLeft:"1%"}}>
+                    <div style={{width:"33%", paddingLeft:"1%"}}>
                         <img src={props.imagenPokemon} className='imagenPokemonEditorEquipo'></img>
-                        <h3 style={{paddingTop:"19  %"}}>Pokemon</h3>
+                        <h3 style={{paddingTop:"7%"}}>Pokemon</h3>
                         <div className='pokemonElegido'>
                             <h2>{props.pokemon}</h2>
                         </div>
@@ -88,22 +88,22 @@ export default function Pokemon(props){
                     <div  style={{width: "41%"}}>
                         <h1>estadisticas (Evs. Restantes: 502)</h1>
                         <h3>Salud</h3>
-                        <input type='range' min="0" max="255" value={valor1} style={{width:"90%"}} onChange={cambiarValor1}></input>
+                        <input type='range' min="0" max="255" value={valor1} className='sliderSalud' onChange={cambiarValor1}></input>
                         <span className='valores'>{valor1}</span>
                         <h3>Ataque</h3>
-                        <input type='range' min="0" max="255" value={valor2} style={{width:"90%"}} onChange={cambiarValor2}></input>
+                        <input type='range' min="0" max="255" value={valor2} className='sliderAtaque' onChange={cambiarValor2}></input>
                         <span className='valores'>{valor2}</span>
                         <h3>Defensa</h3>
-                        <input type='range' min="0" max="255" value={valor3} style={{width:"90%"}} onChange={cambiarValor3}></input>
+                        <input type='range' min="0" max="255" value={valor3} className='sliderDefensa'  onChange={cambiarValor3}></input>
                         <span className='valores'>{valor3}</span>
                         <h3>At. Especial</h3>
-                        <input type='range' min="0" max="255" value={valor4} style={{width:"90%"}} onChange={cambiarValor4}></input>
+                        <input type='range' min="0" max="255" value={valor4} className='sliderAtEspecial' onChange={cambiarValor4}></input>
                         <span className='valores'>{valor4}</span>
                         <h3>Df. Especial</h3>
-                        <input type='range' min="0" max="255" value={valor5} style={{width:"90%"}} onChange={cambiarValor5}></input>
+                        <input type='range' min="0" max="255" value={valor5} className='sliderDfEspecial' onChange={cambiarValor5}></input>
                         <span className='valores'>{valor5}</span>
                         <h3>Velocidad</h3>
-                        <input type='range' min="0" max="255" value={valor6} style={{width:"90%"}} onChange={cambiarValor6}></input>
+                        <input type='range' min="0" max="255" value={valor6} className='sliderVelocidad' onChange={cambiarValor6}></input>
                         <span className='valores'>{valor6}</span>
                     </div>
                 </div>
