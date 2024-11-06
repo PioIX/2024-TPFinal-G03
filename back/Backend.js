@@ -1,5 +1,3 @@
-//seccion recibir datos
-import {turno} from "@/funciones/funciones"
 
 const express = require('express');						// Para el manejo del web server
 const bodyParser = require('body-parser'); 				// Para el manejo de los strings JSON
@@ -90,10 +88,7 @@ io.on("connection", (socket) => {
 	socket.on('turno', data =>{
 		//si alguien ve esto, solo quiero que sepa que a pesar de que esta función me va a hacer sufrir, no me arrepiento de estar haciendo un juego de pokemon
 		// para aclarar las cosas, "P" indica "Propio" y "A", "Ajeno"
-		console.log(data)
-		// turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno,movPropio,movRival)
-		let retorno = turno(data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA)
-		io.to(req.session.room).emit('devolverTurno', { room: req.session.room, pokemonP: retorno[0],pokemonA: retorno[1],comprobarCombate:retorno[2]});
+		io.to(req.session.room).emit('devolverTurno', { room: req.session.room, retorno:data.retorno});
 	})
 
 	socket.on('disconnect', () => {
@@ -185,4 +180,8 @@ app.post('/insertarMoves', async function(req,res) {
 app.delete('/borrarMoves', async function(req,res) {
 	await MySql.realizarQuery(`DELETE FROM moves_pokemons`)
 	res.send("oki");
+})
+
+app.post('/calcularTurno', async function name(req, res) {
+
 })

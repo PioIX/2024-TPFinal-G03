@@ -737,5 +737,5 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
         dañoPostTurno(pokemon2)
     }
     comprobarCombate = terminarCombate(equipo1,equipo2)
-    return([pokemon1,pokemon2,comprobarCombate])
+    return([pokemon1,pokemon2,equipo1,equipo2,comprobarCombate])
 }
