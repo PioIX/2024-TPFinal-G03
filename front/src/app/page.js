@@ -47,7 +47,7 @@ export default function Home() {
         let newMessage = data.message;
         console.log(newMessage)
         setRecibidorMensaje(newMessage)
-        
+  
     })
     
     socket.on("eleccionLead",(data)=>{
@@ -61,8 +61,30 @@ export default function Home() {
         setPokemonAjeno(primerPokemon)
 
       }
-      
-  })
+    })
+
+    socket.on("enviarMovimientoElegido",(data)=>{
+      // console.log("RECIBI MENSAJE: ",data);
+      let primerPokemon = JSON.parse(data.primerPokemon)
+      let equipo = data.equipo
+      let turno = data.turno
+      let mov = data.mov
+      let cambioPokemonA = data.cambioPokemon
+      console.log(primerPokemon)
+      console.log(equipo)
+      if (primerPokemon.idUser != idUser) {
+        setEquipoAjeno(equipo)
+        setPokemonAjeno(primerPokemon)
+        setTurnoRival(turno)
+        setMovRival(mov)
+        setPokemonACambiaraAjeno(cambioPokemonA)
+
+      }
+      if (primerPokemon.idUser != idUser && turnoPropio != "") {
+        //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
+        socket.emit('turno',{pokemonP:pokemonPropio,pokemonA:primerPokemon,turnoP:turnoPropio,turnoA:turno,cambioPokemonP:pokemonACambiarPropio, cambioPokemonA:cambioPokemonA,equipoP:equipoPropio,equipoA:equipo,movP:movPropio,movA:mov});
+      }
+    })
 
 },[socket, isConnected]);
 
@@ -98,27 +120,17 @@ export default function Home() {
     setSalaConectada("sala1")
   }
 
-  function crearMensaje(){
-    let newMessage = {pokemon1:equipoPropio[0].apodo, chat:"sala1"};
-    setRecibidorMensaje(newMessage.pokemon1)
-    console.log(newMessage)
-    //ListDeMensajes.push(newMessage)
-    enviarMensaje()
-}
-
-
+  
 
   function seleccionarAtaquePropio(event) {
-    if (event.target.value=="change") {
-      setTurnoPropio("change")
-      //turnoAlterPropio = "change"
-
-    }
-    else {
-      setMovPropio(event.target.value)
-      setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
-      //turnoAlterPropio =moves[event.target.value]
-    }
+    let turno = ""
+    let mov = ""
+    let primerPokemon = JSON.stringify(pokemonPropio)
+    setMovPropio(event.target.value)
+    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
+    mov = event.target.value
+    turno = moves[pokemonPropio.moves[event.target.value]]
+    socket.emit('enviarMovimientoElegido',{primerPokemon:primerPokemon, equipo:equipoPropio, turno:turno, mov:mov, cambioPokemon:""});
   }
 
 /*  function seleccionarAtaqueAjeno(event) {
@@ -135,9 +147,14 @@ export default function Home() {
   }*/
 
 function setPokemonACambiarPropioF(event){
+  let primerPokemon = JSON.stringify(pokemonPropio)
+  let turno = "change"
+  let mov = ""
+  let cambioPokemon = pokemons[event.target.value]
   setPokemonACambiarPropio(pokemons[event.target.value])
   console.log(pokemons[event.target.value])
   setTurnoPropio("change")
+  socket.emit('enviarMovimientoElegido',{primerPokemon:primerPokemon, equipo:equipoPropio, turno:turno, mov:mov, cambioPokemon:cambioPokemon});
 }
 
 
@@ -206,6 +223,17 @@ function batallaTerminada(){
 useEffect(() =>  {
   batallaTerminada()
 },[ganador])
+
+
+useEffect(()=>{
+  if (turnoPropio != "" && turnoRival != "") {
+    console.log("Marti la puta que te pario")
+    setTurnoPropio("")
+    setTurnoRival("")
+    setMovPropio("")
+    setMovRival("")
+  }
+},[turnoPropio,turnoRival])
 
   function iniciarTurno (){
     setCoco(coco + 1)

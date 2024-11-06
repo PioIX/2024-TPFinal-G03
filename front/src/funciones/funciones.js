@@ -660,10 +660,10 @@ export function ejecutarMovimiento(pkm1, pkm2, mov,pp) {
                 console.log(pkm2, " cayó debilitado")
             }
         }
-        console.log(pkm1.pps[pp])
         pkm1.pps[pp] --
     }
     else{
+        pkm1.pps[pp] --
         console.log(pkm1, " usó ",mov," pero falló!!!!")}
 }
 

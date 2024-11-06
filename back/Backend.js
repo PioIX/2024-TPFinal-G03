@@ -1,4 +1,6 @@
 //seccion recibir datos
+import {turno} from "@/funciones/funciones"
+
 const express = require('express');						// Para el manejo del web server
 const bodyParser = require('body-parser'); 				// Para el manejo de los strings JSON
 const MySql = require('./modulos/mysql');				// Añado el archivo mysql.js presente en la carpeta módulos
@@ -80,10 +82,20 @@ io.on("connection", (socket) => {
 			io.to(req.session.room).emit('eleccionLead', { room: req.session.room, primerPokemon: data.primerPokemon, equipo: data.equipo});
 	})
 
-	socket.on('newMessage', data =>{
-		
+	socket.on('enviarMovimientoElegido', data =>{
+		console.log(data)
+			io.to(req.session.room).emit('enviarMovimientoElegido', { room: req.session.room, primerPokemon: data.primerPokemon, equipo: data.equipo, turno: data.turno , mov: data.mov, cambioPokemon: data.cambioPokemon});
 	})
 	
+	socket.on('turno', data =>{
+		//si alguien ve esto, solo quiero que sepa que a pesar de que esta función me va a hacer sufrir, no me arrepiento de estar haciendo un juego de pokemon
+		// para aclarar las cosas, "P" indica "Propio" y "A", "Ajeno"
+		console.log(data)
+		// turno(pokemonPropio,pokemonAjeno,turnoPropio,turnoRival,pokemonACambiarPropio,pokemonACambiarAjeno,equipoPropio,equipoAjeno,movPropio,movRival)
+		let retorno = turno(data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA)
+		io.to(req.session.room).emit('devolverTurno', { room: req.session.room, pokemonP: retorno[0],pokemonA: retorno[1],comprobarCombate:retorno[2]});
+	})
+
 	socket.on('disconnect', () => {
 		console.log("Disconnect");
 	})
