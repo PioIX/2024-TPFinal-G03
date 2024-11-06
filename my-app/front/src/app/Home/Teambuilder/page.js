@@ -8,19 +8,22 @@ import Pokemon from "./Pokemon";
 
 export default function Teambuilder() {
 
+    let [fondo, setFondo] = useState('fondo3')
     let[div1, setdiv1] = useState('grid')
     let[div2, setdiv2] = useState('none')
     function editarEquipo(){
         if (div1 == 'grid'){
             setdiv1('none')
             setdiv2('grid')
+            setFondo('fondo4')
         } else {
             setdiv1('grid')
+            setFondo('fondo3')
             setdiv2('none')
         }
     }
     return ( 
-        <div className='fondo3'>
+        <div className={fondo}>
             <div className='display'  style={{display:div1}}>
                 <div className="imagenChiquita">
                     <div>  
