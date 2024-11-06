@@ -86,6 +86,7 @@ io.on("connection", (socket) => {
 	})
 	
 	socket.on('turno', data =>{
+		console.log("H dame bola")
 		//si alguien ve esto, solo quiero que sepa que a pesar de que esta función me va a hacer sufrir, no me arrepiento de estar haciendo un juego de pokemon
 		// para aclarar las cosas, "P" indica "Propio" y "A", "Ajeno"
 		io.to(req.session.room).emit('devolverTurno', { room: req.session.room, retorno:data.retorno});

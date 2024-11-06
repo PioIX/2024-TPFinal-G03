@@ -20,8 +20,8 @@ export default function Home() {
   let [pokemonesCombatientes, setPokemonesCombatientes] = useState([pokemons[0], pokemons[1]])
   let [pokemonPropio, setPokemonPropio] = useState("")
   let [pokemonAjeno, setPokemonAjeno] = useState("")
-  let [turnoPropio, setTurnoPropio] = useState(0)
-  let [turnoRival, setTurnoRival] = useState(0)
+  let [turnoPropio, setTurnoPropio] = useState("")
+  let [turnoRival, setTurnoRival] = useState("")
   let [equipoPropio, setEquipoPropio] = useState([])
   let [equipoAjeno, setEquipoAjeno] = useState([])
   let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
@@ -30,6 +30,7 @@ export default function Home() {
   let [movPropio, setMovPropio] = useState("")
   let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
+  let turnoPropioParaElSocket = 0.1
 
   const [recibidorMensaje, setRecibidorMensaje] = useState("")
   const [empezarCombate, setEmpezarCombate] = useState(false)
@@ -67,29 +68,31 @@ export default function Home() {
       // console.log("RECIBI MENSAJE: ",data);
       let primerPokemon = JSON.parse(data.primerPokemon)
       let equipo = data.equipo
-      let turno = data.turno
+      let turnoEnviado = JSON.parse(data.turno)
       let mov = data.mov
       let cambioPokemonA = data.cambioPokemon
       let objetoTurno = {}
       let retorno = []
       let envio =[]
-      console.log(primerPokemon)
-      console.log(equipo)
       if (primerPokemon.idUser != idUser) {
         setEquipoAjeno(equipo)
         setPokemonAjeno(primerPokemon)
-        setTurnoRival(turno)
+        setTurnoRival(turnoEnviado)
         setMovRival(mov)
         setPokemonACambiaraAjeno(cambioPokemonA)
 
       }
-      if (primerPokemon.idUser != idUser && turnoPropio != "") {
+      console.log("pokemon recibido: ",primerPokemon.idUser)
+      console.log(idUser)
+      console.log("Turno propio: ",turnoPropio)
+      if (primerPokemon.idUser != idUser && turnoPropio !== "") {
+        console.log("H.F. dame bola")
         //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
         //(turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
 
         objetoTurno = {
           pokemonP: pokemonPropio, pokemonA: primerPokemon, turnoP: turnoPropio,
-          turnoA: turno, cambioPokemonP: pokemonACambiarPropio,
+          turnoA: turnoEnviado, cambioPokemonP: pokemonACambiarPropio,
           cambioPokemonA: cambioPokemonA, equipoP: equipoPropio,
           equipoA: equipo, movP: movPropio, movA: mov
         }
@@ -103,7 +106,7 @@ export default function Home() {
         envio =JSON.stringify(retorno)
         socket.emit('turno', {retorno:envio});
       }
-      socket.on("turno", (data) => {
+      socket.on("devolverTurno", (data) => {
         // console.log("RECIBI MENSAJE: ",data);
         let turno = JSON.parse(data.retorno)
         console.log(turno)
@@ -153,9 +156,11 @@ export default function Home() {
     let mov = ""
     let primerPokemon = JSON.stringify(pokemonPropio)
     setMovPropio(event.target.value)
-    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
+    console.log("QQuiero q valga: " + JSON.stringify(moves[pokemonPropio.moves[event.target.value]]))
+    setTurnoPropio(JSON.stringify(moves[pokemonPropio.moves[event.target.value]]))
+    //turnoPropioParaElSocket = moves[pokemonPropio.moves[event.target.value]]
     mov = event.target.value
-    turno = moves[pokemonPropio.moves[event.target.value]]
+    turno = JSON.stringify(moves[pokemonPropio.moves[event.target.value]])
     socket.emit('enviarMovimientoElegido', { primerPokemon: primerPokemon, equipo: equipoPropio, turno: turno, mov: mov, cambioPokemon: "" });
   }
 
@@ -252,14 +257,8 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (turnoPropio != "" && turnoRival != "") {
-      console.log("Marti la puta que te pario")
-      setTurnoPropio("")
-      setTurnoRival("")
-      setMovPropio("")
-      setMovRival("")
-    }
-  }, [turnoPropio, turnoRival])
+    console.log("Use effect: " + turnoPropio)
+  }, [turnoPropio])
 
   function iniciarTurno() {
     setCoco(coco + 1)
