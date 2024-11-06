@@ -6,7 +6,7 @@ export default function Equipospokemon(props){
     
 
     return(
-        <div style={{paddingLeft:"1%", paddingBottom:"10px", alignItems:"center", display:'flex', justifyContent:"center", alignContent:"center", gap:"10px"}}>
+        <div style={{paddingLeft:"1%", paddingBottom:"3px", paddingTop:"3px",alignItems:"center", display:'flex', justifyContent:"center", alignContent:"center", gap:"10px"}}>
             <button className='botonEquipoSeleccionado'>
                 <div>
                     <h2>{props.nombreEquipo}</h2>
@@ -22,7 +22,6 @@ export default function Equipospokemon(props){
             </button>
             <button className='botonEditar' onClick={props.editarEquipo}>✏️</button>
             <button className='botonBorrar' onClick={props.funcionBorrar}>❌</button>
-            <p style={{paddingBottom: "20px"}}></p>
         </div>
     )
 }

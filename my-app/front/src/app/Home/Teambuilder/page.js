@@ -23,7 +23,7 @@ export default function Teambuilder() {
         }
     }
     return ( 
-        <div className={fondo}>
+        <div className="fondo3">
             <div className='display'  style={{display:div1}}>
                 <div className="imagenChiquita">
                     <div>  
@@ -67,7 +67,7 @@ export default function Teambuilder() {
                     ></Equipospokemon>
                 </div>  
                 <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%"}}>
-                    <button className="botonCombate">¡combate!</button>
+                    <button className="botonCombate"><img src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                 </div>
             </div>
             <div className='display'  style={{display:div2}}>

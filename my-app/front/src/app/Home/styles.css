@@ -222,11 +222,10 @@
 
 .botonCombate{
     font-size: 400%;
-    background-color: #feca04;
+    background-color: white;
     box-shadow: black 0.2em 0.2em;
-    width: 24%;
+    width: 15%;
     padding: 5px;
-    margin: 35px 0px;
     border-radius: 80px;
     border: 0;
 }
