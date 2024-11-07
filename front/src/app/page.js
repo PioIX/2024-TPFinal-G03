@@ -18,9 +18,9 @@ import { useSocket } from "@/hooks/useSocket"
 
 export default function Home() {
   let [pokemonesCombatientes, setPokemonesCombatientes] = useState([pokemons[0], pokemons[1]])
-  let [pokemonPropio, setPokemonPropio] = useState("")
+  const [pokemonPropio, setPokemonPropio] = useState("")
   let [pokemonAjeno, setPokemonAjeno] = useState("")
-  let [turnoPropio, setTurnoPropio] = useState("")
+  const [turnoPropio, setTurnoPropio] = useState({})
   let [turnoRival, setTurnoRival] = useState("")
   let [equipoPropio, setEquipoPropio] = useState([])
   let [equipoAjeno, setEquipoAjeno] = useState([])
@@ -39,6 +39,10 @@ export default function Home() {
   const [salaConectada, setSalaConectada] = useState("")
 
 
+
+  useEffect(() =>{
+    meVoyAMatar()
+  },[])
 
   useEffect(() => {
     if (!socket) return;
@@ -80,12 +84,12 @@ export default function Home() {
         setTurnoRival(turnoEnviado)
         setMovRival(mov)
         setPokemonACambiaraAjeno(cambioPokemonA)
-
+        console.log(turnoPropio)
+        console.log(pokemonPropio)
       }
       console.log("pokemon recibido: ",primerPokemon.idUser)
-      console.log(idUser)
-      console.log("Turno propio: ",turnoPropio)
-      if (primerPokemon.idUser != idUser && turnoPropio !== "") {
+ 
+      if (primerPokemon.idUser != idUser && turnoPropio != "") {
         console.log("H.F. dame bola")
         //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
         //(turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
@@ -116,6 +120,9 @@ export default function Home() {
     })
 
   }, [socket, isConnected]);
+
+
+  
 
 
   useEffect(() => {
@@ -156,8 +163,9 @@ export default function Home() {
     let mov = ""
     let primerPokemon = JSON.stringify(pokemonPropio)
     setMovPropio(event.target.value)
-    console.log("QQuiero q valga: " + JSON.stringify(moves[pokemonPropio.moves[event.target.value]]))
-    setTurnoPropio(JSON.stringify(moves[pokemonPropio.moves[event.target.value]]))
+    console.log(moves[0])
+    console.log("QQuiero q valga: ", moves[pokemonPropio.moves[event.target.value]])
+    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
     //turnoPropioParaElSocket = moves[pokemonPropio.moves[event.target.value]]
     mov = event.target.value
     turno = JSON.stringify(moves[pokemonPropio.moves[event.target.value]])
@@ -257,7 +265,7 @@ export default function Home() {
 
 
   useEffect(() => {
-    console.log("Use effect: " + turnoPropio)
+    console.log("Use effect: ", turnoPropio)
   }, [turnoPropio])
 
   function iniciarTurno() {
