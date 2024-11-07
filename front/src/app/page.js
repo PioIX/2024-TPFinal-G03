@@ -20,7 +20,7 @@ export default function Home() {
   let [pokemonesCombatientes, setPokemonesCombatientes] = useState([pokemons[0], pokemons[1]])
   const [pokemonPropio, setPokemonPropio] = useState("")
   let [pokemonAjeno, setPokemonAjeno] = useState("")
-  const [turnoPropio, setTurnoPropio] = useState({})
+  let [turnoPropio, setTurnoPropio] = useState({})
   let [turnoRival, setTurnoRival] = useState("")
   let [equipoPropio, setEquipoPropio] = useState([])
   let [equipoAjeno, setEquipoAjeno] = useState([])
@@ -40,9 +40,8 @@ export default function Home() {
 
 
 
-  useEffect(() =>{
-    meVoyAMatar()
-  },[])
+  useEffect(() => {
+  }, [])
 
   useEffect(() => {
     if (!socket) return;
@@ -67,8 +66,10 @@ export default function Home() {
 
       }
     })
-
+    console.log("Adentro del socket")
     socket.on("enviarMovimientoElegido", (data) => {
+      console.log(data)
+      console.log("Adentro del socket elegido")
       // console.log("RECIBI MENSAJE: ",data);
       let primerPokemon = JSON.parse(data.primerPokemon)
       let equipo = data.equipo
@@ -77,8 +78,9 @@ export default function Home() {
       let cambioPokemonA = data.cambioPokemon
       let objetoTurno = {}
       let retorno = []
-      let envio =[]
+      let envio = []
       if (primerPokemon.idUser != idUser) {
+        console.log("Adentro del if elegido")
         setEquipoAjeno(equipo)
         setPokemonAjeno(primerPokemon)
         setTurnoRival(turnoEnviado)
@@ -87,10 +89,11 @@ export default function Home() {
         console.log(turnoPropio)
         console.log(pokemonPropio)
       }
-      console.log("pokemon recibido: ",primerPokemon.idUser)
- 
+      console.log(turnoPropio)
+
+
       if (primerPokemon.idUser != idUser && turnoPropio != "") {
-        console.log("H.F. dame bola")
+        console.log("")
         //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
         //(turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
 
@@ -107,22 +110,25 @@ export default function Home() {
           objetoTurno.equipoP, objetoTurno.equipoA,
           objetoTurno.movP, objetoTurno.movP
         )
-        envio =JSON.stringify(retorno)
-        socket.emit('turno', {retorno:envio});
+        envio = JSON.stringify(retorno)
+        socket.emit('turno', { retorno: envio });
       }
-      socket.on("devolverTurno", (data) => {
-        // console.log("RECIBI MENSAJE: ",data);
-        let turno = JSON.parse(data.retorno)
-        console.log(turno)
-        if (turno[0].idUser != idUser) {
-        }
-      })
+    })
+    socket.on("devolverTurno", (data) => {
+      // console.log("RECIBI MENSAJE: ",data);
+      let turno = JSON.parse(data.retorno)
+      console.log(turno)
+      if (turno[0].idUser != idUser) {
+      }
     })
 
   }, [socket, isConnected]);
 
 
-  
+
+  useEffect(() => {
+    console.log("Use effect: ", turnoPropio)
+  }, [turnoPropio])
 
 
   useEffect(() => {
@@ -165,7 +171,8 @@ export default function Home() {
     setMovPropio(event.target.value)
     console.log(moves[0])
     console.log("QQuiero q valga: ", moves[pokemonPropio.moves[event.target.value]])
-    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
+    setTurnoPropio(()=>moves[pokemonPropio.moves[event.target.value]])
+    console.log("minimo")
     //turnoPropioParaElSocket = moves[pokemonPropio.moves[event.target.value]]
     mov = event.target.value
     turno = JSON.stringify(moves[pokemonPropio.moves[event.target.value]])
@@ -264,9 +271,6 @@ export default function Home() {
   }, [ganador])
 
 
-  useEffect(() => {
-    console.log("Use effect: ", turnoPropio)
-  }, [turnoPropio])
 
   function iniciarTurno() {
     setCoco(coco + 1)
