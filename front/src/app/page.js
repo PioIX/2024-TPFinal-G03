@@ -69,7 +69,6 @@ export default function Home() {
     console.log("Adentro del socket")
     socket.on("enviarMovimientoElegido", (data) => {
       console.log(data)
-      console.log("Adentro del socket elegido")
       // console.log("RECIBI MENSAJE: ",data);
       let primerPokemon = JSON.parse(data.primerPokemon)
       let equipo = data.equipo
@@ -89,16 +88,24 @@ export default function Home() {
         console.log(turnoPropio)
         console.log(pokemonPropio)
       }
-      console.log(turnoPropio)
+      else{
+      console.log("Data.turno",data.turno)
+      }
+      console.log("AHHHHHHHH",turnoPropio)
+      setTurnoPropio((turnoPropioActual)=>
+        {
+          console.log("turnoPropioActual",turnoPropioActual)
+          return turnoPropioActual
+        }
+      )
 
-
-      if (primerPokemon.idUser != idUser && turnoPropio != "") {
+      if (primerPokemon.idUser != idUser && turnoPropioActual != "") {
         console.log("")
         //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
         //(turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
 
         objetoTurno = {
-          pokemonP: pokemonPropio, pokemonA: primerPokemon, turnoP: turnoPropio,
+          pokemonP: pokemonPropio, pokemonA: primerPokemon, turnoP: turnoPropioVariable,
           turnoA: turnoEnviado, cambioPokemonP: pokemonACambiarPropio,
           cambioPokemonA: cambioPokemonA, equipoP: equipoPropio,
           equipoA: equipo, movP: movPropio, movA: mov
@@ -171,7 +178,7 @@ export default function Home() {
     setMovPropio(event.target.value)
     console.log(moves[0])
     console.log("QQuiero q valga: ", moves[pokemonPropio.moves[event.target.value]])
-    setTurnoPropio(()=>moves[pokemonPropio.moves[event.target.value]])
+    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
     console.log("minimo")
     //turnoPropioParaElSocket = moves[pokemonPropio.moves[event.target.value]]
     mov = event.target.value
