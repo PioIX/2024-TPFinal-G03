@@ -7,7 +7,7 @@ import { useState } from "react";
 import Pokemon from "./Pokemon";
 
 export default function Teambuilder() {
-
+    const router = useRouter()
     let [fondo, setFondo] = useState('fondo3')
     let[div1, setdiv1] = useState('grid')
     let[div2, setdiv2] = useState('none')
@@ -22,6 +22,11 @@ export default function Teambuilder() {
             setdiv2('none')
         }
     }
+
+    function botonCombate(){
+        router.push('/Home/PaginaCombate')
+    }    
+
     return ( 
         <div className="fondo3">
             <div className='display'  style={{display:div1}}>
@@ -67,7 +72,7 @@ export default function Teambuilder() {
                     ></Equipospokemon>
                 </div>  
                 <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%"}}>
-                    <button className="botonCombate"><img src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
+                    <button className="botonCombate" onClick={botonCombate}><img src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                 </div>
             </div>
             <div className='display'  style={{display:div2}}>
