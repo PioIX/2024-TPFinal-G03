@@ -332,21 +332,21 @@ input[type="range"] {
     outline: none;
     overflow: hidden;
     border-radius: 16px;
-  }
+}
   
-  input[type="range"]::-webkit-slider-runnable-track {
+input[type="range"]::-webkit-slider-runnable-track {
     height: 15px;
     background: white;
     border-radius: 16px;
-  }
+}
   
-  input[type="range"]::-moz-range-track {
+input[type="range"]::-moz-range-track {
     height: 15px;
     background: rgb(11, 199, 199);
     border-radius: 16px;
-  }
+}
   
-  input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     /* removing default appearance */
     -webkit-appearance: none;
     appearance: none; 
@@ -358,4 +358,8 @@ input[type="range"] {
     border: 2px solid rgb(11, 199, 199);
     /*  slider progress trick  */
     box-shadow: -407px 0 0 400px rgb(11, 199, 199);
-  }
+}
+
+.pokemonCombate{
+    
+}
