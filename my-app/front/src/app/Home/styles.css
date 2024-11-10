@@ -360,6 +360,13 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: -407px 0 0 400px rgb(11, 199, 199);
 }
 
-.pokemonCombate{
-    
+.fondo5{
+    width: 55%;
+    display: grid; 
+    background-image: url('https://img.freepik.com/vector-gratis/fondo-efecto-zoom-degradado-azul_23-2149762303.jpg?semt=ais_hybrid');
+    background-size: cover; 
+    min-height: auto;
+    max-width: auto;
+    border-radius: 80px;
+
 }

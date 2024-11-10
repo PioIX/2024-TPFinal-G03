@@ -2,7 +2,10 @@
 
 import { useState } from "react"
 import '@/app/Home/styles.css'
+import Movimientos from "./Movimientos"
 import PokemonesCombate from "./PokemonesCombate"
+import PokemonesCambio from "./PokemonesCambio"
+import Comentario from "./Comentario"
 
 export default function PaginaCombate(){
     let [vidaRestante1, setVidarestante1] = useState(500)
@@ -26,10 +29,41 @@ export default function PaginaCombate(){
                         </div>
                     </div>
                     <div style={{width:"40%", backgroundColor:"gray"}}>
-                        <p>dhuio</p>
+                        <Comentario PokemonEnemigo="me pica el pene" Movimiento="gritar"></Comentario>
                     </div>
                 </div>
-                <div style={{width:"100%", backgroundColor:"gray"}}>
+                <div style={{width:"100%", display:"inline-flex", backgroundColor: "gray", borderRadius: "80px"}}>
+                    <div className="fondo5">
+                        <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                            <Movimientos></Movimientos>
+                            <p style={{width:"5%"}}></p>
+                            <Movimientos></Movimientos>
+                        </div>
+                        <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                            <Movimientos></Movimientos>
+                            <p style={{width:"5%"}}></p>
+                            <Movimientos></Movimientos>
+                        </div>
+                    </div>
+                    <div style={{width:"37%", display:"grid", paddingTop:"1%", paddingLeft:"7%"}}>
+                        <div>
+                            <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/b4tjxrof1pe81.gif"></PokemonesCambio>
+                                <p style={{width:"5%"}}></p>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/2dye1fpf1pe81.gif"></PokemonesCambio>
+                            </div>
+                            <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/rq61yrof1pe81.gif"></PokemonesCambio>
+                                <p style={{width:"5%"}}></p>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/z24twzof1pe81.gif"></PokemonesCambio>
+                            </div>
+                            <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/6z1y41pf1pe81.gif"></PokemonesCambio>
+                                <p style={{width:"5%"}}></p>
+                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/so36fsof1pe81.gif"></PokemonesCambio>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
