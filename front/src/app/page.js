@@ -91,6 +91,7 @@ export default function Home() {
             datosLocalesActuales.mov,
             mov
           )
+          datosLocalesActuales.turno=""
           envio = JSON.stringify(retorno)
           socket.emit('turno', { retorno: envio });
 
@@ -105,6 +106,7 @@ export default function Home() {
     socket.on("devolverTurno", (data) => {
       // console.log("RECIBI MENSAJE: ",data);
       let turno = JSON.parse(data.retorno)
+      console.log({turno})
       let nuevoObjeto = { ...datosLocales }
       if (turno[0].idUser == idUser) {
         nuevoObjeto.pokemon = (turno[0])
@@ -247,16 +249,16 @@ export default function Home() {
   
   }*/
 
-  function remplazarPokemonPropio(event) {
-    let nuevoObjeto={...datosLocales}
-    nuevoObjeto.pokemon = equipoPropio[event.target.value]
-    setPokemonPropio(equipoPropio[event.target.value])
-    setDatosLocales(nuevoObjeto)
-    socket.emit('remplazarPokemon', { pokemon: JSON.stringify(equipoPropio[event.target.value]) });
-    //remplazarPokemon
-
-  }
-
+    function remplazarPokemonPropio(event) {
+      console.log(event.target.value);  // This causes the error
+      let nuevoObjeto = { ...datosLocales };
+      nuevoObjeto.pokemon = JSON.parse(event.target.value);
+      setPokemonPropio(JSON.parse(event.target.value));
+      console.log(setPokemonPropio);
+      setDatosLocales(nuevoObjeto);
+      socket.emit('remplazarPokemon', { pokemon: event.target.value });
+    }
+    
   function actualizarPokemonPropio() {
     if (pokemonPropio != "") {
       pokemonPropio.combatiendo = true
@@ -368,7 +370,7 @@ export default function Home() {
               {pokemonPropio.isDefeated == true
                 ? <><p>tu pokemon está debilitado, lol</p>
                   {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon, i) => (
-                    <button key={i} onClick={remplazarPokemonPropio} value={i}>{pokemon.apodo}</button>
+                    <button key={i} onClick={remplazarPokemonPropio} value={pokemon}>{pokemon.apodo}</button>
                   ))}
                 </>
 
