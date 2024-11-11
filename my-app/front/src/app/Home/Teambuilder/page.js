@@ -8,17 +8,14 @@ import Pokemon from "./Pokemon";
 
 export default function Teambuilder() {
     const router = useRouter()
-    let [fondo, setFondo] = useState('fondo3')
     let[div1, setdiv1] = useState('grid')
     let[div2, setdiv2] = useState('none')
     function editarEquipo(){
         if (div1 == 'grid'){
             setdiv1('none')
             setdiv2('grid')
-            setFondo('fondo4')
         } else {
             setdiv1('grid')
-            setFondo('fondo3')
             setdiv2('none')
         }
     }
@@ -28,7 +25,7 @@ export default function Teambuilder() {
     }    
 
     return ( 
-        <div className="fondo3">
+        <div className="fondo4">
             <div className='display'  style={{display:div1}}>
                 <div className="imagenChiquita">
                     <div>  
@@ -71,11 +68,11 @@ export default function Teambuilder() {
                     editarEquipo = {editarEquipo}
                     ></Equipospokemon>
                 </div>  
-                <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%"}}>
-                    <button className="botonCombate" onClick={botonCombate}><img src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
+                <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%", paddingBottom:"1%"}}>
+                    <button className="botonCombate" onClick={botonCombate}><img style={{width:"90%"}} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                 </div>
             </div>
-            <div className='display'  style={{display:div2}}>
+            <div className='display' style={{display:div2}}>
                 <div className="imagenChiquita">
                     <div>  
                         <Image 

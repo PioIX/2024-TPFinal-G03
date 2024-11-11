@@ -34,7 +34,7 @@
 }
 
 .fondo4{
-    background-color: rgb(11, 199, 199);
+    background-color: rgb(13, 109, 109);
     background-size: cover;
     padding: 0;
     box-sizing: border-box;
@@ -188,7 +188,7 @@
 
 .botonEditar{
     font-size: 50px;
-    background-color: yellow;
+    background-color: aqua;
     border: 0;
     border-radius: 30px;
     width: 10%;
@@ -196,7 +196,7 @@
 }
 
 .botonEditar:hover{
-    background-color: green;
+    background-color: white;
 }
 
 .botonEquipoSeleccionado:focus{
@@ -221,10 +221,9 @@
 }
 
 .botonCombate{
-    font-size: 400%;
     background-color: white;
     box-shadow: black 0.2em 0.2em;
-    width: 15%;
+    width: 7%;
     padding: 5px;
     border-radius: 80px;
     border: 0;
@@ -369,4 +368,27 @@ input[type="range"]::-webkit-slider-thumb {
     max-width: auto;
     border-radius: 80px;
 
+}
+
+.fondo6{
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.fondoCombate{
+    min-height: 30vh;
+    max-width: 100%;
+    background-size: cover; 
+    width: 100% ;
+    display: inline-flex;
+    background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/59239705-5ebf-4a7a-9dee-5dd305685980/d6x068t-c0c57a81-186c-4c78-a6b9-cbb57bd28e21.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU5MjM5NzA1LTVlYmYtNGE3YS05ZGVlLTVkZDMwNTY4NTk4MFwvZDZ4MDY4dC1jMGM1N2E4MS0xODZjLTRjNzgtYTZiOS1jYmI1N2JkMjhlMjEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.lm2wxkfT0jnGdM4sT1DAL7qwmMTLK9wLH9wL95qk1hk");
+}
+
+.pokemonCombate{
+    width: 50%;
+    text-align: center;
 }
