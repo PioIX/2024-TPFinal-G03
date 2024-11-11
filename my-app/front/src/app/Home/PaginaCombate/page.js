@@ -12,27 +12,54 @@ export default function PaginaCombate(){
     let [vidaTotal1, setVidaTotal1] = useState(1000)
 
     return(
-        <div className="fondo6">
-            <div style={{width:"100%", display:"grid"}}>
-                <div style={{width:"100%", display:"inline-flex"}}>
+        <div className="fondo6" style={{backgroundColor:"gray"}}>
+            <div style={{width:"100%", display:"grid", backgroundColor:"gray"}}>
+                <div style={{width:"100%", display:"inline-flex", backgroundColor:"gray"}}>
                     <div className="fondoCombate">
                         <div style={{width:"100%", paddingLeft:"9%"}}>
                             <div style={{width:"70%"}}>
-                                <p style={{paddingTop:"70%"}}></p>
-                                <PokemonesCombate nombrePokemon="me pica el pene" vidaRestante={vidaRestante1} vidaPokemon={vidaTotal1} imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}></PokemonesCombate>                                                    
+                                <p style={{paddingTop:"45%"}}></p>
+                                <PokemonesCombate nombrePokemon="fg" vidaRestante={vidaRestante1} vidaPokemon={vidaTotal1} imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}></PokemonesCombate>                                                    
                             </div>
                         </div>
                         <div style={{width:"80%"}}>
                             <div style={{width:"100%", paddingLeft:"30%", paddingTop:"10%"}}>
-                                <PokemonesCombate nombrePokemon="me pica el pene" vidaRestante={vidaRestante1} vidaPokemon={vidaTotal1} imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}></PokemonesCombate>                                                    
+                                <PokemonesCombate nombrePokemon="fg" vidaRestante={vidaRestante1} vidaPokemon={vidaTotal1} imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}></PokemonesCombate>                                                    
                             </div>
                         </div>
                     </div>
-                    <div style={{width:"40%", backgroundColor:"gray"}}>
-                        <Comentario PokemonEnemigo="me pica el pene" Movimiento="gritar"></Comentario>
+                    <div className="scrollbarComentarios">
+                        <div style={{paddingLeft:"1%", paddingTop:"1%", paddingBottom:"1%", backgroundColor:"gray"}}>
+                            <div style={{backgroundColor:"#dae5f0"}}>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+                                <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style={{width:"100%", display:"inline-flex", backgroundColor: "gray", borderRadius: "80px"}}>
+                <div style={{width:"100%", display:"inline-flex", backgroundColor: "gray"}}>
                     <div className="fondo5">
                         <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
                             <Movimientos></Movimientos>
