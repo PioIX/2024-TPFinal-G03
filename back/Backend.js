@@ -81,15 +81,19 @@ io.on("connection", (socket) => {
 	})
 
 	socket.on('enviarMovimientoElegido', data =>{
-		console.log(data)
-			io.to(req.session.room).emit('enviarMovimientoElegido', { room: req.session.room, primerPokemon: data.primerPokemon, equipo: data.equipo, turno: data.turno , mov: data.mov, cambioPokemon: data.cambioPokemon});
+		console.log("ESTAS EN ENVIAR MOVIMIENTO")
+			io.to(req.session.room).emit('enviarMovimientoElegido', { room: req.session.room, datos:data.datos});
 	})
 	
 	socket.on('turno', data =>{
-		console.log("H dame bola")
 		//si alguien ve esto, solo quiero que sepa que a pesar de que esta función me va a hacer sufrir, no me arrepiento de estar haciendo un juego de pokemon
 		// para aclarar las cosas, "P" indica "Propio" y "A", "Ajeno"
 		io.to(req.session.room).emit('devolverTurno', { room: req.session.room, retorno:data.retorno});
+	})
+
+	socket.on('remplazarPokemon',data=>{
+		io.to(req.session.room).emit('remplazarPokemon', { room: req.session.room, pokemon:data.pokemon});
+
 	})
 
 	socket.on('disconnect', () => {

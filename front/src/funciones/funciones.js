@@ -687,10 +687,21 @@ export function terminarCombate(equipo1,equipo2){
     return resultado
 }
 
+function actualizarEquipo(pokemon,equipo){
+    for(let i = 0;i<equipo.length;i++){
+        if (pokemon.id == equipo[i].id) {
+            equipo[i]=pokemon
+        }
+    }
+    return equipo
+}
+
 export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,equipo1,equipo2,movPropio,movRival) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
-    let pokemon1 = pkm1
-    let pokemon2 = pkm2
+    let pokemon1 = {...pkm1}
+    let pokemon2 = {...pkm2}
+    let primerEquipo = [...equipo1]
+    let segundoEquipo = [...equipo2]
     let comprobarCombate = []
     if (ordenTurno(pokemon1, pokemon2,mov1,mov2) == 1) {
         
@@ -736,6 +747,8 @@ export function turno(pkm1, pkm2, mov1,mov2,pokemonACambiar1,pokemonACambiar2,eq
     if (pokemon2.isDefeated == false) {
         dañoPostTurno(pokemon2)
     }
-    comprobarCombate = terminarCombate(equipo1,equipo2)
-    return([pokemon1,pokemon2,equipo1,equipo2,comprobarCombate])
+    actualizarEquipo(pokemon1,primerEquipo)
+    actualizarEquipo(pokemon2,segundoEquipo)
+    comprobarCombate = terminarCombate(primerEquipo,segundoEquipo)
+    return([pokemon1,pokemon2,primerEquipo,segundoEquipo,comprobarCombate])
 }

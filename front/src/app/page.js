@@ -17,27 +17,26 @@ import { useSocket } from "@/hooks/useSocket"
 //console.log(damageCalculate(pokemons[1],pokemons[0],moves[0]))
 
 export default function Home() {
-  let [pokemonesCombatientes, setPokemonesCombatientes] = useState([pokemons[0], pokemons[1]])
   const [pokemonPropio, setPokemonPropio] = useState("")
   let [pokemonAjeno, setPokemonAjeno] = useState("")
   let [turnoPropio, setTurnoPropio] = useState({})
-  let [turnoRival, setTurnoRival] = useState("")
   let [equipoPropio, setEquipoPropio] = useState([])
-  let [equipoAjeno, setEquipoAjeno] = useState([])
-  let [pokemonACambiarPropio, setPokemonACambiarPropio] = useState()
-  let [pokemonACambiarAjeno, setPokemonACambiaraAjeno] = useState()
   let [ganador, setGanador] = useState("")
-  let [movPropio, setMovPropio] = useState("")
-  let [movRival, setMovRival] = useState("")
   let [coco, setCoco] = useState(0)
-  let turnoPropioParaElSocket = 0.1
+  let pureba = 0
+  // este use state es la bestialidad que se le manda al socket para evitar los errores de actualización que tienen sus metodos.
+  //Podría borrar los otros useState y hacer que el codigo sea bastante mas limpio, pero no estoy viendo un peso por esto.
+  const [datosLocales, setDatosLocales] = useState({ pokemon: "", equipoPropio: [], turno: "", mov: 0.1, pokemonACambiar: {} })
 
-  const [recibidorMensaje, setRecibidorMensaje] = useState("")
   const [empezarCombate, setEmpezarCombate] = useState(false)
   const { socket, isConnected } = useSocket();
   const [ultimoMensaje, setUltimoMensaje] = useState("")
   const [salaConectada, setSalaConectada] = useState("")
 
+
+  useEffect(() => {
+    console.log(datosLocales)
+  }, [datosLocales])
 
 
   useEffect(() => {
@@ -47,7 +46,6 @@ export default function Home() {
     if (!socket) return;
 
     socket.on("newMessage", (data) => {
-      console.log("RECIBI MENSAJE: ", data);
       let newMessage = data.message;
       console.log(newMessage)
       setRecibidorMensaje(newMessage)
@@ -58,74 +56,99 @@ export default function Home() {
       // console.log("RECIBI MENSAJE: ",data);
       let primerPokemon = JSON.parse(data.primerPokemon)
       let equipo = data.equipo
-      console.log(primerPokemon)
-      console.log(equipo)
       if (primerPokemon.idUser != idUser) {
-        setEquipoAjeno(equipo)
         setPokemonAjeno(primerPokemon)
 
       }
+
     })
-    console.log("Adentro del socket")
+
+    socket.on("remplazarPokemon",(data) => {
+      let pokemon = JSON.parse(data.pokemon)
+      if (pokemon.idUser != idUser) {
+        setPokemonAjeno(pokemon)
+      }
+    })
+
     socket.on("enviarMovimientoElegido", (data) => {
-      console.log(data)
-      // console.log("RECIBI MENSAJE: ",data);
-      let primerPokemon = JSON.parse(data.primerPokemon)
-      let equipo = data.equipo
-      let turnoEnviado = JSON.parse(data.turno)
-      let mov = data.mov
-      let cambioPokemonA = data.cambioPokemon
-      let objetoTurno = {}
+      let datosObtenidos = JSON.parse(data.datos)
+      let primerPokemon = datosObtenidos.pokemon
+      let equipo = datosObtenidos.equipoPropio
+      let turnoEnviado = datosObtenidos.turno
+      let mov = datosObtenidos.mov
+      let cambioPokemonA = datosObtenidos.pokemonACambiar
       let retorno = []
       let envio = []
-      if (primerPokemon.idUser != idUser) {
-        console.log("Adentro del if elegido")
-        setEquipoAjeno(equipo)
-        setPokemonAjeno(primerPokemon)
-        setTurnoRival(turnoEnviado)
-        setMovRival(mov)
-        setPokemonACambiaraAjeno(cambioPokemonA)
-        console.log(turnoPropio)
-        console.log(pokemonPropio)
-      }
-      else{
-      console.log("Data.turno",data.turno)
-      }
-      console.log("AHHHHHHHH",turnoPropio)
-      setTurnoPropio((turnoPropioActual)=>
-        {
-          console.log("turnoPropioActual",turnoPropioActual)
-          return turnoPropioActual
+      console.log("adentro del  socket")
+      setDatosLocales((datosLocalesActuales) => {
+        if (parseInt(primerPokemon.idUser) != idUser && datosLocalesActuales.turno != "") {
+          console.log("aca empezaría el turno")
+          retorno = turno(
+            datosLocalesActuales.pokemon,
+            primerPokemon,
+            datosLocalesActuales.turno,
+            turnoEnviado,
+            datosLocalesActuales.pokemonACambiar,
+            cambioPokemonA,
+            datosLocalesActuales.equipoPropio,
+            equipo,
+            datosLocalesActuales.mov,
+            mov
+          )
+          envio = JSON.stringify(retorno)
+          socket.emit('turno', { retorno: envio });
+
         }
+        return datosLocalesActuales
+      }
       )
-
-      if (primerPokemon.idUser != idUser && turnoPropioActual != "") {
-        console.log("")
-        //data.pokemonP,data.pokemonA,data.turnoP,data.turnoA,data.cambioPokemonP,data.cambioPokemonA,data.equipoP,data.equipoA,data.movP,data.movA
-        //(turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
-
-        objetoTurno = {
-          pokemonP: pokemonPropio, pokemonA: primerPokemon, turnoP: turnoPropioVariable,
-          turnoA: turnoEnviado, cambioPokemonP: pokemonACambiarPropio,
-          cambioPokemonA: cambioPokemonA, equipoP: equipoPropio,
-          equipoA: equipo, movP: movPropio, movA: mov
-        }
-        retorno = turno(
-          objetoTurno.pokemonP, objetoTurno.pokemonA,
-          objetoTurno.turnoP, objetoTurno.turnoA,
-          objetoTurno.cambioPokemonP, objetoTurno.pokemonA,
-          objetoTurno.equipoP, objetoTurno.equipoA,
-          objetoTurno.movP, objetoTurno.movP
-        )
-        envio = JSON.stringify(retorno)
-        socket.emit('turno', { retorno: envio });
-      }
     })
+
+
+
     socket.on("devolverTurno", (data) => {
       // console.log("RECIBI MENSAJE: ",data);
       let turno = JSON.parse(data.retorno)
-      console.log(turno)
-      if (turno[0].idUser != idUser) {
+      let nuevoObjeto = { ...datosLocales }
+      if (turno[0].idUser == idUser) {
+        nuevoObjeto.pokemon = (turno[0])
+        nuevoObjeto.equipoPropio = turno[2]
+        nuevoObjeto.turno = ""
+        nuevoObjeto.pokemonACambiar = {}
+        nuevoObjeto.mov = 0.1
+        setPokemonPropio(turno[0])
+        setPokemonAjeno(turno[1])
+        setEquipoPropio(turno[2])
+        setTurnoPropio("")
+        setDatosLocales(nuevoObjeto)
+        if (turno[4][0] == false) {
+          if (retorno[4][1] == true) {
+            setGanador(1)
+          }
+          else {
+            setGanador(2)
+          }
+        }
+      }
+      else {
+        nuevoObjeto.pokemon = (turno[1])
+        nuevoObjeto.equipoPropio = turno[3]
+        nuevoObjeto.turno = ""
+        nuevoObjeto.pokemonACambiar = {}
+        nuevoObjeto.mov = 0.1
+        setPokemonPropio(turno[1])
+        setPokemonAjeno(turno[0])
+        setEquipoPropio(turno[3])
+        setTurnoPropio("")
+        setDatosLocales(nuevoObjeto)
+        if (turno[4][0] == false) {
+          if (retorno[4][2] == true) {
+            setGanador(1)
+          }
+          else {
+            setGanador(2)
+          }
+        }
       }
     })
 
@@ -133,9 +156,11 @@ export default function Home() {
 
 
 
+
+
   useEffect(() => {
-    console.log("Use effect: ", turnoPropio)
-  }, [turnoPropio])
+    console.log(pokemonAjeno)
+  }, [pokemonAjeno])
 
 
   useEffect(() => {
@@ -152,8 +177,12 @@ export default function Home() {
 
   function seleccionarPokemonInicial(event) {
     setPokemonPropio(equipoPropio[event.target.value])
+    let nuevoObjeto = { ...datosLocales }
+    console.log(nuevoObjeto)
     let primerPokemon = JSON.stringify(equipoPropio[event.target.value])
     console.log(primerPokemon)
+    nuevoObjeto.pokemon = equipoPropio[event.target.value]
+    setDatosLocales(nuevoObjeto)
     socket.emit('enviarLeadYEquipo', { primerPokemon: primerPokemon, equipo: equipoPropio });
 
   }
@@ -172,18 +201,15 @@ export default function Home() {
 
 
   function seleccionarAtaquePropio(event) {
-    let turno = ""
-    let mov = ""
-    let primerPokemon = JSON.stringify(pokemonPropio)
-    setMovPropio(event.target.value)
-    console.log(moves[0])
-    console.log("QQuiero q valga: ", moves[pokemonPropio.moves[event.target.value]])
+    let nuevoObjeto = { ...datosLocales }
+    nuevoObjeto.turno = moves[pokemonPropio.moves[event.target.value]]
+    nuevoObjeto.mov = event.target.value
+    nuevoObjeto.pokemonACambiar = {}
+    nuevoObjeto.equipoPropio = equipoPropio
     setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
-    console.log("minimo")
-    //turnoPropioParaElSocket = moves[pokemonPropio.moves[event.target.value]]
-    mov = event.target.value
-    turno = JSON.stringify(moves[pokemonPropio.moves[event.target.value]])
-    socket.emit('enviarMovimientoElegido', { primerPokemon: primerPokemon, equipo: equipoPropio, turno: turno, mov: mov, cambioPokemon: "" });
+    setDatosLocales(nuevoObjeto)
+    pureba = 0
+    socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
   }
 
   /*  function seleccionarAtaqueAjeno(event) {
@@ -200,14 +226,15 @@ export default function Home() {
     }*/
 
   function setPokemonACambiarPropioF(event) {
-    let primerPokemon = JSON.stringify(pokemonPropio)
-    let turno = "change"
-    let mov = ""
-    let cambioPokemon = pokemons[event.target.value]
-    setPokemonACambiarPropio(pokemons[event.target.value])
-    console.log(pokemons[event.target.value])
+    let nuevoObjeto = { ...datosLocales }
+    nuevoObjeto.turno = "change"
+    nuevoObjeto.mov = 0.1
+    nuevoObjeto.pokemonACambiar = equipoPropio[event.target.value]
+    nuevoObjeto.equipoPropio = equipoPropio
     setTurnoPropio("change")
-    socket.emit('enviarMovimientoElegido', { primerPokemon: primerPokemon, equipo: equipoPropio, turno: turno, mov: mov, cambioPokemon: cambioPokemon });
+    setDatosLocales(nuevoObjeto)
+    socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
+
   }
 
 
@@ -219,8 +246,12 @@ export default function Home() {
   }*/
 
   function remplazarPokemonPropio(event) {
-    pokemonPropio.combatiendo = false
-    setPokemonPropio(pokemons[event.target.value])
+    let nuevoObjeto={...datosLocales}
+    nuevoObjeto.pokemon = equipoPropio[event.target.value]
+    setPokemonPropio(equipoPropio[event.target.value])
+    setDatosLocales(nuevoObjeto)
+    socket.emit('remplazarPokemon', { pokemon: JSON.stringify(equipoPropio[event.target.value]) });
+    //remplazarPokemon
 
   }
 
@@ -279,33 +310,6 @@ export default function Home() {
 
 
 
-  function iniciarTurno() {
-    setCoco(coco + 1)
-    //console.log("LO QUE RECIBE TURNO: pokemonPropio",pokemonPropio,"pokemonAjeno ",pokemonAjeno,"turnoPropio ", turnoPropio,"turnoRival ",turnoRival,"pokemonACambiarPropio",pokemonACambiarPropio,"pokemonAcambiarAjeno",pokemonACambiarAjeno)
-    if (pokemonPropio != "" && pokemonAjeno != "" && turnoPropio != "" && turnoRival != "") {
-      let retorno = (turno(pokemonPropio, pokemonAjeno, turnoPropio, turnoRival, pokemonACambiarPropio, pokemonACambiarAjeno, equipoPropio, equipoAjeno, movPropio, movRival))
-      setPokemonPropio(retorno[0])
-      setPokemonAjeno(retorno[1])
-      setCoco(coco + 1)
-      setTurnoPropio("")
-      setTurnoRival("")
-      // setCoco es como el coco de TF2, si lo saco deja de actualizarse el useState pokemonPropio y pokemonAjeno. NO TOCAR.
-      if (retorno[2][0] == false) {
-        if (retorno[2][1] == true) {
-          setGanador(1)
-        }
-        else {
-          setGanador(2)
-        }
-      }
-    }
-    else {
-      console.log("FALTAN DATOZ")
-      console.log(equipoPropio)
-    }
-  }
-
-
 
 
   return (
@@ -337,32 +341,54 @@ export default function Home() {
 
 
           <br></br>
-          {pokemonPropio.moves.map((move, i) => (
+          {pokemonPropio.isDefeated == false && pokemonAjeno.isDefeated == false
+            ? <>
+              {datosLocales.turno == ""
+                ? <>
+                  {pokemonPropio.moves.map((move, i) => (
 
-            <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i] == 0}>{moves[move].name}</button>
-          ))}
+                    <button onClick={seleccionarAtaquePropio} value={i} key={i} disabled={pokemonPropio.pps[i] == 0}>{moves[move].name}</button>
+                  ))}
 
-          <h3>Equipo propio</h3>
-          {equipoPropio.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon, i) => (
-            <div key={i}>
-              <button type="radio" name="seleccionarPokemonPropio" value={pokemon.id} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
-            </div>
-          ))}
+                  <h3>Equipo propio</h3>
+                  {equipoPropio.filter(pokemon => pokemon.combatiendo == false && pokemon.isDefeated == false).map((pokemon, i) => (
+                    <div key={i}>
+                      <button type="radio" name="seleccionarPokemonPropio" value={i} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
+                    </div>
+                  ))}</>
+                : <>
+                  <p>Esperando al otro jugador</p>
+                </>
+              }
+
+            </>
+            : <>
+              {pokemonPropio.isDefeated == true
+                ? <><p>tu pokemon está debilitado, lol</p>
+                  {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon, i) => (
+                    <button key={i} onClick={remplazarPokemonPropio} value={i}>{pokemon.apodo}</button>
+                  ))}
+                </>
+
+                : <><p>tenés que esperar a que el otro elija su pokemon</p></>
+              }
+
+            </>
+          }
+
 
           <h2>{pokemonAjeno.apodo}</h2>
 
           <h3>{pokemonAjeno.life}/{pokemonAjeno.stats[0]}</h3>
 
-
-
-
-
         </>}
+
+
+
+
 
     </div>
   );
 }
 
-/*      {equipoPropio.filter(pokemon => pokemon.isDefeated == false).map((pokemon,i)=>(
-  <button key={i} onClick={remplazarPokemonPropio} value={pokemon.id}>{pokemon.apodo}</button> 
-))}*/
+/*     */
