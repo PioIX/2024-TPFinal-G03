@@ -38,10 +38,6 @@ export default function Home() {
     console.log(datosLocales)
   }, [datosLocales])
 
-
-  useEffect(() => {
-  }, [])
-
   useEffect(() => {
     if (!socket) return;
 
@@ -70,7 +66,7 @@ export default function Home() {
       }
     })
 
-    socket.on("enviarMovimientoElegido", (data) => {
+    socket.on("enviarMovimiento", (data) => {
       let datosObtenidos = JSON.parse(data.datos)
       let primerPokemon = datosObtenidos.pokemon
       let equipo = datosObtenidos.equipoPropio
@@ -79,7 +75,7 @@ export default function Home() {
       let cambioPokemonA = datosObtenidos.pokemonACambiar
       let retorno = []
       let envio = []
-      console.log("adentro del  socket")
+      console.log("adentro del  socket enviar mov elegido data: ",data)
       setDatosLocales((datosLocalesActuales) => {
         if (parseInt(primerPokemon.idUser) != idUser && datosLocalesActuales.turno != "") {
           console.log("aca empezaría el turno")
@@ -120,6 +116,7 @@ export default function Home() {
         setPokemonAjeno(turno[1])
         setEquipoPropio(turno[2])
         setTurnoPropio("")
+         console.log("devolver turno mi turno")
         setDatosLocales(nuevoObjeto)
         if (turno[4][0] == false) {
           if (retorno[4][1] == true) {
@@ -140,6 +137,7 @@ export default function Home() {
         setPokemonAjeno(turno[0])
         setEquipoPropio(turno[3])
         setTurnoPropio("")
+        console.log("devolver turno mi turno otro turno")
         setDatosLocales(nuevoObjeto)
         if (turno[4][0] == false) {
           if (retorno[4][2] == true) {
@@ -182,6 +180,7 @@ export default function Home() {
     let primerPokemon = JSON.stringify(equipoPropio[event.target.value])
     console.log(primerPokemon)
     nuevoObjeto.pokemon = equipoPropio[event.target.value]
+    console.log("seleccionarPokemonInicial")
     setDatosLocales(nuevoObjeto)
     socket.emit('enviarLeadYEquipo', { primerPokemon: primerPokemon, equipo: equipoPropio });
 
@@ -207,8 +206,9 @@ export default function Home() {
     nuevoObjeto.pokemonACambiar = {}
     nuevoObjeto.equipoPropio = equipoPropio
     setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
+    console.log("seleccionarAtaquePropio")
     setDatosLocales(nuevoObjeto)
-    pureba = 0
+    console.log("funcion del boton, emit: enviarMovimientoElegido")
     socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
   }
 
@@ -232,7 +232,9 @@ export default function Home() {
     nuevoObjeto.pokemonACambiar = equipoPropio[event.target.value]
     nuevoObjeto.equipoPropio = equipoPropio
     setTurnoPropio("change")
+    console.log("seleccionarAtaquePropio")
     setDatosLocales(nuevoObjeto)
+    console.log("funcion boton cambio")
     socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
 
   }

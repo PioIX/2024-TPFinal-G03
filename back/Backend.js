@@ -82,7 +82,7 @@ io.on("connection", (socket) => {
 
 	socket.on('enviarMovimientoElegido', data =>{
 		console.log("ESTAS EN ENVIAR MOVIMIENTO")
-			io.to(req.session.room).emit('enviarMovimientoElegido', { room: req.session.room, datos:data.datos});
+			io.to(req.session.room).emit('enviarMovimiento', { room: req.session.room, datos:data.datos});
 	})
 	
 	socket.on('turno', data =>{
