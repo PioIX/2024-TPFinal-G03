@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useEffect } from "react";
+export let id = 0.2
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
@@ -12,8 +13,7 @@ export default function PaginaRegistro(props){
     let [ID, setID] = useState(0)
     let [listaUsuariosBackend, setListaUsuariosBackend] = useState([])       
     const router = useRouter()
-    const [usuarioLog, setUsuarioLog] = useState('')
-    let id = 0 
+    const [usuarioLog, setUsuarioLog] = useState('') 
 
 
         const traerLista = async () => {

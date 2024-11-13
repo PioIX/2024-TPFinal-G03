@@ -1,11 +1,7 @@
 "use client"
 
-import {species,Specie} from "@/clases/Species"
 import {Pokemon,pokemons} from "@/clases/Pokemon"
 import {pokemonForms, PokemonForm} from "@/clases/PokemonForm"
-import {moves, Move} from "@/clases/moves"
-import {Team} from "@/clases/Team"
-import {Trainer} from "@/clases/Trainer"
 import { damageCalculate, tirarMoneda, turno,descargarPokemons,descargarPokemonsBaseDeDatos, descargarMovimientos, pureba, comprobarMovsRepetidos, comprobarApodo, comprobarPokemones, comprobarEvs } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import CreadorPokemon from "@/componentes/creadorPokemon"
@@ -46,7 +42,7 @@ export default function Home() {
     nuevoArrayApodo[id] = event.target.value
     setApodosEquipos(nuevoArrayApodo) 
   
-    //setApodo1(event.target.value)
+
 }
 
 function registrarMov1(event,id){
@@ -54,13 +50,6 @@ function registrarMov1(event,id){
   nuevoArray[id][event.target.id] = (event.target.value)
   setMovsEquipo(nuevoArray)
 
-  /*let movId = (event.target.id)
-  let mov=(event.target.value)
-  console.log("movId: ",movId)
-  console.log("mov: ",mov)
-  let nuevoArray = [].concat(movs1)
-  nuevoArray[movId] = mov
-  setMovs1(nuevoArray)  */
 }
 
 function seleccionarPokemon1(event,id){
@@ -71,18 +60,16 @@ function seleccionarPokemon1(event,id){
   setEquipo(nuevoArrayEquipo)
   nuevoArrayApodo[id] = pokemonForms[event.target.value].name
   setApodosEquipos(nuevoArrayApodo)
-  //setPokemon1(pokemonForms[event.target.value])
-  //setApodo1(pokemonForms[event.target.value].name)
   for (let i = 0;i<statEquipo[id].length;i++) {
     
     if (i == 0) {
       console.log(id)
       nuevoArrayStats[id][i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsEquipo[id][i]/4)) + 100 + 10)
-      //statPokemon1[i] = Math.round((100/100 * ((pokemonForms[event.target.value].baseStats[i]*2) + 31 + evsPokemon1[i]/4)) + 100 + 10)
+     
     }
     else {
       nuevoArrayStats[id][i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsEquipo[id][i]/4)))
-      //statPokemon1[i] = Math.round(5 + (100/100 * ((pokemonForms[event.target.value].baseStats[i]*2)+31+evsPokemon1[i]/4)))
+
     }
   }
   setStatEquipo(nuevoArrayStats)
@@ -152,7 +139,6 @@ function validar() {
         <option>hoal</option>
         <option>skibidi</option>
       </select>
-      {/* <button onClick={descargarPokemons}>Descargar Pokemons</button> */}
       {equipo[0]==""
       ?<></>
       :

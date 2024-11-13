@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useEffect } from "react";
+export let id = 0.2
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
     let[nombreUsuario, setnombreUsuario] = useState('')
     let[errorLog, setErrorLog] = useState('')
     let [ID, setID] = useState(0.1)
-    let id = 0.2
     let [listaUsuariosBackend, setListaUsuariosBackend] = useState([])       
     const router = useRouter()
 
