@@ -10,6 +10,9 @@ import Comentario from "./Comentario"
 export default function PaginaCombate(){
     let [vidaRestante1, setVidarestante1] = useState(500)
     let [vidaTotal1, setVidaTotal1] = useState(1000)
+    let [textoFinal1, setTextoFinal1] = useState("ganaste")
+    let [textoFinal2, setTextoFinal2] = useState("perdiste")
+
 
     return(
         <div className="fondo6" style={{backgroundColor:"gray"}}>
@@ -75,26 +78,28 @@ export default function PaginaCombate(){
                     <div style={{width:"37%", display:"grid", paddingTop:"1%", paddingLeft:"7%"}}>
                         <div>
                             <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/b4tjxrof1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/b4tjxrof1pe81.gif"></PokemonesCambio>
                                 <p style={{width:"5%"}}></p>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/2dye1fpf1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/2dye1fpf1pe81.gif"></PokemonesCambio>
                             </div>
                             <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/rq61yrof1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/rq61yrof1pe81.gif"></PokemonesCambio>
                                 <p style={{width:"5%"}}></p>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/z24twzof1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/z24twzof1pe81.gif"></PokemonesCambio>
                             </div>
                             <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/6z1y41pf1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/6z1y41pf1pe81.gif"></PokemonesCambio>
                                 <p style={{width:"5%"}}></p>
-                                <PokemonesCambio NombrePokemon="sdfbnj" VidaTotal={vidaTotal1} VidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/so36fsof1pe81.gif"></PokemonesCambio>
+                                <PokemonesCambio NombrePokemon="sdfbnj" vidaPokemon={vidaTotal1} vidaRestante={vidaRestante1} PokemonCambio="https://i.redd.it/so36fsof1pe81.gif"></PokemonesCambio>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div style={{display:"n"}}>
-
+            <div style={{display:"none", width:"100vw", position:"absolute", zIndex:"1", visibility:"", backgroundColor:"rgb(51,102,175, 0.7)", minHeight:"100vh", justifyContent:"center", alignContent:"center", top:"0", bottom:"0"}}>
+                <h1 style={{height:"auto", paddingTop:"15%", textAlign:"center"}}><b>{textoFinal1}</b></h1>
+                <h2 style={{paddingTop:"5%"}}></h2>
+                <button style={{fontSize:"200%", backgroundColor:"aqua", border:"0", boxShadow:"black 0.2em 0.2em", borderRadius: "80px", padding:"5px"}}>volver al inicio</button>
             </div>
         </div>
     )

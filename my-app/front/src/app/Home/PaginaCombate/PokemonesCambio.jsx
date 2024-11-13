@@ -4,30 +4,34 @@ import { useEffect, useState } from "react"
 
 export default function PokemonesCambio(props){
     
+    let [tamanoColor, setTamanoColor] = useState("100%");
     let [fondoVida, setFondoVida] = useState("green")
-    let [tamanoBarra, setTamanoBarra] = useState("50%")
 
     useEffect(() => {
-        setearFondoVida(props.VidaRestante, props.VidaTotal)
+        setearFondoVida(props.vidaRestante, props.vidaPokemon)
     }, [fondoVida])
 
-    function setearFondoVida(vidaRestante, VidaTotal){
-        if (vidaRestante < (VidaTotal * 0.25)){
+    function setearFondoVida(vidaRestante, vidaPokemon){
+        if (vidaRestante < (vidaPokemon * 0.25)){
+            setTamanoColor(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}`)
             setFondoVida("red")
-        } else if (vidaRestante < (VidaTotal * 0.75)){
+        } else if (vidaRestante < (vidaPokemon * 0.75)){
+            setTamanoColor(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}`)
             setFondoVida("orange")
-        } else if (vidaRestante > (VidaTotal * 0.75)){
+        } else if (vidaRestante > (vidaPokemon * 0.75)){
+            setTamanoColor(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}`)
             setFondoVida("green")
         }
     }
 
     return(
-        <div style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px"}}>
+        <button style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px", border:"0"}}>
             <img style={{width:"30%"}} src={props.PokemonCambio}></img>
             <div style={{display:"grid", paddingLeft:"5%"}}>
                 <p style={{fontSize:"20px", paddingTop:"5%"}}>{props.NombrePokemon}</p>
-                <p style={{fontSize:"20px", backgroundColor:fondoVida, backgroundSize:tamanoBarra}}>{props.VidaRestante}/{props.VidaTotal}</p>
+                <p style={{fontSize:"120%", width:`100%`,  paddingLeft:"10%"}}>{props.vidaRestante}/{props.vidaPokemon}</p>
+                <p style={{backgroundColor:fondoVida, fontSize:"15px", width:`${tamanoColor}%`, color:fondoVida}}>.</p> 
             </div>
-        </div>
+        </button>
     )
 }
