@@ -7,7 +7,7 @@ import { useState } from "react";
 import Pokemon from "./Pokemon";
 
 export default function Teambuilder() {
-
+    const router = useRouter()
     let[div1, setdiv1] = useState('grid')
     let[div2, setdiv2] = useState('none')
     function editarEquipo(){
@@ -19,8 +19,13 @@ export default function Teambuilder() {
             setdiv2('none')
         }
     }
+
+    function botonCombate(){
+        router.push('/Home/PaginaCombate')
+    }    
+
     return ( 
-        <div className='fondo3'>
+        <div className="fondo4">
             <div className='display'  style={{display:div1}}>
                 <div className="imagenChiquita">
                     <div>  
@@ -38,7 +43,7 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
@@ -48,7 +53,7 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
@@ -57,17 +62,17 @@ export default function Teambuilder() {
                     pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
                     pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
                     pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTE4g5VJEmrxMIP33ev5h8gevlFeNDwYFZ-Fg&s"}
+                    pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
                     pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
                     pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
                     editarEquipo = {editarEquipo}
                     ></Equipospokemon>
                 </div>  
-                <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%"}}>
-                    <button className="botonCombate">¡combate!</button>
+                <div style={{width:"100%", justifyContent:"right", display:"flex", paddingRight:"2%", paddingBottom:"1%"}}>
+                    <button className="botonCombate" onClick={botonCombate}><img style={{width:"90%"}} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                 </div>
             </div>
-            <div className='display'  style={{display:div2}}>
+            <div className='display' style={{display:div2}}>
                 <div className="imagenChiquita">
                     <div>  
                         <Image 

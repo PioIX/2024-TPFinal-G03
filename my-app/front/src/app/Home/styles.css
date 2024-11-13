@@ -33,6 +33,17 @@
     justify-content: center;
 }
 
+.fondo4{
+    background-color: rgb(13, 109, 109);
+    background-size: cover;
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .subtitulo1{
     float: right;
     font-size: 60px;
@@ -177,7 +188,7 @@
 
 .botonEditar{
     font-size: 50px;
-    background-color: yellow;
+    background-color: aqua;
     border: 0;
     border-radius: 30px;
     width: 10%;
@@ -185,7 +196,7 @@
 }
 
 .botonEditar:hover{
-    background-color: green;
+    background-color: white;
 }
 
 .botonEquipoSeleccionado:focus{
@@ -210,33 +221,34 @@
 }
 
 .botonCombate{
-    font-size: 400%;
-    background-color: #feca04;
+    background-color: white;
     box-shadow: black 0.2em 0.2em;
-    width: 20%;
+    width: 7%;
     padding: 5px;
-    margin: 35px 0px;
     border-radius: 80px;
     border: 0;
 }
 
 .nombrePokemon1{
-    background-color: gray;
+    background-color: black;
     width: 40%;
-    background-color: #cbd6e1;
-    border-top-right-radius: 10% 30%;
-    border-top-left-radius: 10% 30%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    color: rgb(11, 199, 199);
 }
 
 .datosPokemon{
-    width: 100%;
-    background-color: #dae5f0;
+    width: 103%;
+    background-color: black;
     display: flex;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+    border-bottom-left-radius: 22px;
 }
 
 .nombrePokemon2{
     width: 90%;
-    background-color: white;
+    background-color: rgb(11, 199, 199);
     padding-left: 5px;
     border: 0;
     font-size: 200%;
@@ -244,31 +256,28 @@
 }
 
 .imagenPokemonEditorEquipo{
-    width: 75%;
+    width: 90%;
+    height: 70%;
     padding-left:15%;
-    margin: 5px 5px 5px 5px;
 }
 
 .pokemonElegido{
     width: auto;
-    background-color: white;
+    background-color: rgb(11, 199, 199);
+    color: black;
     padding-left: 5px;
     border-radius: 10px;
 }
 
 .botonVolverAtras{
     font-size: 300%;
-    background-color: #feca04;
-    box-shadow: black 0.2em 0.2em;
+    background-color: black;
+    color: rgb(11, 199, 199);
     width: 25%;
     padding: 5px;
     margin: 35px 0px;
     border-radius: 80px;
     border: 0;
-}
-
-.botonVolverAtras:hover{
-    background-color: green;
 }
 
 .estiloSelectorMovimiento{
@@ -277,5 +286,125 @@
     border-radius:20px;
     padding-left: 1%;
     padding-bottom: 1%;
+    background-color: rgb(11, 199, 199);
     display: grid;
+}
+
+.valores{
+    font-size: 150%;
+    color: rgb(11, 199, 199);
+}
+
+.sliderSalud{
+    width: 90%;
+    background: white;  
+}
+.sliderSalud::-webkit-progress-bar {
+    width: 90%;
+    background: #fd0101;
+}
+
+.sliderAtaque{
+    width:90%;
+}
+
+.sliderDefensa{
+    width:90%;
+}
+
+.sliderAtEspecial{
+    width:90%;
+}
+
+.sliderDfEspecial{
+    width:90%;
+}
+
+.sliderVelocidad{
+    width:90%;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none; 
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    border-radius: 16px;
+}
+  
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 15px;
+    background: white;
+    border-radius: 16px;
+}
+  
+input[type="range"]::-moz-range-track {
+    height: 15px;
+    background: rgb(11, 199, 199);
+    border-radius: 16px;
+}
+  
+input[type="range"]::-webkit-slider-thumb {
+    /* removing default appearance */
+    -webkit-appearance: none;
+    appearance: none; 
+    /* creating a custom design */
+    height: 15px;
+    width: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    border: 2px solid rgb(11, 199, 199);
+    /*  slider progress trick  */
+    box-shadow: -407px 0 0 400px rgb(11, 199, 199);
+}
+
+.fondo5{
+    width: 55%;
+    display: grid; 
+    background-image: url('https://img.freepik.com/vector-gratis/fondo-efecto-zoom-degradado-azul_23-2149762303.jpg?semt=ais_hybrid');
+    background-size: cover; 
+    min-height: auto;
+    max-width: auto;
+    border-radius: 80px;
+
+}
+
+.fondo6{
+    padding: 0;
+    box-sizing: border-box;
+    min-height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.fondoCombate{
+    min-height: 30vh;
+    max-width: 100%;
+    background-size: cover; 
+    width: 100% ;
+    display: inline-flex;
+    background-image: url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/59239705-5ebf-4a7a-9dee-5dd305685980/d6x068t-c0c57a81-186c-4c78-a6b9-cbb57bd28e21.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzU5MjM5NzA1LTVlYmYtNGE3YS05ZGVlLTVkZDMwNTY4NTk4MFwvZDZ4MDY4dC1jMGM1N2E4MS0xODZjLTRjNzgtYTZiOS1jYmI1N2JkMjhlMjEucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.lm2wxkfT0jnGdM4sT1DAL7qwmMTLK9wLH9wL95qk1hk");
+}
+
+.pokemonCombate{
+    width: 60%;
+    text-align: center;
+}
+
+.scrollbarComentarios{
+    width: 40%; 
+    background-color: gray;
+    overflow: scroll;
+    height: 380px;
+}
+
+.scrollbarComentarios::-webkit-scrollbar{
+    width: 10px;
+}
+
+.scrollbarComentarios::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background-color: black;
 }
