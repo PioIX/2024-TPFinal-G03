@@ -93,6 +93,9 @@ export default function PaginaCombate(){
                     </div>
                 </div>
             </div>
+            <div style={{display:"n"}}>
+
+            </div>
         </div>
     )
 }
