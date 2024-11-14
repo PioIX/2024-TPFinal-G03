@@ -9,6 +9,8 @@ import { pokemonForms, PokemonForm } from "@/clases/PokemonForm"
 import { damageCalculate, tirarMoneda, turno, descargarPokemons, descargarPokemonsBaseDeDatos, descargarMovimientos, pureba, comprobarMovsRepetidos, comprobarApodo, comprobarPokemones, comprobarEvs } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation'
+import { id } from "../Logeo/page";
+import { idRegister } from "../Registro/page";
 export let equipoValidado = []
 export let idUser = 0
 
@@ -29,7 +31,7 @@ export default function Teambuilder() {
     }
 
     function botonCombate() {
-        router.push('/Home/PaginaCombate')
+        router.push('/paginaCombate')
     }
     // ------------------------- FIN Cosas del html ---------------
     // ------------------------- FUNCIONALIDADES ---------------
@@ -38,7 +40,6 @@ export default function Teambuilder() {
     let [evsEquipo, setEvsEquipo] = useState([[252, 0, 252, 0, 0, 0], [252, 252, 0, 0, 0, 0], [252, 0, 252, 0, 0, 0], [252, 0, 0, 252, 0, 0], [0, 252, 0, 0, 0, 252], [0, 252, 0, 0, 0, 252]])
     let [statEquipo, setStatEquipo] = useState([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
     let [movsEquipo, setMovsEquipo] = useState([[0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4]])
-    const [id, setId] = useState(0)
     const router = useRouter()
 
     useEffect(() => {
@@ -49,6 +50,13 @@ export default function Teambuilder() {
                 setEquipo(nuevoArray)
             }
         })
+        if (id == 0.2) {
+            idUser = idRegister
+        }
+        else {
+            idUser = id
+        }
+        console.log(idUser)
     }, [])
 
 
@@ -124,18 +132,19 @@ export default function Teambuilder() {
         let check = true
         let mientras = true
         let x = 0
-        while (mientras == true && check == true) {
-            for (let i = 0; i < equipo.length; i++) {
+        for (let i = 0; i < equipo.length; i++) {
+            if (check == true) {
                 check = comprobarApodo(apodosEquipo[i], i)
                 check = comprobarMovsRepetidos(movsEquipo[i], i)
                 check = comprobarPokemones(equipo[i])
                 check = comprobarEvs(evsEquipo[i], i)
             }
-            x++
-            if (x < equipo.length) {
-                mientras = false
-            }
+            /*console.log(apodosEquipo[i])
+            console.log(movsEquipo[i])
+            console.log(equipo[i])
+            console.log(evsEquipo[i])*/
         }
+
         if (check == true) {
             console.log("Equipo validado")
             console.log(movsEquipo[0])
@@ -143,7 +152,6 @@ export default function Teambuilder() {
                 equipoValidado.push(new Pokemon(equipo[i], movsEquipo[i], evsEquipo[i], apodosEquipo[i], idUser))
             }
             console.log(equipoValidado)
-            router.push("/")
         }
         else {
             console.log("Toda la noche está contando oveja")

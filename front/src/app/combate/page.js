@@ -3,8 +3,8 @@
 import { moves, Move } from "@/clases/moves"
 import { damageCalculate, tirarMoneda, turno, descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
-import { equipoValidado } from "../teamBuilder/page";
-import { idUser } from "../teamBuilder/page";
+//import { equipoValidado } from "../teamBuilder/page";
+//import { idUser } from "../teamBuilder/page";
 import { useSocket } from "@/hooks/useSocket"
 
 

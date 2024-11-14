@@ -140,8 +140,6 @@ app.get('/pokemonMovs', async function(req,res){
 })
 
 app.post('/insertarPokemons', async function(req,res) {
-	console.log("Pokemos recibido del front:",req.body)
-	console.log(`select * from pokemons where Id=${req.body.Id};`)
 	let result = await MySql.realizarQuery(`select * from pokemons where Id=${req.body.Id};`) 
 
 	if (result.length == 0){
@@ -187,6 +185,24 @@ app.delete('/borrarMoves', async function(req,res) {
 	res.send("oki");
 })
 
-app.post('/calcularTurno', async function name(req, res) {
+app.get('/traerUsuarios', async function(req, res){
+	console.log(req.query)
+	let lista = await MySql.realizarQuery(`select * FROM Usuarios`)
+	res.send(lista)
+})
 
+//POST
+app.post('/insertarUsuarios', async function(req,res) {
+	console.log("POST /insertarUsuarios req.body:",req.body)
+	let result = await MySql.realizarQuery(`select * from Usuarios where ID_usuario=${req.body.ID_usuario};`) 
+	console.log(result)
+	if (result.length == 0){
+		await MySql.realizarQuery(`INSERT INTO Usuarios (ID_usuario, nombre, contrasenia, puntos)
+		VALUES (${req.body.ID_usuario}, '${req.body.nombre}', '${req.body.contrasenia}', ${req.body.puntos})`);
+		res.send("oki")
+
+	}
+	else{
+		res.send("ya existre")
+	}
 })

@@ -45,6 +45,7 @@ export default function PaginaRegistro(props){
 
     useEffect(()=>{
         console.log(ID)
+        id = ID
     },[ID])
     
 
@@ -89,7 +90,7 @@ export default function PaginaRegistro(props){
         switch(result){
             case 1:
                 alert("se inicio exitosamente")
-                router.push('/Teambuilder')
+                router.push('/teamBuilder')
                 break;
             case 2:
                 alert('contraseña incorrecta')

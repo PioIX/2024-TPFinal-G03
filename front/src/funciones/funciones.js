@@ -254,7 +254,7 @@ export function comprobarApodo(apodo, id) {
 export function comprobarEvs(evs, id) {
     let check = true
     let sumaTotal = 0
-    for (let i = 0;i<evs;i++){
+    for (let i = 0;i<evs.length;i++){
         sumaTotal += evs[i]
     }
     if (sumaTotal > 510) {

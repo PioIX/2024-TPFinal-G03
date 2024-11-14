@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useEffect } from "react";
-import { id } from '../Logeo/page';
+export let idRegister = 0.2
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
@@ -71,7 +71,7 @@ export default function PaginaRegistro(props){
         console.log(i)
         if (check == false){
             console.log("hol")
-            id = i
+            idRegister = i
             setID(i)
             return 1}
         else{
@@ -80,6 +80,7 @@ export default function PaginaRegistro(props){
 
     useEffect(()=>{
         console.log(ID)
+        idRegister = ID
     },[ID])
 
 
@@ -88,7 +89,7 @@ export default function PaginaRegistro(props){
         let puntos = 0
         switch(result){
             case 1:
-                subirUsuario(id, nombreUsuario, contrasenia, puntos)
+                subirUsuario(idRegister, nombreUsuario, contrasenia, puntos)
                 alert("Se registro exitosamente")
                 router.push('/teamBuilder')
                 break;
