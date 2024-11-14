@@ -1,10 +1,10 @@
 "use client"
-import '@/app/Home/styles.css'
+import '@/app/styles.css'
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import { useEffect } from "react";
-export let id = 0.2
+import { id } from '../Logeo/page';
 
 export default function PaginaRegistro(props){
     let[contrasenia, setContrasenia] = useState('')
@@ -90,7 +90,7 @@ export default function PaginaRegistro(props){
             case 1:
                 subirUsuario(id, nombreUsuario, contrasenia, puntos)
                 alert("Se registro exitosamente")
-                router.push('/Home/Teambuilder')
+                router.push('/teamBuilder')
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')

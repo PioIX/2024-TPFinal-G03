@@ -156,7 +156,7 @@ function ponerPokemonEnLaLista(pokemon,z,movs) {
         for (let i = 0;i<movs.length;i++) {
             moves.push(movs[i].move)
         }
-        pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name,moves))
+        pokemonForms.push(new PokemonForm(pokemon.ps,pokemon.atk,pokemon.def,pokemon.spa,pokemon.spd,pokemon.spe,pokemon.weight,pokemon.type1,pokemon.type2,pokemon.name,moves,pokemon.spriteFront,pokemon.spriteBack))
     }
     moves = []
 }

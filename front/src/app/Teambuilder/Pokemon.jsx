@@ -1,8 +1,8 @@
 "use client"
-import '@/app/Home/styles.css'
+import '@/app/styles.css'
 import { encontrarMov, encontrarMovByNombre } from "@/funciones/funciones"
 
-export default function Pokemon(props) {
+export default function PokemonComponente(props) {
     const nombresStats = ["Salud", "Ataque", "Defensa", "Ataque especial", "Defensa especial", "Velocidad"]
     const nombreClass = ['sliderSalud', 'sliderAtaque', 'sliderDefensa', 'sliderAtEspecial', 'sliderDfEspecial', 'sliderVelocidad']
     let movs = encontrarMov(props.pokemon.posibleMovs)

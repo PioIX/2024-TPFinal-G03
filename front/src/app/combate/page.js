@@ -1,12 +1,6 @@
 "use client"
 
-import styles from "./page.module.css";
-import { species, Specie } from "@/clases/Species"
-import { Pokemon, pokemons } from "@/clases/Pokemon"
-import { pokemonForms, PokemonForm } from "@/clases/PokemonForm"
 import { moves, Move } from "@/clases/moves"
-import { Team } from "@/clases/Team"
-import { Trainer } from "@/clases/Trainer"
 import { damageCalculate, tirarMoneda, turno, descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
 import { equipoValidado } from "../teamBuilder/page";
@@ -19,13 +13,12 @@ import { useSocket } from "@/hooks/useSocket"
 export default function Home() {
   const [pokemonPropio, setPokemonPropio] = useState("")
   let [pokemonAjeno, setPokemonAjeno] = useState("")
-  let [turnoPropio, setTurnoPropio] = useState({})
   let [equipoPropio, setEquipoPropio] = useState([])
   let [ganador, setGanador] = useState("")
   let [coco, setCoco] = useState(0)
-  let pureba = 0
   // este use state es la bestialidad que se le manda al socket para evitar los errores de actualización que tienen sus metodos.
   //Podría borrar los otros useState y hacer que el codigo sea bastante mas limpio, pero no estoy viendo un peso por esto.
+  //Al final eliminé la mayoría porque los pude remplazar
   const [datosLocales, setDatosLocales] = useState({ pokemon: "", equipoPropio: [], turno: "", mov: 0.1, pokemonACambiar: {} })
 
   const [empezarCombate, setEmpezarCombate] = useState(false)
@@ -117,7 +110,6 @@ export default function Home() {
         setPokemonPropio(turno[0])
         setPokemonAjeno(turno[1])
         setEquipoPropio(turno[2])
-        setTurnoPropio("")
          console.log("devolver turno mi turno")
         setDatosLocales(nuevoObjeto)
         if (turno[4][0] == false) {
@@ -138,7 +130,6 @@ export default function Home() {
         setPokemonPropio(turno[1])
         setPokemonAjeno(turno[0])
         setEquipoPropio(turno[3])
-        setTurnoPropio("")
         console.log("devolver turno mi turno otro turno")
         setDatosLocales(nuevoObjeto)
         if (turno[4][0] == false) {
@@ -207,7 +198,6 @@ export default function Home() {
     nuevoObjeto.mov = event.target.value
     nuevoObjeto.pokemonACambiar = {}
     nuevoObjeto.equipoPropio = equipoPropio
-    setTurnoPropio(moves[pokemonPropio.moves[event.target.value]])
     console.log("seleccionarAtaquePropio")
     setDatosLocales(nuevoObjeto)
     console.log("funcion del boton, emit: enviarMovimientoElegido")
@@ -233,7 +223,6 @@ export default function Home() {
     nuevoObjeto.mov = 0.1
     nuevoObjeto.pokemonACambiar = equipoPropio[event.target.value]
     nuevoObjeto.equipoPropio = equipoPropio
-    setTurnoPropio("change")
     console.log("seleccionarAtaquePropio")
     setDatosLocales(nuevoObjeto)
     console.log("funcion boton cambio")
@@ -267,7 +256,6 @@ export default function Home() {
           equipoPropio[i].combatiendo = false
         }
       }
-      /*preguntar a franco porque no se acutaliza el quipo*/
       setCoco(coco + 1)
     }
 
@@ -278,43 +266,13 @@ export default function Home() {
 
   }, [pokemonPropio])
 
-  /*function remplazarPokemonAjeno(event){
-    pokemonAjeno.combatiendo = false
-    setPokemonAjeno(pokemons[event.target.value])
-  }*/
-
-
-  /*function actualizarPokemonAjeno(){
-    if (pokemonAjeno != "") {
-      pokemonAjeno.combatiendo = true
-      for(let i = 0;i < equipoAjeno.length;i++) {
-        if (equipoAjeno[i] != pokemonAjeno) {
-          equipoAjeno[i].combatiendo = false
-        }
-      }
-      setCoco(coco + 1)
-    }
-  
-  }*/
-
-  /*useEffect(()=>{
-    actualizarPokemonAjeno()
-    
-  }, [pokemonAjeno])*/
-
-
   function batallaTerminada() {
     return <h3>holas</h3>
   }
 
-
   useEffect(() => {
     batallaTerminada()
   }, [ganador])
-
-
-
-
 
   return (
     <div >

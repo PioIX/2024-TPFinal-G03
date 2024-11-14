@@ -1,5 +1,5 @@
 "use client"
-import '@/app/Home/styles.css'
+import '@/app/styles.css'
 
 
 export default function Equipospokemon(props){

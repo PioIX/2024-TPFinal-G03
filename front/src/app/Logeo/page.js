@@ -1,5 +1,5 @@
 "use client"
-import '@/app/Home/styles.css'
+import '@/app/styles.css'
 import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -89,7 +89,7 @@ export default function PaginaRegistro(props){
         switch(result){
             case 1:
                 alert("se inicio exitosamente")
-                router.push('/Home/Teambuilder')
+                router.push('/Teambuilder')
                 break;
             case 2:
                 alert('contraseña incorrecta')

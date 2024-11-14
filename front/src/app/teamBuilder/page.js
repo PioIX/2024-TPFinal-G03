@@ -2,7 +2,7 @@
 // COMPONENTES Y ESTILOS
 import Equipospokemon from "./Equipospokemon";
 import Image from 'next/image'
-import Pokemon from "./Pokemon";
+import PokemonComponente from "./Pokemon";
 // FUNCIONES
 import { Pokemon, pokemons } from "@/clases/Pokemon"
 import { pokemonForms, PokemonForm } from "@/clases/PokemonForm"
@@ -45,7 +45,7 @@ export default function Teambuilder() {
         descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
             let nuevoArray = [].concat(equipo)
             for (let i = 0; i < equipo.length; i++) {
-                nuevoArray[i] = pokemonForms[0]
+                nuevoArray[i] = pokemonForms[5]
                 setEquipo(nuevoArray)
             }
         })
@@ -151,84 +151,91 @@ export default function Teambuilder() {
     }
 
     return (
-        <div className="fondo4">
-            <div className='display' style={{ display: div1 }}>
-                <div className="imagenChiquita">
-                    <div>
-                        <Image
-                            src="/imagenes/pokemonLogo.png"
-                            width={280}
-                            height={100}
-                            alt='hols'
-                        />
-                        <h4 className='subtitulo2'>Chowdawn</h4>
+        <>
+            {equipo[0] != ""
+                ? <div className="fondo4">
+                    <div className='display' style={{ display: div1 }}>
+                        <div className="imagenChiquita">
+                            <div>
+                                <Image
+                                    src="/imagenes/pokemonLogo.png"
+                                    width={280}
+                                    height={100}
+                                    alt='hols'
+                                />
+                                <h4 className='subtitulo2'>Chowdawn</h4>
+                            </div>
+                        </div>
+                        <div>
+                            <Equipospokemon nombreEquipo={"rgbyiu"}
+                                pokemon1={equipo[0].spriteFront}
+                                pokemon2={equipo[1].spriteFront}
+                                pokemon3={equipo[2].spriteFront}
+                                pokemon4={equipo[3].spriteFront}
+                                pokemon5={equipo[4].spriteFront}
+                                pokemon6={equipo[5].spriteFront}
+                                editarEquipo={editarEquipo}
+                            >
+                            </Equipospokemon>
+                        </div>
+                        <div style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
+                            <button className="botonCombate" onClick={botonCombate}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
+                        </div>
+                    </div>
+                    <div className='display' style={{ display: div2 }}>
+                        <div className="imagenChiquita">
+                            <div>
+                                <Image
+                                    src="/imagenes/pokemonLogo.png"
+                                    width={280}
+                                    height={100}
+                                    alt='hols'
+                                />
+                                <h4 className='subtitulo2'>Chowdawn</h4>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <button className="botonVolverAtras" onClick={editarEquipo}> ←volver atras</button>
+                                <button className="botonVolverAtras" onClick={validar}>validar</button>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[0].spriteFront}
+                                    pokemonName={apodosEquipo[0]} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs={obtenerEvs} statPokemon={statEquipo[0]}
+                                ></PokemonComponente>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[1].spriteFront}
+                                    pokemonName={apodosEquipo[1]} lista={pokemonForms} id={1} pokemon={equipo[1]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[1]} funcionEvs={obtenerEvs} statPokemon={statEquipo[1]}
+                                ></PokemonComponente>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[2].spriteFront}
+                                    pokemonName={apodosEquipo[2]} lista={pokemonForms} id={2} pokemon={equipo[2]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[2]} funcionEvs={obtenerEvs} statPokemon={statEquipo[2]}
+                                ></PokemonComponente>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[3].spriteFront}
+                                    pokemonName={apodosEquipo[3]} lista={pokemonForms} id={3} pokemon={equipo[3]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[3]} funcionEvs={obtenerEvs} statPokemon={statEquipo[3]}
+                                ></PokemonComponente>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[4].spriteFront}
+                                    pokemonName={apodosEquipo[4]} lista={pokemonForms} id={4} pokemon={equipo[4]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[4]} funcionEvs={obtenerEvs} statPokemon={statEquipo[4]}
+                                ></PokemonComponente>
+                                <PokemonComponente
+                                    imagenPokemon={equipo[5].spriteFront}
+                                    pokemonName={apodosEquipo[5]} lista={pokemonForms} id={5} pokemon={equipo[5]} funcionNickname={registrarApodo}
+                                    funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[5]} funcionEvs={obtenerEvs} statPokemon={statEquipo[5]}
+                                ></PokemonComponente>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div>
-                    <Equipospokemon nombreEquipo={"rgbyiu"}
-                        pokemon1={"https://cl2.buscafs.com/www.levelup.com/public/uploads/images/875285/875285.jpg"}
-                        pokemon2={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWFnDxVMJ4uU5bKxIqDbCKrC9ee93h55Fa_Q&s"}
-                        pokemon3={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3dmPIuElf3Clj2-ND4-t3nHwpuN4uB1vCZw&s"}
-                        pokemon4={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLnXwziEuZxrCu1fUMAnkr7wcFcf-Vg8pBlw&s"}
-                        pokemon5={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWbOm88aA0zUfU6Jy0NFSR5QA9nk8cdg8f6g&s"}
-                        pokemon6={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRGzshcmB_0wUWKFt2WdCSF-eaTk9tEiiMsw&s"}
-                        editarEquipo={editarEquipo}
-                    >
-                    </Equipospokemon>
-                </div>
-                <div style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
-                    <button className="botonCombate" onClick={botonCombate}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
-                </div>
-            </div>
-            <div className='display' style={{ display: div2 }}>
-                <div className="imagenChiquita">
-                    <div>
-                        <Image
-                            src="/imagenes/pokemonLogo.png"
-                            width={280}
-                            height={100}
-                            alt='hols'
-                        />
-                        <h4 className='subtitulo2'>Chowdawn</h4>
-                    </div>
-                </div>
-                <div>
-                    <div>
-                        <button className="botonVolverAtras" onClick={editarEquipo}> ←volver atras</button>
-                        <button className="botonVolverAtras" onClick={validar}>validar</button>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[0]} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs={obtenerEvs} statPokemon={statEquipo[0]}
-                        ></Pokemon>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[1]} lista={pokemonForms} id={1} pokemon={equipo[1]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[1]} funcionEvs={obtenerEvs} statPokemon={statEquipo[1]}
-                        ></Pokemon>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[2]} lista={pokemonForms} id={2} pokemon={equipo[2]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[2]} funcionEvs={obtenerEvs} statPokemon={statEquipo[2]}
-                        ></Pokemon>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[3]} lista={pokemonForms} id={3} pokemon={equipo[3]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[3]} funcionEvs={obtenerEvs} statPokemon={statEquipo[3]}
-                        ></Pokemon>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[4]} lista={pokemonForms} id={4} pokemon={equipo[4]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[4]} funcionEvs={obtenerEvs} statPokemon={statEquipo[4]}
-                        ></Pokemon>
-                        <Pokemon
-                            imagenPokemon={"https://preview.redd.it/my-collection-of-isaac-dancing-gifs-v0-kgegurof1pe81.gif?width=168&auto=webp&s=7f8c0f694cdf55ca5c7eaa624720e23945ff641f"}
-                            pokemonName={apodosEquipo[5]} lista={pokemonForms} id={5} pokemon={equipo[5]} funcionNickname={registrarApodo}
-                            funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[5]} funcionEvs={obtenerEvs} statPokemon={statEquipo[5]}
-                        ></Pokemon>
-                    </div>
-                </div>
-            </div>
-        </div>
+                : <></>
+
+            }
+
+        </>
     )
 }
