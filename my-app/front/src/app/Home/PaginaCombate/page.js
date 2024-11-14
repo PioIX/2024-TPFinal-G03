@@ -1,22 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import '@/app/Home/styles.css'
 import Movimientos from "./Movimientos"
 import PokemonesCombate from "./PokemonesCombate"
 import PokemonesCambio from "./PokemonesCambio"
+import PrimerPokemon from "./SeleccionPokemonInicial"
 import Comentario from "./Comentario"
 
 export default function PaginaCombate(){
     let [vidaRestante1, setVidarestante1] = useState(500)
     let [vidaTotal1, setVidaTotal1] = useState(1000)
     let [textoFinal1, setTextoFinal1] = useState("ganaste")
-    let [textoFinal2, setTextoFinal2] = useState("perdiste")
+    let [textoFinal2, setTextoFina2] = useState("perdiste")
+    const [seccion1, setSeccion1] = useState("grid")
+    const [seccion2, setSeccion2] = useState("none")
+    const [seccion3, setSeccion3] = useState("none")
 
+    function cambiarSecciones(){
+        if (seccion1 == "grid"){
+            setSeccion1("none")
+            setSeccion2("grid")
+        } else if(seccion2 == "none"){
+            setSeccion2("none")
+            setSeccion3("grid")
+        }   
+    }
 
     return(
         <div className="fondo6" style={{backgroundColor:"gray"}}>
-            <div style={{width:"100%", display:"grid", backgroundColor:"gray"}}>
+            <div style={{width:"100%", display:seccion2, backgroundColor:"gray"}}>
                 <div style={{width:"100%", display:"inline-flex", backgroundColor:"gray"}}>
                     <div className="fondoCombate">
                         <div style={{width:"100%", paddingLeft:"9%"}}>
@@ -96,10 +109,24 @@ export default function PaginaCombate(){
                     </div>
                 </div>
             </div>
-            <div style={{display:"none", width:"100vw", position:"absolute", zIndex:"1", visibility:"", backgroundColor:"rgb(51,102,175, 0.7)", minHeight:"100vh", justifyContent:"center", alignContent:"center", top:"0", bottom:"0"}}>
+            <div style={{display:seccion3, width:"100vw", position:"absolute", zIndex:"1", visibility:"", backgroundColor:"rgb(51,102,175, 0.7)", minHeight:"100vh", justifyContent:"center", alignContent:"center", top:"0", bottom:"0"}}>
                 <h1 style={{height:"auto", paddingTop:"15%", textAlign:"center"}}><b>{textoFinal1}</b></h1>
                 <h2 style={{paddingTop:"5%"}}></h2>
                 <button style={{fontSize:"200%", backgroundColor:"aqua", border:"0", boxShadow:"black 0.2em 0.2em", borderRadius: "80px", padding:"5px"}}>volver al inicio</button>
+            </div>
+            <div style={{display:seccion1, width:"100vw", position:"absolute", zIndex:"1", backgroundColor:"rgb(51,102,175, 0.7)", minHeight:"100vh", justifyContent:"center", alignContent:"center", top:"0", bottom:"0"}}>
+                <div style={{width:"100%", alignContent:"center", justifyContent:"center", display:"flex"}}>
+                    <h1>Elige tu primer Pokemon</h1>
+                    <p style={{paddingTop:"5%"}}></p>
+                </div>
+                <div style={{width:"auto", display:"inline-flex", }}>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                    <PrimerPokemon Pokemon="https://i.redd.it/kgegurof1pe81.gif" Funcion={cambiarSecciones}></PrimerPokemon>
+                </div>
             </div>
         </div>
     )

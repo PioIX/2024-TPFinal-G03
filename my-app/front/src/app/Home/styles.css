@@ -407,3 +407,16 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 10px;
     background-color: black;
 }
+
+.PrimerPokemon{
+    width:20%; 
+    padding-Right:2%;
+    height: auto;
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+.PrimerPokemon:hover{
+    width: 24%;
+    padding-right: 0%;
+}
