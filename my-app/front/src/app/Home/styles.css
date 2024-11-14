@@ -50,7 +50,7 @@
     color: #feca04;
     padding-right: 25%;
     height: 10%;
-    text-shadow: #3366af 0.15em 0.15em;
+    text-shadow: #3366af 0.15em 0.15em ;
     font-family: "Pixelify Sans", sans-serif;
 }
 
@@ -362,7 +362,6 @@ input[type="range"]::-webkit-slider-thumb {
 .fondo5{
     width: 55%;
     display: grid; 
-    background-image: url('https://img.freepik.com/vector-gratis/fondo-efecto-zoom-degradado-azul_23-2149762303.jpg?semt=ais_hybrid');
     background-size: cover; 
     min-height: auto;
     max-width: auto;
@@ -397,7 +396,7 @@ input[type="range"]::-webkit-slider-thumb {
     width: 40%; 
     background-color: gray;
     overflow: scroll;
-    height: 380px;
+    height: 440px;
 }
 
 .scrollbarComentarios::-webkit-scrollbar{
@@ -407,4 +406,17 @@ input[type="range"]::-webkit-slider-thumb {
 .scrollbarComentarios::-webkit-scrollbar-thumb{
     border-radius: 10px;
     background-color: black;
+}
+
+.PrimerPokemon{
+    width:20%; 
+    padding-Right:2%;
+    height: auto;
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+.PrimerPokemon:hover{
+    width: 24%;
+    padding-right: 0%;
 }
