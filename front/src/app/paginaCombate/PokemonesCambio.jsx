@@ -21,8 +21,12 @@ export default function PokemonesCambio(props){
         }
     }
 
+    function handlerFunction() {
+        props.funcion(props.valor)
+    }
+
     return(
-        <button onClick={props.funcion} value={props.valor} disabled={props.desabilitado} style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px"}}>
+        <button onClick={handlerFunction} disabled={props.desabilitado} style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px"}}>
             <img style={{width:"30%"}} src={props.PokemonCambio}></img>
             <div style={{display:"grid", paddingLeft:"5%"}}>
                 <p style={{fontSize:"20px", paddingTop:"5%"}}>{props.NombrePokemon}</p>

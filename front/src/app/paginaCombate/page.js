@@ -123,7 +123,7 @@ export default function PaginaCombate() {
                 console.log("devolver turno mi turno")
                 setDatosLocales(nuevoObjeto)
                 if (turno[4][0] == false) {
-                    if (retorno[4][1] == true) {
+                    if (turno[4][1] == true) {
                         setGanador(1)
                     }
                     else {
@@ -143,7 +143,7 @@ export default function PaginaCombate() {
                 console.log("devolver turno mi turno otro turno")
                 setDatosLocales(nuevoObjeto)
                 if (turno[4][0] == false) {
-                    if (retorno[4][2] == true) {
+                    if (turno[4][2] == true) {
                         setGanador(1)
                     }
                     else {
@@ -178,7 +178,7 @@ export default function PaginaCombate() {
         let primerPokemon = JSON.stringify(equipoPropio[valor])
         nuevoObjeto.pokemon = equipoPropio[valor]
         setDatosLocales(nuevoObjeto)
-        socket.emit('enviarLeadYEquipo', { primerPokemon:primerPokemon, equipo:equipoPropio });
+        socket.emit('enviarLeadYEquipo', { primerPokemon: primerPokemon, equipo: equipoPropio });
 
     }
 
@@ -204,25 +204,27 @@ export default function PaginaCombate() {
         socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
     }
 
-    function setPokemonACambiarPropioF(event) {
+    function setPokemonACambiarPropioF(i) {
+        console.log(i)
         let nuevoObjeto = { ...datosLocales }
         nuevoObjeto.turno = "change"
         nuevoObjeto.mov = 0.1
-        nuevoObjeto.pokemonACambiar = equipoPropio[event.target.value]
+        nuevoObjeto.pokemonACambiar = equipoPropio[i]
         nuevoObjeto.equipoPropio = equipoPropio
+
         setDatosLocales(nuevoObjeto)
         socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
 
     }
 
-    function remplazarPokemonPropio(event) {
-        console.log(event.target.value);  // This causes the error
+    function remplazarPokemonPropio(i) {
+        console.log(i);  // This causes the error
         let nuevoObjeto = { ...datosLocales };
-        nuevoObjeto.pokemon = JSON.parse(event.target.value);
-        setPokemonPropio(JSON.parse(event.target.value));
+        nuevoObjeto.pokemon = (equipoPropio[i]);
+        setPokemonPropio(equipoPropio[i]);
         console.log(setPokemonPropio);
         setDatosLocales(nuevoObjeto);
-        socket.emit('remplazarPokemon', { pokemon: event.target.value });
+        socket.emit('remplazarPokemon', { pokemon: JSON.stringify(equipoPropio[i]) });
     }
 
     /*function actualizarPokemonPropio() {
@@ -292,13 +294,13 @@ export default function PaginaCombate() {
                                         <div style={{ width: "70%" }}>
                                             <p style={{ paddingTop: "45%" }}></p>
                                             {/*EL POKEMON DEL OTRO*/}
-                                            <PokemonesCombate nombrePokemon={pokemonAjeno.apodo} vidaRestante={pokemonAjeno.life} vidaPokemon={pokemonAjeno.stats[0]} imagenPokemon={pokemonAjeno.form.spriteFront}></PokemonesCombate>
+                                            <PokemonesCombate nombrePokemon={pokemonPropio.apodo} vidaRestante={pokemonPropio.life} vidaPokemon={pokemonPropio.stats[0]} imagenPokemon={pokemonPropio.form.spriteBack}></PokemonesCombate>
                                         </div>
                                     </div>
                                     <div style={{ width: "80%" }}>
                                         <div style={{ width: "100%", paddingLeft: "30%", paddingTop: "10%" }}>
                                             {/*TU POKEMON*/}
-                                            <PokemonesCombate nombrePokemon={pokemonPropio.apodo} vidaRestante={pokemonPropio.life} vidaPokemon={pokemonPropio.stats[0]} imagenPokemon={pokemonPropio.form.spriteBack}></PokemonesCombate>
+                                            <PokemonesCombate nombrePokemon={pokemonAjeno.apodo} vidaRestante={pokemonAjeno.life} vidaPokemon={pokemonAjeno.stats[0]} imagenPokemon={pokemonAjeno.form.spriteFront}></PokemonesCombate>
                                         </div>
                                     </div>
                                 </div>
@@ -334,39 +336,51 @@ export default function PaginaCombate() {
                                 </div>
                             </div>
                             <div style={{ width: "100%", display: "inline-flex", backgroundColor: "gray" }}>
-                                {pokemonPropio.isDefeated == true
-                                    ? <>{
-                                        equipoPropio.map((pokemon, i) => (
-                                            <div key={i}>
-                                                <button type="radio" name="seleccionarPokemonPropio" value={i} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
-                                                <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.combatiendo == true || pokemon.isDefeated == true)}></PokemonesCambio>
+                                {pokemonPropio.isDefeated == true || pokemonAjeno.isDefeated == true
+                                    ? <>
+                                        {pokemonPropio.isDefeated == true
+                                            ? <>
+                                                {
+                                                    equipoPropio.map((pokemon, i) => (
+                                                        <div key={i}>
+                                                            <PokemonesCambio valor={i} funcion={remplazarPokemonPropio} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.isDefeated == true)}></PokemonesCambio>
+                                                        </div>
+                                                    ))
+                                                }
+                                            </>
+                                            : <>
+                                                <p>Esperando al otro jugador</p>
+                                            </>
+                                        }
+                                    </>
+                                    : <>
+                                        <div className="fondo5">
+                                            {datosLocales.turno == ""
+                                                ? <><div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                    <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[0]].name} valor={0} desabilitado={pokemonPropio.pps[0] == 0}></Movimientos>
+                                                    <p style={{ width: "5%" }}></p>
+                                                    <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[1]].name} valor={1} desabilitado={pokemonPropio.pps[1] == 0}></Movimientos>
+                                                </div>
+                                                    <div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                        <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[2]].name} valor={2} desabilitado={pokemonPropio.pps[2] == 0}></Movimientos>
+                                                        <p style={{ width: "5%" }}></p>
+                                                        <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[3]].name} valor={3} desabilitado={pokemonPropio.pps[3] == 0}></Movimientos>
+                                                    </div></>
+                                                : <p>Esperando al otro jugador</p>
+                                            }
+                                        </div>
+                                        <div style={{ width: "37%", display: "grid", paddingTop: "1%", paddingLeft: "7%" }}>
+                                            <div>
+                                                {equipoPropio.map((pokemon, i) => (
+                                                    <div key={i}>
+                                                        <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                    </div>
+                                                ))}
                                             </div>
-                                        ))
-                                    }</>
-                                    : <div className="fondo5">
-                                        <div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
-                                            <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[0]].name} valor={0} desabilitado={pokemonPropio.pps[0] == 0}></Movimientos>
-                                            <p style={{ width: "5%" }}></p>
-                                            <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[1]].name} valor={1} desabilitado={pokemonPropio.pps[1] == 0}></Movimientos>
                                         </div>
-                                        <div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
-                                            <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[2]].name} valor={2} desabilitado={pokemonPropio.pps[2] == 0}></Movimientos>
-                                            <p style={{ width: "5%" }}></p>
-                                            <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[3]].name} valor={3} desabilitado={pokemonPropio.pps[3] == 0}></Movimientos>
-                                        </div>
-                                    </div>
+                                    </>
                                 }
 
-                                <div style={{ width: "37%", display: "grid", paddingTop: "1%", paddingLeft: "7%" }}>
-                                    <div>
-                                        {equipoPropio.map((pokemon, i) => (
-                                            <div key={i}>
-                                                <button type="radio" name="seleccionarPokemonPropio" value={i} onClick={setPokemonACambiarPropioF}>{pokemon.apodo}</button>
-                                                <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.combatiendo == true || pokemon.isDefeated == true)}></PokemonesCambio>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
