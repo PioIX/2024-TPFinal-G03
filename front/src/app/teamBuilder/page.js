@@ -13,6 +13,7 @@ import { id } from "../Logeo/page";
 import { idRegister } from "../Registro/page";
 export let equipoValidado = []
 export let idUser = 0
+export let salaElegida = ""
 
 export default function Teambuilder() {
 
@@ -127,27 +128,33 @@ export default function Teambuilder() {
         setEvsEquipo(nuevoArray)
         calcularStats(id)
     }
-
+    // ATENCIÓN!!!!!
+    // Actualmente podés elegir un pokemon y luego cambiarlo, por lo que podés tener pokemon ilegales
+    // Es un un cambio de QoL de baja prioridad, pero no estoy muy cómodo sabiendo que existe
+    // Igual si no lo corregimos y alguien se pone a hacerlo en el dia de la expo, lo felicitaría por el esfuerzo
     function validar() {
+        let checkApodo = true
+        let checkMovs = true
+        let checkPokemons = true
+        let checkEvs = true
         let check = true
-        let mientras = true
         let x = 0
         for (let i = 0; i < equipo.length; i++) {
-            if (check == true) {
-                check = comprobarApodo(apodosEquipo[i], i)
-                check = comprobarMovsRepetidos(movsEquipo[i], i)
-                check = comprobarPokemones(equipo[i])
-                check = comprobarEvs(evsEquipo[i], i)
+            if (checkApodo == true && checkMovs == true && checkPokemons == true && checkEvs == true) {
+                checkApodo = comprobarApodo(apodosEquipo[i], i)
+                checkMovs = comprobarMovsRepetidos(movsEquipo[i], i)
+                checkPokemons = comprobarPokemones(equipo[i])
+                checkEvs = comprobarEvs(evsEquipo[i], i)
             }
             /*console.log(apodosEquipo[i])
             console.log(movsEquipo[i])
             console.log(equipo[i])
             console.log(evsEquipo[i])*/
         }
-
+        check = (checkApodo == true && checkMovs == true && checkPokemons == true && checkEvs == true)
         if (check == true) {
             console.log("Equipo validado")
-            console.log(movsEquipo[0])
+            equipoValidado = []
             for (let i = 0; i < equipo.length; i++) {
                 equipoValidado.push(new Pokemon(equipo[i], movsEquipo[i], evsEquipo[i], apodosEquipo[i], idUser))
             }
@@ -155,7 +162,13 @@ export default function Teambuilder() {
         }
         else {
             console.log("Toda la noche está contando oveja")
+            //MEJORAR ESTO DESPUES
         }
+    }
+
+    function seleccionarSala(event){
+        salaElegida = event.target.value
+        console.log(salaElegida)
     }
 
     return (
@@ -186,6 +199,11 @@ export default function Teambuilder() {
                             >
                             </Equipospokemon>
                         </div>
+                        <select onChange={seleccionarSala}>
+                            <option>Elegir sala</option>
+                            <option value={"CombateNormal"}>Combate contra otro usuario</option>
+                            <option value={"CombateRafta"}>Reto por un rafta</option>
+                        </select>
                         <div style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
                             <button className="botonCombate" onClick={botonCombate}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                         </div>
