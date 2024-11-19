@@ -1,6 +1,7 @@
 "use client"
 import '@/app/styles.css'
 import { encontrarMov, encontrarMovByNombre } from "@/funciones/funciones"
+import { moves } from '@/clases/moves'
 
 export default function PokemonComponente(props) {
     const nombresStats = ["Salud", "Ataque", "Defensa", "Ataque especial", "Defensa especial", "Velocidad"]
@@ -43,24 +44,29 @@ export default function PokemonComponente(props) {
                     <div style={{ width: "28%" }}>
                         <h1 style={{ color: "rgb(11, 199, 199)" }}>movimientos</h1>
                         <select onChange={handlerMov} id={0} className='estiloSelectorMovimiento'>
+                            <option selected={true} disabled>{moves[props.movsDefault[0]].name}</option>
                             {movs.map((mov, i) => (
                                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
                             ))}
                         </select>
                         <h1 style={{ paddingBottom: "8%" }}></h1>
                         <select onChange={handlerMov} id={1} className='estiloSelectorMovimiento'>
+                            <option selected={true} disabled>{moves[props.movsDefault[1]].name}</option>
+
                             {movs.map((mov, i) => (
                                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
                             ))}
                         </select>
                         <h1 style={{ paddingBottom: "8%" }}></h1>
                         <select onChange={handlerMov} id={2} className='estiloSelectorMovimiento'>
+                            <option selected={true} disabled>{moves[props.movsDefault[2]].name}</option>
                             {movs.map((mov, i) => (
                                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
                             ))}
                         </select>
                         <h1 style={{ paddingBottom: "8%" }}></h1>
                         <select onChange={handlerMov} id={2} className='estiloSelectorMovimiento'>
+                            <option selected={true} disabled>{moves[props.movsDefault[3]].name}</option>
                             {movs.map((mov, i) => (
                                 <option value={encontrarMovByNombre(mov)} key={mov} >{mov}</option>
                             ))}
@@ -70,7 +76,7 @@ export default function PokemonComponente(props) {
                     {props.pokemon.baseStats.map((stat, i) => (
                         <div style={{ width: "41%" }} key={i}>
                             <h3 style={{ color: "rgb(11, 199, 199)" }}>{nombresStats[i]}</h3>
-                            <input onChange={handlerEvs} type="range" id={i} min="0" max="252" defaultValue={0} className={nombreClass[i]} />
+                            <input onChange={handlerEvs} type="range" id={i} min="0" max="252" defaultValue={props.evsPokemon[i]} className={nombreClass[i]} />
                             <label>{props.evsPokemon[i]}</label>
                             <span className='valores'>{props.statPokemon[i]}</span>
 

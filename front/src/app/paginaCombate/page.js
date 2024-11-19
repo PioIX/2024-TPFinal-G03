@@ -6,6 +6,7 @@ import PokemonesCombate from "./PokemonesCombate"
 import PokemonesCambio from "./PokemonesCambio"
 import Comentario from "./Comentario"
 import PrimerPokemon from "./SeleccionPokemonInicial"
+import PopUp from './PopUp'
 // imports componentes FIN
 
 import { moves, Move } from "@/clases/moves"
@@ -15,14 +16,16 @@ import { equipoValidado } from "../teamBuilder/page";
 import { id } from '../Logeo/page';
 import { useSocket } from "@/hooks/useSocket"
 import { salaElegida } from '../teamBuilder/page'
+import { useRouter } from 'next/navigation'
 
 export default function PaginaCombate() {
+    const router = useRouter()
     const [pokemonPropio, setPokemonPropio] = useState("")
     const idUser = id
-    let [pokemonAjeno, setPokemonAjeno] = useState("")
-    let [equipoPropio, setEquipoPropio] = useState([])
-    let [ganador, setGanador] = useState("")
-    let [coco, setCoco] = useState(0)
+    const [pokemonAjeno, setPokemonAjeno] = useState("")
+    const [equipoPropio, setEquipoPropio] = useState([])
+    const [ganador, setGanador] = useState("")
+    const [coco, setCoco] = useState(0)
     // este use state es la bestialidad que se le manda al socket para evitar los errores de actualización que tienen sus metodos.
     //Podría borrar los otros useState y hacer que el codigo sea bastante mas limpio, pero no estoy viendo un peso por esto.
     //Al final eliminé la mayoría porque los pude remplazar
@@ -31,7 +34,11 @@ export default function PaginaCombate() {
     const { socket, isConnected } = useSocket();
     const [ultimoMensaje, setUltimoMensaje] = useState("")
     const [salaConectada, setSalaConectada] = useState("")
+    const [informe, setInforme] = useState(["Empezó el combate!!!"])
+    const [nuevoInforme, setNuevoInforme] = useState([])
 
+    let switchParaElInforme = false
+    
     useEffect(() => {
         console.log(datosLocales)
     }, [datosLocales])
@@ -78,7 +85,8 @@ export default function PaginaCombate() {
             let cambioPokemonA = datosObtenidos.pokemonACambiar
             let retorno = []
             let envio = []
-            console.log("adentro del  socket enviar mov elegido data: ", data)
+            switchParaElInforme = false
+            console.log(switchParaElInforme)
             setDatosLocales((datosLocalesActuales) => {
                 if (parseInt(primerPokemon.idUser) != idUser && datosLocalesActuales.turno != "") {
                     console.log("aca empezaría el turno")
@@ -105,8 +113,9 @@ export default function PaginaCombate() {
         })
 
 
-
         socket.on("devolverTurno", (data) => {
+            let nuevoArray = []
+
             // console.log("RECIBI MENSAJE: ",data);
             let turno = JSON.parse(data.retorno)
             console.log({ turno })
@@ -151,9 +160,42 @@ export default function PaginaCombate() {
                     }
                 }
             }
+            setNuevoInforme(turno[5])
+            //actualizarInforme(turno[5])
         })
 
     }, [socket, isConnected]);
+
+    // NO PUEDO SOLUCIONAR EL INFORME DE TURNOS
+   /* useEffect(()=>{
+        let nuevoArray = [].concat(nuevoInforme)
+        for (let x = 0; x < nuevoInforme.length; x++) {
+            nuevoArray.push(nuevoInforme[x])
+        }
+        setInforme(nuevoArray)
+    },[nuevoInforme])*/
+
+    function actualizarInforme(array){
+            console.log("INFORME: ",informe)
+            let nuevoArray = []
+            if (switchParaElInforme == false) {
+                /*for (let x = 0; x < array.length; x++) {
+                    console.log(array[x])
+                    nuevoArray.push(array[x])
+                }
+                setInforme(nuevoArray)
+                switchParaElInforme = true*/
+                setInforme((informeActual)=>{
+                    nuevoArray = [].concat(informeActual)
+                    for (let x = 0; x < array.length; x++) {
+                        nuevoArray.push(array[x])
+                    }
+                    setInforme(nuevoArray)
+                    switchParaElInforme = true
+                })
+            }
+            
+    }
 
     useEffect(() => {
         console.log(pokemonAjeno)
@@ -258,6 +300,10 @@ export default function PaginaCombate() {
         batallaTerminada()
     }, [ganador])
 
+    function volverAlLobby(event) {
+        router.push('/teamBuilder')
+    }
+
     return (
         <>
             {empezarCombate == false
@@ -284,8 +330,7 @@ export default function PaginaCombate() {
                     }
                 </>
                 : <>
-
-
+                    <PopUp abrirse={ganador != ""} text={"saory"} funcion={volverAlLobby}></PopUp>
                     <div className="fondo6" style={{ backgroundColor: "gray" }}>
                         <div style={{ width: "100%", display: "grid", backgroundColor: "gray" }}>
                             <div style={{ width: "100%", display: "inline-flex", backgroundColor: "gray" }}>
@@ -307,30 +352,9 @@ export default function PaginaCombate() {
                                 <div className="scrollbarComentarios">
                                     <div style={{ paddingLeft: "1%", paddingTop: "1%", paddingBottom: "1%", backgroundColor: "gray" }}>
                                         <div style={{ backgroundColor: "#dae5f0" }}>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-                                            <Comentario PokemonEnemigo="fg" Movimiento="gritar"></Comentario>
-
+                                            {informe.map((noticia, i) => (
+                                                <Comentario texto={noticia}></Comentario>
+                                            ))}
                                         </div>
                                     </div>
                                 </div>

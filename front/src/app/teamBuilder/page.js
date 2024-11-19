@@ -15,6 +15,7 @@ export let equipoValidado = []
 export let idUser = 0
 export let salaElegida = ""
 
+
 export default function Teambuilder() {
 
     let [div1, setdiv1] = useState('grid')
@@ -32,25 +33,70 @@ export default function Teambuilder() {
     }
 
     function botonCombate() {
-        router.push('/paginaCombate')
+        let check = validar()
+        if (check) {
+            router.push('/paginaCombate')
+
+        }
     }
     // ------------------------- FIN Cosas del html ---------------
     // ------------------------- FUNCIONALIDADES ---------------
-    let [equipo, setEquipo] = useState(["", pokemonForms[1], pokemonForms[3], pokemonForms[4], pokemonForms[5], pokemonForms[6]])
-    let [apodosEquipo, setApodosEquipos] = useState(["raul", "uwu", "skibidi", "Raul2", "Raulito3", "Simon"])
-    let [evsEquipo, setEvsEquipo] = useState([[252, 0, 252, 0, 0, 0], [252, 252, 0, 0, 0, 0], [252, 0, 252, 0, 0, 0], [252, 0, 0, 252, 0, 0], [0, 252, 0, 0, 0, 252], [0, 252, 0, 0, 0, 252]])
-    let [statEquipo, setStatEquipo] = useState([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
-    let [movsEquipo, setMovsEquipo] = useState([[0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4]])
+    const [equipo, setEquipo] = useState(["", pokemonForms[1], pokemonForms[3], pokemonForms[4], pokemonForms[5], pokemonForms[6]])
+    const [apodosEquipo, setApodosEquipos] = useState(["raul", "uwu", "skibidi", "Raul2", "Raulito3", "Simon"])
+    const [evsEquipo, setEvsEquipo] = useState([[252, 0, 252, 0, 0, 0], [252, 252, 0, 0, 0, 0], [252, 0, 252, 0, 0, 0], [252, 0, 0, 252, 0, 0], [0, 252, 0, 0, 0, 252], [0, 252, 0, 0, 0, 252]])
+    const [statEquipo, setStatEquipo] = useState([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
+    const [movsEquipo, setMovsEquipo] = useState([[0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4]])
+    const [textoValidar, setTextoValidar] = useState("Si editás a tu equipo, vas a tener que validarlo.")
+    const [validacion, setValidacion] = useState(true)
     const router = useRouter()
 
     useEffect(() => {
-        descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
+        let equipoLocal = {}
+        let movsLocal = {}
+        let evsLocal = {}
+        let apodosLocal = {}
+        /*descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
             let nuevoArray = [].concat(equipo)
-            for (let i = 0; i < equipo.length; i++) {
-                nuevoArray[i] = pokemonForms[5]
-                setEquipo(nuevoArray)
+            //PONER AL EQUIPO PREDETERMINADO
+            nuevoArray[0] = pokemonForms[0]
+            nuevoArray[1] = pokemonForms[1]
+            nuevoArray[2] = pokemonForms[2]
+            nuevoArray[3] = pokemonForms[3]
+            nuevoArray[4] = pokemonForms[4]
+            nuevoArray[5] = pokemonForms[5]
+            setEquipo(nuevoArray)
+            console.log(localStorage.getItem("equipo"))
+            if ((localStorage.getItem("equipo")) != null) {
+                equipoLocal = JSON.parse(localStorage.getItem("equipo"))
+                movsLocal = JSON.parse(localStorage.getItem("movs"))
+                evsLocal = JSON.parse(localStorage.getItem("evs"))
+                apodosLocal = JSON.parse(localStorage.getItem("apodos"))
+                setEquipo(equipoLocal)
+                setApodosEquipos(apodosLocal)
+                setMovsEquipo(movsLocal)
+                setEvsEquipo(evsLocal)
             }
-        })
+        })*/
+        let nuevoArray = [].concat(equipo)
+        //PONER AL EQUIPO PREDETERMINADO
+        nuevoArray[0] = pokemonForms[0]
+        nuevoArray[1] = pokemonForms[1]
+        nuevoArray[2] = pokemonForms[2]
+        nuevoArray[3] = pokemonForms[3]
+        nuevoArray[4] = pokemonForms[4]
+        nuevoArray[5] = pokemonForms[5]
+        setEquipo(nuevoArray)
+        console.log(localStorage.getItem("equipo"))
+        if ((localStorage.getItem("equipo")) != null) {
+            equipoLocal = JSON.parse(localStorage.getItem("equipo"))
+            movsLocal = JSON.parse(localStorage.getItem("movs"))
+            evsLocal = JSON.parse(localStorage.getItem("evs"))
+            apodosLocal = JSON.parse(localStorage.getItem("apodos"))
+            setEquipo(equipoLocal)
+            setApodosEquipos(apodosLocal)
+            setMovsEquipo(movsLocal)
+            setEvsEquipo(evsLocal)
+        }
         if (id == 0.2) {
             idUser = idRegister
         }
@@ -58,8 +104,14 @@ export default function Teambuilder() {
             idUser = id
         }
         console.log(idUser)
+
+
     }, [])
 
+
+    useEffect(() => {
+        console.log(equipo)
+    }, [equipo])
 
     function selectId(event) {
         idUser = event.target.value
@@ -69,14 +121,16 @@ export default function Teambuilder() {
         let nuevoArrayApodo = [].concat(apodosEquipo)
         nuevoArrayApodo[id] = event.target.value
         setApodosEquipos(nuevoArrayApodo)
-
-
+        setTextoValidar("Se han realizado cambios, es necesario validarlos.")
+        setValidacion(false)
     }
 
     function registrarMov1(event, id) {
         let nuevoArray = [].concat(movsEquipo)
         nuevoArray[id][event.target.id] = (event.target.value)
         setMovsEquipo(nuevoArray)
+        setTextoValidar("Se han realizado cambios, es necesario validarlos.")
+        setValidacion(false)
 
     }
 
@@ -84,23 +138,32 @@ export default function Teambuilder() {
         let nuevoArrayEquipo = [].concat(equipo)
         let nuevoArrayApodo = [].concat(apodosEquipo)
         let nuevoArrayStats = [].concat(statEquipo)
+        let nuevosEvs = [].concat(evsEquipo)
+        let nuevosMovs = [].concat(movsEquipo)
+        nuevosMovs[id] = [6, 7, 8, 9]
+        nuevosEvs[id] = [0, 0, 0, 0, 0, 0]
         nuevoArrayEquipo[id] = pokemonForms[event.target.value]
-        setEquipo(nuevoArrayEquipo)
         nuevoArrayApodo[id] = pokemonForms[event.target.value].name
+        setMovsEquipo(nuevosMovs)
+        setEvsEquipo(nuevosEvs)
+        setEquipo(nuevoArrayEquipo)
         setApodosEquipos(nuevoArrayApodo)
+        setTextoValidar("Se han realizado cambios, es necesario validarlos.")
+        setValidacion(false)
         for (let i = 0; i < statEquipo[id].length; i++) {
 
             if (i == 0) {
                 console.log(id)
-                nuevoArrayStats[id][i] = Math.round((100 / 100 * ((pokemonForms[event.target.value].baseStats[i] * 2) + 31 + evsEquipo[id][i] / 4)) + 100 + 10)
+                nuevoArrayStats[id][i] = Math.round((100 / 100 * ((pokemonForms[event.target.value].baseStats[i] * 2) + 31 + 0 / 4)) + 100 + 10)
 
             }
             else {
-                nuevoArrayStats[id][i] = Math.round(5 + (100 / 100 * ((pokemonForms[event.target.value].baseStats[i] * 2) + 31 + evsEquipo[id][i] / 4)))
+                nuevoArrayStats[id][i] = Math.round(5 + (100 / 100 * ((pokemonForms[event.target.value].baseStats[i] * 2) + 31 + 0 / 4)))
 
             }
         }
         setStatEquipo(nuevoArrayStats)
+
         console.log(nuevoArrayStats)
     }
 
@@ -127,11 +190,14 @@ export default function Teambuilder() {
         nuevoArray[id][statId] = evs
         setEvsEquipo(nuevoArray)
         calcularStats(id)
+        setTextoValidar("Se han realizado cambios, es necesario validarlos.")
+        setValidacion(false)
     }
     // ATENCIÓN!!!!!
     // Actualmente podés elegir un pokemon y luego cambiarlo, por lo que podés tener pokemon ilegales
     // Es un un cambio de QoL de baja prioridad, pero no estoy muy cómodo sabiendo que existe
     // Igual si no lo corregimos y alguien se pone a hacerlo en el dia de la expo, lo felicitaría por el esfuerzo
+    // Ya está corregido
     function validar() {
         let checkApodo = true
         let checkMovs = true
@@ -139,19 +205,26 @@ export default function Teambuilder() {
         let checkEvs = true
         let check = true
         let x = 0
+        let listaCheck = [true, true, true, true, "El equipo tiene el siguiente error: "]
         for (let i = 0; i < equipo.length; i++) {
-            if (checkApodo == true && checkMovs == true && checkPokemons == true && checkEvs == true) {
+            /*if (checkApodo == true && checkMovs == true && checkPokemons == true && checkEvs == true) {
                 checkApodo = comprobarApodo(apodosEquipo[i], i)
                 checkMovs = comprobarMovsRepetidos(movsEquipo[i], i)
                 checkPokemons = comprobarPokemones(equipo[i])
                 checkEvs = comprobarEvs(evsEquipo[i], i)
+            }*/
+            if (listaCheck[0] == true && listaCheck[1] == true && listaCheck[2] == true && listaCheck[3] == true) {
+                listaCheck = comprobarApodo(apodosEquipo[i], i, listaCheck)
+                listaCheck = comprobarMovsRepetidos(movsEquipo[i], i, apodosEquipo[i], listaCheck)
+                listaCheck = comprobarPokemones(equipo[i], apodosEquipo[i], listaCheck)
+                listaCheck = comprobarEvs(evsEquipo[i], apodosEquipo[i], listaCheck)
             }
             /*console.log(apodosEquipo[i])
             console.log(movsEquipo[i])
             console.log(equipo[i])
             console.log(evsEquipo[i])*/
         }
-        check = (checkApodo == true && checkMovs == true && checkPokemons == true && checkEvs == true)
+        check = (listaCheck[0] == true && listaCheck[1] == true && listaCheck[2] == true && listaCheck[3] == true)
         if (check == true) {
             console.log("Equipo validado")
             equipoValidado = []
@@ -159,14 +232,28 @@ export default function Teambuilder() {
                 equipoValidado.push(new Pokemon(equipo[i], movsEquipo[i], evsEquipo[i], apodosEquipo[i], idUser))
             }
             console.log(equipoValidado)
+            setTextoValidar("Equipo validado!")
+            setearDatos()
+            setValidacion(true)
+            return true
         }
         else {
+            setTextoValidar(listaCheck[4])
+            return false
             console.log("Toda la noche está contando oveja")
             //MEJORAR ESTO DESPUES
         }
     }
 
-    function seleccionarSala(event){
+    function setearDatos() {
+        localStorage.setItem("equipo", JSON.stringify(equipo))
+        localStorage.setItem("apodos", JSON.stringify(apodosEquipo))
+        localStorage.setItem("movs", JSON.stringify(movsEquipo))
+        localStorage.setItem("evs", JSON.stringify(evsEquipo))
+
+    }
+
+    function seleccionarSala(event) {
         salaElegida = event.target.value
         console.log(salaElegida)
     }
@@ -179,7 +266,7 @@ export default function Teambuilder() {
                         <div className="imagenChiquita">
                             <div>
                                 <Image
-                                    src="/imagenes/pokemonLogo.png"
+                                    src="/front/src/ap/imagenes/pokemonLogo.png"
                                     width={280}
                                     height={100}
                                     alt='hols'
@@ -200,7 +287,7 @@ export default function Teambuilder() {
                             </Equipospokemon>
                         </div>
                         <select onChange={seleccionarSala}>
-                            <option>Elegir sala</option>
+                            <option selected disabled>Elegir sala</option>
                             <option value={"CombateNormal"}>Combate contra otro usuario</option>
                             <option value={"CombateRafta"}>Reto por un rafta</option>
                         </select>
@@ -222,35 +309,36 @@ export default function Teambuilder() {
                         </div>
                         <div>
                             <div>
-                                <button className="botonVolverAtras" onClick={editarEquipo}> ←volver atras</button>
+                                <button className="botonVolverAtras" onClick={editarEquipo} disabled={!validacion}> ←volver atras</button>
                                 <button className="botonVolverAtras" onClick={validar}>validar</button>
+                                <h2>{textoValidar}</h2>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[0].spriteFront}
+                                    imagenPokemon={equipo[0].spriteFront} movsDefault={movsEquipo[0]}
                                     pokemonName={apodosEquipo[0]} lista={pokemonForms} id={0} pokemon={equipo[0]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[0]} funcionEvs={obtenerEvs} statPokemon={statEquipo[0]}
                                 ></PokemonComponente>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[1].spriteFront}
+                                    imagenPokemon={equipo[1].spriteFront} movsDefault={movsEquipo[1]}
                                     pokemonName={apodosEquipo[1]} lista={pokemonForms} id={1} pokemon={equipo[1]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[1]} funcionEvs={obtenerEvs} statPokemon={statEquipo[1]}
                                 ></PokemonComponente>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[2].spriteFront}
+                                    imagenPokemon={equipo[2].spriteFront} movsDefault={movsEquipo[2]}
                                     pokemonName={apodosEquipo[2]} lista={pokemonForms} id={2} pokemon={equipo[2]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[2]} funcionEvs={obtenerEvs} statPokemon={statEquipo[2]}
                                 ></PokemonComponente>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[3].spriteFront}
+                                    imagenPokemon={equipo[3].spriteFront} movsDefault={movsEquipo[3]}
                                     pokemonName={apodosEquipo[3]} lista={pokemonForms} id={3} pokemon={equipo[3]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[3]} funcionEvs={obtenerEvs} statPokemon={statEquipo[3]}
                                 ></PokemonComponente>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[4].spriteFront}
+                                    imagenPokemon={equipo[4].spriteFront} movsDefault={movsEquipo[4]}
                                     pokemonName={apodosEquipo[4]} lista={pokemonForms} id={4} pokemon={equipo[4]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[4]} funcionEvs={obtenerEvs} statPokemon={statEquipo[4]}
                                 ></PokemonComponente>
                                 <PokemonComponente
-                                    imagenPokemon={equipo[5].spriteFront}
+                                    imagenPokemon={equipo[5].spriteFront} movsDefault={movsEquipo[5]}
                                     pokemonName={apodosEquipo[5]} lista={pokemonForms} id={5} pokemon={equipo[5]} funcionNickname={registrarApodo}
                                     funcionPokemon={seleccionarPokemon1} funcionMov1={registrarMov1} evsPokemon={evsEquipo[5]} funcionEvs={obtenerEvs} statPokemon={statEquipo[5]}
                                 ></PokemonComponente>

@@ -1,9 +1,8 @@
 "use client"
 import '@/app/styles.css'
-import { useState } from "react";
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 export let idRegister = 0.2
 
 export default function PaginaRegistro(props){
@@ -28,7 +27,7 @@ export default function PaginaRegistro(props){
         }
 
         useEffect(()=>{
-            traerLista()         
+            traerLista()
         },[])
 
 
