@@ -90,7 +90,7 @@ export default function PaginaRegistro(props){
             case 1:
                 subirUsuario(idRegister, nombreUsuario, contrasenia, puntos)
                 alert("Se registro exitosamente")
-                router.push('/teamBuilder')
+                router.push('/TeamBuilder')
                 break;
             case 2:
                 setErrorLog('el usuario ya existe')
@@ -104,7 +104,7 @@ export default function PaginaRegistro(props){
             <div className="imagenChiquita">
                     <div>  
                     <Image 
-                        src="/imagenes/pokemonLogo.png"
+                        src='/pokemonLogo.png'
                         width={280}
                         height={100} 
                         alt='hols'

@@ -90,7 +90,7 @@ export default function PaginaRegistro(props){
         switch(result){
             case 1:
                 alert("se inicio exitosamente")
-                router.push('/teamBuilder')
+                router.push('/TeamBuilder')
                 break;
             case 2:
                 alert('contraseña incorrecta')
@@ -106,7 +106,7 @@ export default function PaginaRegistro(props){
                 <div className="imagenChiquita">
                     <div>  
                     <Image 
-                        src="/imagenes/pokemonLogo.png"
+                        src='/pokemonLogo.png'
                         width={280}
                         height={100} 
                         alt='hols'

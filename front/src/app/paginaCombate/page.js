@@ -12,10 +12,10 @@ import PopUp from './PopUp'
 import { moves, Move } from "@/clases/moves"
 import { damageCalculate, tirarMoneda, turno, descargarPokemons } from "@/funciones/funciones";
 import { useState, useEffect } from "react"
-import { equipoValidado } from "../teamBuilder/page";
+import { equipoValidado } from "../TeamBuilder/page";
 import { id } from '../Logeo/page';
 import { useSocket } from "@/hooks/useSocket"
-import { salaElegida } from '../teamBuilder/page'
+import { salaElegida } from '../TeamBuilder/page'
 import { useRouter } from 'next/navigation'
 
 export default function PaginaCombate() {

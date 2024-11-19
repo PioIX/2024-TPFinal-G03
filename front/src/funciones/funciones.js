@@ -6,7 +6,7 @@ const { pokemonForms, PokemonForm } = require("@/clases/PokemonForm")
 const { species, Specie } = require("@/clases/Species")
 const { Team, teams } = require("@/clases/Team")
 const { trainers, Trainer } = require("@/clases/Trainer")
-import { textoError } from "@/app/teamBuilder/page"
+import { textoError } from "@/app/TeamBuilder/page"
 import { useState, useEffect } from "react"
 
 // Pedido a la POKEAPI

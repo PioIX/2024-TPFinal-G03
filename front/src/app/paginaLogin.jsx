@@ -1,8 +1,8 @@
 "use client"
 import './styles.css'
 import { useRouter } from 'next/navigation'
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { descargarPokemonsBaseDeDatos } from '@/funciones/funciones'
 
 export default function PaginaLoginRegistro(){
@@ -20,9 +20,9 @@ export default function PaginaLoginRegistro(){
             {mostrarElementos == true
             ?<div>
             <Image 
-                style={{paddingLeft:"300px"}}
-                src="/imagenes/pokemonLogo.png"
-                width={850}
+                style={{paddingLeft:"290px"}}
+                src='/pokemonLogo.png'
+                width={840}
                 height={205}
                 alt='hols'
             /> 
