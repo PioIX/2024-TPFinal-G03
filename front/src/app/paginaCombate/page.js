@@ -35,9 +35,8 @@ export default function PaginaCombate() {
     const [ultimoMensaje, setUltimoMensaje] = useState("")
     const [salaConectada, setSalaConectada] = useState("")
     const [informe, setInforme] = useState(["Empezó el combate!!!"])
-    const [nuevoInforme, setNuevoInforme] = useState([])
 
-    let switchParaElInforme = false
+    let timeoutInforme;
     
     useEffect(() => {
         console.log(datosLocales)
@@ -85,11 +84,9 @@ export default function PaginaCombate() {
             let cambioPokemonA = datosObtenidos.pokemonACambiar
             let retorno = []
             let envio = []
-            switchParaElInforme = false
-            console.log(switchParaElInforme)
             setDatosLocales((datosLocalesActuales) => {
                 if (parseInt(primerPokemon.idUser) != idUser && datosLocalesActuales.turno != "") {
-                    console.log("aca empezaría el turno")
+                    console.log(datosLocalesActuales.turno)
                     retorno = turno(
                         datosLocalesActuales.pokemon,
                         primerPokemon,
@@ -160,42 +157,27 @@ export default function PaginaCombate() {
                     }
                 }
             }
-            setNuevoInforme(turno[5])
-            //actualizarInforme(turno[5])
+            
+            console.log("INFORME", informe, turno[5]);
+            clearTimeout(timeoutInforme);
+            timeoutInforme = setTimeout(function() {
+                console.log("ENTRE AL TIMEOUT");
+                setInforme((lastInforme) => {
+                    let newInforme = [];
+                    lastInforme.forEach((inf) => {
+                        newInforme.push(inf);
+                    });
+                    if(turno[5]) {
+                        turno[5].forEach(linea => {
+                            newInforme.push(linea);
+                        })
+                    }
+                    return newInforme;
+                })
+            }, 1000);
         })
 
     }, [socket, isConnected]);
-
-    // NO PUEDO SOLUCIONAR EL INFORME DE TURNOS
-   /* useEffect(()=>{
-        let nuevoArray = [].concat(nuevoInforme)
-        for (let x = 0; x < nuevoInforme.length; x++) {
-            nuevoArray.push(nuevoInforme[x])
-        }
-        setInforme(nuevoArray)
-    },[nuevoInforme])*/
-
-    function actualizarInforme(array){
-            console.log("INFORME: ",informe)
-            let nuevoArray = []
-            if (switchParaElInforme == false) {
-                /*for (let x = 0; x < array.length; x++) {
-                    console.log(array[x])
-                    nuevoArray.push(array[x])
-                }
-                setInforme(nuevoArray)
-                switchParaElInforme = true*/
-                setInforme((informeActual)=>{
-                    nuevoArray = [].concat(informeActual)
-                    for (let x = 0; x < array.length; x++) {
-                        nuevoArray.push(array[x])
-                    }
-                    setInforme(nuevoArray)
-                    switchParaElInforme = true
-                })
-            }
-            
-    }
 
     useEffect(() => {
         console.log(pokemonAjeno)
@@ -241,6 +223,7 @@ export default function PaginaCombate() {
         nuevoObjeto.pokemonACambiar = {}
         nuevoObjeto.equipoPropio = equipoPropio
         console.log("seleccionarAtaquePropio")
+        console.log("MovimientoElegido: ",moves[pokemonPropio.moves[event.target.value]])
         setDatosLocales(nuevoObjeto)
         console.log("funcion del boton, emit: enviarMovimientoElegido")
         socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
@@ -353,7 +336,7 @@ export default function PaginaCombate() {
                                     <div style={{ paddingLeft: "1%", paddingTop: "1%", paddingBottom: "1%", backgroundColor: "gray" }}>
                                         <div style={{ backgroundColor: "#dae5f0" }}>
                                             {informe.map((noticia, i) => (
-                                                <Comentario texto={noticia}></Comentario>
+                                                <Comentario key={i} texto={noticia}></Comentario>
                                             ))}
                                         </div>
                                     </div>

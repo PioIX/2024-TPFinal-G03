@@ -693,7 +693,8 @@ export function ejecutarMovimiento(pkm1, pkm2, mov, pp) {
     let indice1critico = 4.16
     let oracion = ""
     console.log(mov)
-    if (Math.round(Math.random() * 100) <= mov.accuracy || ((pkm1.type1 == "poison" || pkm1.type2 == "poison") && mov.name == "toxic")) {
+    console.log("ERROR DE MIERDA", mov.accuracy, pkm1.form.type1, pkm1.form.type2, mov.name);
+    if (Math.round(Math.random() * 100) <= mov.accuracy || ((pkm1.form.type1 == "poison" || pkm1.form.type2 == "poison") && mov.name == "toxic")) {
         if (mov.category == "status") {
             movsDeEstado(pkm1, pkm2, mov)
         }
@@ -755,6 +756,8 @@ function actualizarEquipo(pokemon, equipo) {
 export function turno(pkm1, pkm2, mov1, mov2, pokemonACambiar1, pokemonACambiar2, equipo1, equipo2, movPropio, movRival) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
     envioInforme = []
+    console.log("MovPropio: ",mov1)
+    console.log("MovAjeno: ",mov2)
     let oracion = ""
     let pokemon1 = { ...pkm1 }
     let pokemon2 = { ...pkm2 }
