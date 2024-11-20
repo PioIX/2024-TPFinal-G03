@@ -79,7 +79,7 @@ export default function PaginaCombate() {
             let equipo = datosObtenidos.equipoPropio
             let turnoEnviado = datosObtenidos.turno
             let mov = datosObtenidos.mov
-            console.log("MOVIMIENTO RECIBIDO: ",mov)
+            console.log("MOVIMIENTO RECIBIDO: ",datosObtenidos)
             let cambioPokemonA = datosObtenidos.pokemonACambiar
             let retorno = []
             let envio = []
@@ -197,15 +197,18 @@ export default function PaginaCombate() {
 
 
     function seleccionarAtaquePropio(event) {
-
-        let nuevoObjeto = { ...datosLocales }
-        nuevoObjeto.turno = moves[pokemonPropio.moves[event.target.value]]
-        nuevoObjeto.mov = event.target.value
-        nuevoObjeto.pokemonACambiar = {}
-        nuevoObjeto.equipoPropio = equipoPropio
-        console.log("MovimientoElegido: ", moves[pokemonPropio.moves[event.target.value]])
-        setDatosLocales(nuevoObjeto)
-        socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
+        if (event.target.value != undefined) {
+            let nuevoObjeto = { ...datosLocales }
+            nuevoObjeto.turno = moves[pokemonPropio.moves[event.target.value]]
+            nuevoObjeto.mov = event.target.value
+            nuevoObjeto.pokemonACambiar = {}
+            nuevoObjeto.equipoPropio = equipoPropio
+            console.log("Event.target.value: ",event.target.value)
+            console.log("IdMovimientoElegido: ",pokemonPropio.moves[event.target.value])
+            console.log("MovimientoElegido: ", moves[pokemonPropio.moves[event.target.value]])
+            setDatosLocales(nuevoObjeto)
+            socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
+        }
     }
 
     function setPokemonACambiarPropioF(i) {

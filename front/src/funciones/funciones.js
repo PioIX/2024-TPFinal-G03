@@ -306,7 +306,7 @@ const tablaDeTipos = {
     fire:
     {
         normal: 1, fire: 0.5, water: 2, grass: 0.5, electric: 1, ice: 0.5, fighting: 1, poison: 1,
-        ground: 2, flying: 1, psychic: 1, bug: 0.5, rock: 2, ghost: 0, dragon: 1, dark: 1, steel: 0.5, fairy: 0.5
+        ground: 2, flying: 1, psychic: 1, bug: 0.5, rock: 2, ghost: 1, dragon: 1, dark: 1, steel: 0.5, fairy: 0.5
     },
     water:
     {
@@ -426,10 +426,12 @@ export function damageCalculate(user, enemy, move) {
     let enemyStats = { atk: 0, def: 0, spa: 0, spd: 0 }
     let multiplicadorCritico = 1
     userStats.atk = changeStatsCalculate(user, 1)
+    console.log("ATAQUE DEL POKIMON",userStats.atk)
     userStats.def = changeStatsCalculate(user, 2)
     userStats.spa = changeStatsCalculate(user, 3)
     userStats.spd = changeStatsCalculate(user, 4)
     enemyStats.atk = changeStatsCalculate(enemy, 1)
+    console.log("ATAQUE DEL POKIMON RIVAL",enemyStats.atk)
     enemyStats.def = changeStatsCalculate(enemy, 2)
     enemyStats.spa = changeStatsCalculate(enemy, 3)
     enemyStats.spd = changeStatsCalculate(enemy, 4)
@@ -530,14 +532,17 @@ export function freeze(pokemon) {
 }
 
 export function dream(pokemon) {
+    let oracion = ""
     if (pokemon.countDream == 0) {
         pokemon.status = ""
-        console.log(pokemon.apodo, " se ha despertado")
+        oracion = pokemon.apodo+ " se ha despertado"
+        envioInforme.push(oracion)
         return true
     }
     else {
         pokemon.countDream = (pokemon.countDream - 1)
-        console.log(pokemon.apodo, " sigue dormido")
+        oracion = pokemon.apodo+ " sigue dormido"
+        envioInforme.push(oracion)
         return false
 
     }
@@ -556,6 +561,7 @@ export function paralisys(pokemon) {
 
 export function impedimentosMovimiento(pokemon) {
     let retorno = true
+    console.log("IMPEDIMENTOS: ",pokemon.status)
     if (pokemon.flinched) {
         return false
     }
@@ -821,6 +827,7 @@ function movsDeEstado(pkm1, pkm2, mov) {
         case "sleep-powder":
             if ((pkm2.form.type1 != "grass" || pkm2.form.type2 != "grass") && pkm2.status == "") {
                 pkm2.status = "dream"
+                pkm2.countDream = 3
                 oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está dormido"
                 envioInforme.push(oracion)
             }
@@ -832,6 +839,7 @@ function movsDeEstado(pkm1, pkm2, mov) {
         case "rest":
             if (pkm1.status != "dream") {
                 pkm1.status = "dream"
+                pkm1.countDream = 3
                 pkm1.life = pkm1.stats[0]
                 oracion = pkm1.apodo + "usó " + mov.name + ", ahora está dormido"
                 envioInforme.push(oracion)
@@ -848,6 +856,7 @@ function movsDeEstado(pkm1, pkm2, mov) {
             if (pkm1.statsChanges[4] < 6) {
                 pkm1.statsChanges[4]++
             }
+            console.log("EFECTO DANZA DRAGON",pkm1.statsChanges)
             oracion = "El ataque y la velocidad de " + pkm1.apodo + " subieron en un nivel"
             envioInforme.push(oracion)
             break;
