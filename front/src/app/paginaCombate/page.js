@@ -34,32 +34,30 @@ export default function PaginaCombate() {
     const { socket, isConnected } = useSocket();
     const [ultimoMensaje, setUltimoMensaje] = useState("")
     const [salaConectada, setSalaConectada] = useState("")
-    const [informe, setInforme] = useState(["Empezó el combate!!!"])
+    const [informe, setInforme] = useState({ 0: ["Empezó el combate!!!"] })
+    console.log(informe)
 
     let timeoutInforme;
-    
+
     useEffect(() => {
-        console.log(datosLocales)
+        //console.log(datosLocales)
     }, [datosLocales])
 
     useEffect(() => {
         if (!socket) return;
 
         if (salaConectada == "") {
-            console.log("unirse a la sala")
             socket.emit('joinRoom', salaElegida)
             setSalaConectada(salaElegida)
         }
 
         socket.on("newMessage", (data) => {
             let newMessage = data.message;
-            console.log(newMessage)
             setRecibidorMensaje(newMessage)
 
         })
 
         socket.on("eleccionLead", (data) => {
-            // console.log("RECIBI MENSAJE: ",data);
             let primerPokemon = JSON.parse(data.primerPokemon)
             if (primerPokemon.idUser != idUser) {
                 setPokemonAjeno(primerPokemon)
@@ -113,9 +111,8 @@ export default function PaginaCombate() {
         socket.on("devolverTurno", (data) => {
             let nuevoArray = []
 
-            // console.log("RECIBI MENSAJE: ",data);
             let turno = JSON.parse(data.retorno)
-            console.log({ turno })
+            console.log("TURNO:", { turno })
             let nuevoObjeto = { ...datosLocales }
             if (turno[0].idUser == idUser) {
                 nuevoObjeto.pokemon = (turno[0])
@@ -157,24 +154,14 @@ export default function PaginaCombate() {
                     }
                 }
             }
-            
-            console.log("INFORME", informe, turno[5]);
-            clearTimeout(timeoutInforme);
-            timeoutInforme = setTimeout(function() {
-                console.log("ENTRE AL TIMEOUT");
-                setInforme((lastInforme) => {
-                    let newInforme = [];
-                    lastInforme.forEach((inf) => {
-                        newInforme.push(inf);
-                    });
-                    if(turno[5]) {
-                        turno[5].forEach(linea => {
-                            newInforme.push(linea);
-                        })
-                    }
-                    return newInforme;
-                })
-            }, 1000);
+            setInforme((informeActual) => {
+                return {
+                    ...informeActual,
+                    [turno[6]]: turno[5]
+                }
+            })
+
+          
         })
 
     }, [socket, isConnected]);
@@ -189,18 +176,14 @@ export default function PaginaCombate() {
     }, []
     )
 
-    function enviarMensaje() {
-        if (isConnected) {
-            console.log(ultimoMensaje)
-            socket.emit('sendMessage', { pokemon1: equipoPropio[0].apodo, chat: "sala1" });
-        }
-    }
 
     function seleccionarPokemonInicial(valor) {
-        setPokemonPropio(equipoPropio[valor])
+        let nuevoPokemon = { ...equipoPropio[valor] }
+        nuevoPokemon.statsChanges = [0, 0, 0, 0, 0]
+        setPokemonPropio(nuevoPokemon)
         let nuevoObjeto = { ...datosLocales }
-        let primerPokemon = JSON.stringify(equipoPropio[valor])
-        nuevoObjeto.pokemon = equipoPropio[valor]
+        let primerPokemon = JSON.stringify(nuevoPokemon)
+        nuevoObjeto.pokemon = nuevoPokemon
         setDatosLocales(nuevoObjeto)
         socket.emit('enviarLeadYEquipo', { primerPokemon: primerPokemon, equipo: equipoPropio });
 
@@ -222,15 +205,12 @@ export default function PaginaCombate() {
         nuevoObjeto.mov = event.target.value
         nuevoObjeto.pokemonACambiar = {}
         nuevoObjeto.equipoPropio = equipoPropio
-        console.log("seleccionarAtaquePropio")
-        console.log("MovimientoElegido: ",moves[pokemonPropio.moves[event.target.value]])
+        console.log("MovimientoElegido: ", moves[pokemonPropio.moves[event.target.value]])
         setDatosLocales(nuevoObjeto)
-        console.log("funcion del boton, emit: enviarMovimientoElegido")
         socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
     }
 
     function setPokemonACambiarPropioF(i) {
-        console.log(i)
         let nuevoObjeto = { ...datosLocales }
         nuevoObjeto.turno = "change"
         nuevoObjeto.mov = 0.1
@@ -243,15 +223,12 @@ export default function PaginaCombate() {
     }
 
     function remplazarPokemonPropio(i) {
-        console.log(i);  // This causes the error
         let nuevoObjeto = { ...datosLocales };
         nuevoObjeto.pokemon = (equipoPropio[i]);
         setPokemonPropio(equipoPropio[i]);
-        console.log(setPokemonPropio);
         setDatosLocales(nuevoObjeto);
         socket.emit('remplazarPokemon', { pokemon: JSON.stringify(equipoPropio[i]) });
     }
-
     /*function actualizarPokemonPropio() {
         let nuevoObjeto = {}
         let nuevoArray = [].concat(equipoPropio)
@@ -335,9 +312,16 @@ export default function PaginaCombate() {
                                 <div className="scrollbarComentarios">
                                     <div style={{ paddingLeft: "1%", paddingTop: "1%", paddingBottom: "1%", backgroundColor: "gray" }}>
                                         <div style={{ backgroundColor: "#dae5f0" }}>
-                                            {informe.map((noticia, i) => (
-                                                <Comentario key={i} texto={noticia}></Comentario>
-                                            ))}
+                                            {Object.entries(informe)
+                                            .toSorted((a, b) => a - b)
+                                            .map(([key, value]) => {
+                                                return value.map((noticia, i)=>{
+                                                    return (
+                                                        <Comentario key={key + i} texto={noticia}></Comentario>
+                                                    )
+                                                })
+                                            })}
+
                                         </div>
                                     </div>
                                 </div>

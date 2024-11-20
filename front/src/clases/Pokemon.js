@@ -46,6 +46,7 @@ export class Pokemon {
         this.pps = calcularPPs(this.moves)
         this.critical = false
         this.idUser = idUser
+        this.flinched = false
         idPokemon++;
     }
 }

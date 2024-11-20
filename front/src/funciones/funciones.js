@@ -260,7 +260,7 @@ export function comprobarEvs(evs, apodo, lista) {
     }
     if (sumaTotal > 510) {
         array[3] = false
-        array[4] = array[4] + " " +apodo + " tiene Evs que superan el máximo de 510 puntos."
+        array[4] = array[4] + " " + apodo + " tiene Evs que superan el máximo de 510 puntos."
         console.log(apodo + " tiene Evs que superan el máximo de 510 puntos /")
     }
     return array
@@ -418,6 +418,10 @@ function changeStatsCalculate(pokemon, stat) {
 }
 
 export function damageCalculate(user, enemy, move) {
+    let potencia = move.power
+    if (move.secondaryEffect == "facade" && user.status != "") {
+        potencia = move.power * 2
+    }
     let userStats = { atk: 0, def: 0, spa: 0, spd: 0 }
     let enemyStats = { atk: 0, def: 0, spa: 0, spd: 0 }
     let multiplicadorCritico = 1
@@ -454,10 +458,10 @@ export function damageCalculate(user, enemy, move) {
         boost = 1.5
     }
     if (move.category == "special") {
-        damage = Math.round(0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1) * userStats.spa * move.power) / (25 * enemyStats.spd)) + 2))
+        damage = Math.round(0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1) * userStats.spa * potencia) / (25 * enemyStats.spd)) + 2))
     }
     else if (move.category == "physical") {
-        damage = Math.round(0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1) * userStats.atk * move.power) / (25 * enemyStats.def)) + 2))
+        damage = Math.round(0.01 * boost * efectividad * variacion * ((((0.2 * 100 + 1) * userStats.atk * potencia) / (25 * enemyStats.def)) + 2))
     }
     damage = Math.round(damage * multiplicadorCritico)
     return damage
@@ -552,6 +556,9 @@ export function paralisys(pokemon) {
 
 export function impedimentosMovimiento(pokemon) {
     let retorno = true
+    if (pokemon.flinched) {
+        return false
+    }
     switch (pokemon.status) {
         case "freeze":
             retorno = freeze(pokemon)
@@ -581,6 +588,22 @@ export function dañoPostTurno(pokemon) {
 
 
 export function ordenTurno(pokemon1, pokemon2, mov1, mov2) {
+    let prior1 = 0
+    let prior2 = 0
+    console.log(mov1)
+    console.log(mov2)
+    if (mov1.name == "protect") {
+        prior1 = 3
+    }
+    if (mov2.name == "protect") {
+        prior2 = 3
+    }
+    if (mov1.secondaryEffect == "priority" || mov1.secondaryEffect == "suckerPriority" && mov2.category != "status") {
+        prior1++
+    }
+    if (mov2.secondaryEffect == "priority" || mov2.secondaryEffect == "suckerPriority" && mov1.category != "status") {
+        prior2++
+    }
     if (mov1 == "change") {
         return 1
     }
@@ -588,18 +611,26 @@ export function ordenTurno(pokemon1, pokemon2, mov1, mov2) {
         return 2
     }
     else {
-        if (pokemon1.stats[5] > pokemon2.stats[5]) {
+        if (prior1 > prior2) {
             return 1
         }
-        else if (pokemon1.stats[5] < pokemon2.stats[5]) {
+        else if (prior1 < prior2) {
             return 2
         }
         else {
-            if (tirarMoneda() == 1) {
+            if (pokemon1.stats[5] > pokemon2.stats[5]) {
                 return 1
             }
-            else {
+            else if (pokemon1.stats[5] < pokemon2.stats[5]) {
                 return 2
+            }
+            else {
+                if (tirarMoneda() == 1) {
+                    return 1
+                }
+                else {
+                    return 2
+                }
             }
         }
     }
@@ -667,7 +698,76 @@ function efectoSecundarioPostGolpe(agresor, agredido, move) {
                 envioInforme.push(oracion)
             }
             break;
-        //
+        case "lowBothDef":
+            if (agresor.statsChanges[1] < 6) {
+                agresor.statsChanges[1]--
+            }
+            if (agresor.statsChanges[3] < 6) {
+                agresor.statsChanges[3]--
+            }
+            oracion = "La defensa y la defensa especial de " + agresor.apodo + " bajaron un nivel."
+            envioInforme.push(oracion)
+            break;
+        case "low2SPA":
+            if (agresor.statsChanges[2] < 6) {
+                agresor.statsChanges[2]--
+            }
+            if (agresor.statsChanges[2] < 6) {
+                agresor.statsChanges[2]--
+            }
+            oracion = "El ataque especial de  " + agresor.apodo + " bajó drásticamente."
+            envioInforme.push(oracion)
+            break;
+        case "flinch":
+            if (Math.round(Math.random() * 100) <= move.probabilities) {
+                agredido.flinched = true
+            }
+            break;
+        case "lowDef":
+            if (Math.round(Math.random() * 100) <= move.probabilities && agredido.statsChanges[1] < 6) {
+                if (agredido.statsChanges[1] < 6) {
+                    agredido.statsChanges[1]--
+                }
+                oracion = "La defensa de " + agredido.apodo + " bajó un nivel."
+                envioInforme.push(oracion)
+            }
+        case "lowSPD":
+            if (Math.round(Math.random() * 100) <= move.probabilities && agredido.statsChanges[3] < 6) {
+                if (agredido.statsChanges[3] < 6) {
+                    agredido.statsChanges[3]--
+                }
+                oracion = "La defensa especial de " + agredido.apodo + " bajó un nivel."
+                envioInforme.push(oracion)
+            }
+            break;
+        case "lowATK":
+            if (Math.round(Math.random() * 100) <= move.probabilities && agredido.statsChanges[0] < 6) {
+                if (agredido.statsChanges[0] < 6) {
+                    agredido.statsChanges[0]--
+                }
+                oracion = "El ataque de " + agredido.apodo + " bajó un nivel."
+                envioInforme.push(oracion)
+            }
+            break;
+        case "lowSPA":
+            if (Math.round(Math.random() * 100) <= move.probabilities && agredido.statsChanges[2] < 6) {
+                if (agredido.statsChanges[2] < 6) {
+                    agredido.statsChanges[2]--
+                }
+                oracion = "El ataque especial de " + agredido.apodo + " bajó un nivel."
+                envioInforme.push(oracion)
+            }
+            break;
+        case "lowDefAtk":
+            if (agresor.statsChanges[1] < 6) {
+                agresor.statsChanges[1]--
+            }
+            if (agresor.statsChanges[0] < 6) {
+                agresor.statsChanges[0]--
+            }
+            oracion = "La defensa y el ataque de " + agresor.apodo + " bajaron un nivel."
+            envioInforme.push(oracion)
+            break;
     }
 }
 
@@ -691,9 +791,12 @@ function movsDeEstado(pkm1, pkm2, mov) {
 export function ejecutarMovimiento(pkm1, pkm2, mov, pp) {
     let dmg = 0
     let indice1critico = 4.16
+    if (mov.secondaryEffect == "highCritical") {
+        indice1critico = 12.5
+    }
     let oracion = ""
     console.log(mov)
-    console.log("ERROR DE MIERDA", mov.accuracy, pkm1.form.type1, pkm1.form.type2, mov.name);
+    //console.log("ERROR DE MIERDA", mov.accuracy, pkm1.form.type1, pkm1.form.type2, mov.name);
     if (Math.round(Math.random() * 100) <= mov.accuracy || ((pkm1.form.type1 == "poison" || pkm1.form.type2 == "poison") && mov.name == "toxic")) {
         if (mov.category == "status") {
             movsDeEstado(pkm1, pkm2, mov)
@@ -708,6 +811,9 @@ export function ejecutarMovimiento(pkm1, pkm2, mov, pp) {
             console.log(pkm1.apodo, " usó ", mov.name, " contra ", pkm2.apodo, " y le hizo ", dmg, " puntos de daño")
             oracion = pkm1.apodo + " usó " + mov.name + " contra " + pkm2.apodo + " y le hizo " + dmg + " puntos de daño"
             envioInforme.push(oracion)
+            if (mov.secondaryEffect == "heal") {
+                heal((dmg) / 2, pkm1)
+            }
             efectoSecundarioPostGolpe(pkm1, pkm2, mov)
             if (survival(pkm2, dmg)) {
                 oracion = pkm2.apodo + " cayó debilitado"
@@ -722,6 +828,17 @@ export function ejecutarMovimiento(pkm1, pkm2, mov, pp) {
         oracion = pkm1.apodo + " usó " + mov + " pero falló!!!!"
         envioInforme.push(oracion)
     }
+}
+
+function heal(amount, pokemon) {
+    let oracion = pokemon.apodo + " se a recuperado."
+    if ((pokemon.stats[0] - pokemon.life) <= amount) {
+        pokemon.life = pokemon.stats[0];
+    }
+    else {
+        pokemon.life = pokemon.life + amount
+    }
+    envioInforme.push(oracion)
 }
 
 export function terminarCombate(equipo1, equipo2) {
@@ -756,8 +873,9 @@ function actualizarEquipo(pokemon, equipo) {
 export function turno(pkm1, pkm2, mov1, mov2, pokemonACambiar1, pokemonACambiar2, equipo1, equipo2, movPropio, movRival) {
     // esta cosa es un pecado de la programación, pero no encuentro otra forma
     envioInforme = []
-    console.log("MovPropio: ",mov1)
-    console.log("MovAjeno: ",mov2)
+    const id = new Date().valueOf()
+    console.log("MovPropio: ", mov1)
+    console.log("MovAjeno: ", mov2)
     let oracion = ""
     let pokemon1 = { ...pkm1 }
     let pokemon2 = { ...pkm2 }
@@ -814,5 +932,8 @@ export function turno(pkm1, pkm2, mov1, mov2, pokemonACambiar1, pokemonACambiar2
     actualizarEquipo(pokemon2, segundoEquipo)
     comprobarCombate = terminarCombate(primerEquipo, segundoEquipo)
     console.log(envioInforme)
-    return ([pokemon1, pokemon2, primerEquipo, segundoEquipo, comprobarCombate, envioInforme])
+    pokemon1.flinched = false
+    pokemon2.flinched = false
+    // Esto debería ser un objeto, que sea un array es una re negrada
+    return ([pokemon1, pokemon2, primerEquipo, segundoEquipo, comprobarCombate, envioInforme, id])
 }
