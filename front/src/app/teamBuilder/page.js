@@ -287,8 +287,8 @@ export default function Teambuilder() {
                             >
                             </Equipospokemon>
                         </div>
-                        <div  style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
-                                <select className="estiloSelectorMovimiento" onChange={seleccionarSala} style={{fontSize:"120%", height:"20%", width:"20%"}}>
+                        <div  style={{ width: "100%", justifyContent: "center", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
+                                <select className="estiloSelectorMovimiento" onChange={seleccionarSala} style={{height:"20%", width:"30%"}}>
                                     <option selected disabled>Elegir sala</option>
                                     <option value={"CombateNormal"}>Combate contra otro usuario</option>
                                     <option value={"CombateRafta"}>Reto por un rafta</option>

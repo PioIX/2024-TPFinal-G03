@@ -384,12 +384,12 @@ export default function PaginaCombate() {
                                     : <>
                                         <div className="fondo5">
                                             {datosLocales.turno == ""
-                                                ? <><div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                ? <><div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingLeft: "3%", paddingRight: "3%", height:"auto" }}>
                                                     <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[0]].name} valor={0} desabilitado={pokemonPropio.pps[0] == 0}></Movimientos>
                                                     <p style={{ width: "5%" }}></p>
                                                     <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[1]].name} valor={1} desabilitado={pokemonPropio.pps[1] == 0}></Movimientos>
                                                 </div>
-                                                    <div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                    <div style={{ width: "100%", display: "inline-flex", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
                                                         <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[2]].name} valor={2} desabilitado={pokemonPropio.pps[2] == 0}></Movimientos>
                                                         <p style={{ width: "5%" }}></p>
                                                         <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[3]].name} valor={3} desabilitado={pokemonPropio.pps[3] == 0}></Movimientos>
