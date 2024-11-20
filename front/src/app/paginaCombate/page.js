@@ -79,6 +79,7 @@ export default function PaginaCombate() {
             let equipo = datosObtenidos.equipoPropio
             let turnoEnviado = datosObtenidos.turno
             let mov = datosObtenidos.mov
+            console.log("MOVIMIENTO RECIBIDO: ",mov)
             let cambioPokemonA = datosObtenidos.pokemonACambiar
             let retorno = []
             let envio = []
@@ -112,7 +113,6 @@ export default function PaginaCombate() {
             let nuevoArray = []
 
             let turno = JSON.parse(data.retorno)
-            console.log("TURNO:", { turno })
             let nuevoObjeto = { ...datosLocales }
             if (turno[0].idUser == idUser) {
                 nuevoObjeto.pokemon = (turno[0])
@@ -123,7 +123,6 @@ export default function PaginaCombate() {
                 setPokemonPropio(turno[0])
                 setPokemonAjeno(turno[1])
                 setEquipoPropio(turno[2])
-                console.log("devolver turno mi turno")
                 setDatosLocales(nuevoObjeto)
                 if (turno[4][0] == false) {
                     if (turno[4][1] == true) {
@@ -143,7 +142,6 @@ export default function PaginaCombate() {
                 setPokemonPropio(turno[1])
                 setPokemonAjeno(turno[0])
                 setEquipoPropio(turno[3])
-                console.log("devolver turno mi turno otro turno")
                 setDatosLocales(nuevoObjeto)
                 if (turno[4][0] == false) {
                     if (turno[4][2] == true) {

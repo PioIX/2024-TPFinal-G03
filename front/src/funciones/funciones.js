@@ -775,7 +775,7 @@ function movsDeEstado(pkm1, pkm2, mov) {
     let oracion = ""
     switch (mov.name) {
         case "toxic":
-            if ((pkm2.type1 != "poison" || pkm2.type2 != "poison") && (pkm2.type1 != "steel" || pkm2.type2 != "steel") && pkm2.status == "") {
+            if ((pkm2.form.type1 != "poison" || pkm2.form.type2 != "poison") && (pkm2.form.type1 != "steel" || pkm2.form.type2 != "steel") && pkm2.status == "") {
                 pkm2.status = "BadlyPoisoned"
                 oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está gravemente envenenado"
                 envioInforme.push(oracion)
@@ -784,6 +784,138 @@ function movsDeEstado(pkm1, pkm2, mov) {
                 oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", pero no le afectó..."
                 envioInforme.push(oracion)
             }
+            break
+        case "glare":
+            if ((pkm2.form.type1 != "electric" || pkm2.form.type2 != "electric") && pkm2.status == "") {
+                pkm2.status = "paralized"
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está paralizado"
+                envioInforme.push(oracion)
+            }
+            else {
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", pero no le afectó..."
+                envioInforme.push(oracion)
+            }
+            break
+        case "thunder-wave":
+            if ((pkm2.form.type1 != "electric" || pkm2.form.type2 != "electric") && (pkm2.form.type1 != "ground" || pkm2.form.type2 != "ground") && pkm2.status == "") {
+                pkm2.status = "paralized"
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está paralizado"
+                envioInforme.push(oracion)
+            }
+            else {
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", pero no le afectó..."
+                envioInforme.push(oracion)
+            }
+            break
+        case "stun-spore":
+            if ((pkm2.form.type1 != "electric" || pkm2.form.type2 != "electric") && (pkm2.form.type1 != "grass" || pkm2.form.type2 != "grass") && pkm2.status == "") {
+                pkm2.status = "paralized"
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está paralizado"
+                envioInforme.push(oracion)
+            }
+            else {
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", pero no le afectó..."
+                envioInforme.push(oracion)
+            }
+            break
+        case "sleep-powder":
+            if ((pkm2.form.type1 != "grass" || pkm2.form.type2 != "grass") && pkm2.status == "") {
+                pkm2.status = "dream"
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", ahora está dormido"
+                envioInforme.push(oracion)
+            }
+            else {
+                oracion = pkm1.apodo + "usó " + mov.name + " contra " + pkm2.apodo + ", pero no le afectó..."
+                envioInforme.push(oracion)
+            }
+            break
+        case "rest":
+            if (pkm1.status != "dream") {
+                pkm1.status = "dream"
+                pkm1.life = pkm1.stats[0]
+                oracion = pkm1.apodo + "usó " + mov.name + ", ahora está dormido"
+                envioInforme.push(oracion)
+            }
+            else {
+                oracion = pkm1.apodo + "usó " + mov.name + " pero falló..."
+                envioInforme.push(oracion)
+            }
+            break
+        case "dragon-dance":
+            if (pkm1.statsChanges[0] < 6) {
+                pkm1.statsChanges[0]++
+            }
+            if (pkm1.statsChanges[4] < 6) {
+                pkm1.statsChanges[4]++
+            }
+            oracion = "El ataque y la velocidad de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "bulk-up":
+            if (pkm1.statsChanges[0] < 6) {
+                pkm1.statsChanges[0]++
+            }
+            if (pkm1.statsChanges[1] < 6) {
+                pkm1.statsChanges[1]++
+            }
+            oracion = "El ataque y la defensa de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "sword-dance":
+            if (pkm1.statsChanges[0] < 6) {
+                pkm1.statsChanges[0]++
+            }
+            if (pkm1.statsChanges[0] < 6) {
+                pkm1.statsChanges[0]++
+            }
+            oracion = "El ataque y la defensa de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "calm-mind":
+            if (pkm1.statsChanges[2] < 6) {
+                pkm1.statsChanges[2]++
+            }
+            if (pkm1.statsChanges[3] < 6) {
+                pkm1.statsChanges[3]++
+            }
+            oracion = "El ataque y la defensa especial de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "quiver-dance":
+            if (pkm1.statsChanges[2] < 6) {
+                pkm1.statsChanges[2]++
+            }
+            if (pkm1.statsChanges[3] < 6) {
+                pkm1.statsChanges[3]++
+            }
+            if (pkm1.statsChanges[4] < 6) {
+                pkm1.statsChanges[4]++
+            }
+            oracion = "El ataque especial, la defensa especial y la velocidad de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "cosmic-power":
+            if (pkm1.statsChanges[1] < 6) {
+                pkm1.statsChanges[1]++
+            }
+            if (pkm1.statsChanges[3] < 6) {
+                pkm1.statsChanges[3]++
+            }
+            oracion = "La defensa y la defensa especial de " + pkm1.apodo + " subieron en un nivel"
+            envioInforme.push(oracion)
+            break;
+        case "roost":
+            heal(pkm1.stats[0] / 2, pkm1)
+            break;
+        case "moonlight":
+            heal(pkm1.stats[0] / 2, pkm1)
+            break;
+        case "synthesis":
+            heal(pkm1.stats[0] / 2, pkm1)
+            break;
+        case "protect":
+            heal(pkm1.stats[0] / 2, pkm1)
+            break;
     }
 }
 
