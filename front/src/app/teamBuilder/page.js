@@ -34,6 +34,7 @@ export default function Teambuilder() {
 
     function botonCombate() {
         let check = validar()
+        console.log(equipoValidado)
         if (check) {
             router.push('/paginaCombate')
 
@@ -286,8 +287,8 @@ export default function Teambuilder() {
                             >
                             </Equipospokemon>
                         </div>
-                        <div style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
-                                <select onChange={seleccionarSala} style={{fontSize:"120%", height:"20%"}}>
+                        <div  style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
+                                <select className="estiloSelectorMovimiento" onChange={seleccionarSala} style={{fontSize:"120%", height:"20%", width:"20%"}}>
                                     <option selected disabled>Elegir sala</option>
                                     <option value={"CombateNormal"}>Combate contra otro usuario</option>
                                     <option value={"CombateRafta"}>Reto por un rafta</option>
@@ -299,7 +300,7 @@ export default function Teambuilder() {
                         <div className="imagenChiquita">
                             <div>
                                 <Image
-                                    src="/imagenes/pokemonLogo.png"
+                                    src='/pokemonLogo.png'
                                     width={280}
                                     height={100}
                                     alt='hols'

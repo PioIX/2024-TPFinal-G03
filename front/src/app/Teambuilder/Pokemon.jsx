@@ -73,15 +73,15 @@ export default function PokemonComponente(props) {
                         </select>
                     </div>
                     <p style={{ width: "1%" }}></p>
-                    {props.pokemon.baseStats.map((stat, i) => (
-                        <div style={{ width: "41%" }} key={i}>
-                            <h3 style={{ color: "rgb(11, 199, 199)" }}>{nombresStats[i]}</h3>
-                            <input onChange={handlerEvs} type="range" id={i} min="0" max="252" defaultValue={props.evsPokemon[i]} className={nombreClass[i]} />
-                            <label>{props.evsPokemon[i]}</label>
-                            <span className='valores'>{props.statPokemon[i]}</span>
-
-                        </div>
-                    ))}
+                    <div style={{display:"grid", width:"80%"}}>
+                        {props.pokemon.baseStats.map((stat, i) => (
+                            <div style={{ width: "100%" }} key={i}>
+                                <h3 style={{ color: "rgb(11, 199, 199)" }}>{nombresStats[i]} <label style={{color:"white"}}>{props.evsPokemon[i]}</label></h3>
+                                <input onChange={handlerEvs} type="range" id={i} min="0" max="252" defaultValue={props.evsPokemon[i]} className={nombreClass[i]} />
+                                <span className='valores'>{props.statPokemon[i]}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

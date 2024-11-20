@@ -204,6 +204,7 @@ export default function PaginaCombate() {
 
     useEffect(() => {
         setEquipoPropio(equipoValidado)
+        console.log("EQUIPO VALIDADO", equipoValidado);
     }, []
     )
 
@@ -315,12 +316,15 @@ export default function PaginaCombate() {
                                     <h1>Elige tu primer Pokemon</h1>
                                     <p style={{ paddingTop: "5%" }}></p>
                                 </div>
-                                <div style={{ width: "auto", display: "inline-flex", }}>
-                                    {equipoValidado.map((pokemon, i) => (
-                                        <div key={i}>
-                                            <PrimerPokemon Pokemon={pokemon.form.spriteFront} valor={i} Funcion={seleccionarPokemonInicial}></PrimerPokemon>
-                                        </div>
-                                    ))}
+                                <div style={{ width: "100%", display: "inline-flex", }}>
+                                    {equipoValidado.map((pokemon, i) => {
+                                        return (
+                                            <div key={i} style={{width:"20%"}}>
+                                                <PrimerPokemon Pokemon={pokemon.form.spriteFront} valor={i} Funcion={seleccionarPokemonInicial}></PrimerPokemon>
+                                            </div>
+                                        );
+                                        })
+                                        }
                                 </div>
                             </div>
                         </>
