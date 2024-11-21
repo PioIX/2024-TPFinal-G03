@@ -11,12 +11,15 @@ export default function PokemonesCambio(props){
         setearFondoVida(props.VidaRestante, props.VidaTotal)
     }, [fondoVida])
 
-    function setearFondoVida(vidaRestante, VidaTotal){
-        if (vidaRestante < (VidaTotal * 0.25)){
+    function setearFondoVida(vidaRestante, vidaPokemon){
+        if (vidaRestante < (vidaPokemon * 0.25)){
+            setTamanoBarra(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}%`)
             setFondoVida("red")
-        } else if (vidaRestante < (VidaTotal * 0.75)){
+        } else if (vidaRestante < (vidaPokemon * 0.75)){
+            setTamanoBarra(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}%`)
             setFondoVida("orange")
-        } else if (vidaRestante > (VidaTotal * 0.75)){
+        } else if (vidaRestante > (vidaPokemon * 0.75)){
+            setTamanoBarra(`${(Math.floor((vidaRestante * 100) / vidaPokemon))}%`)
             setFondoVida("green")
         }
     }
@@ -26,12 +29,15 @@ export default function PokemonesCambio(props){
     }
 
     return(
-        <button onClick={handlerFunction} disabled={props.desabilitado} style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px"}}>
-            <img style={{width:"30%"}} src={props.PokemonCambio}></img>
-            <div style={{display:"grid", paddingLeft:"5%"}}>
-                <p style={{fontSize:"20px", paddingTop:"5%"}}>{props.NombrePokemon}</p>
-                <p style={{fontSize:"20px", backgroundColor:fondoVida, backgroundSize:tamanoBarra}}>{props.VidaRestante}/{props.VidaTotal}</p>
-            </div>
-        </button>
+        <div style={{width:"150%"}}>
+            <button onClick={handlerFunction} disabled={props.desabilitado} style={{width:"100%", display:"inline-flex", backgroundColor:"#dae5f0", borderRadius: "80px"}}>
+                <img style={{width:"30%"}} src={props.PokemonCambio}></img>
+                <div style={{display:"grid", paddingLeft:"5%"}}>
+                    <p style={{fontSize:"20px", paddingTop:"5%"}}>{props.NombrePokemon}</p>
+                    <p style={{fontSize:"20px", paddingTop:"5%"}}>{props.VidaRestante}/{props.VidaTotal}</p>
+                    <p style={{fontSize:"20px", backgroundColor:fondoVida, backgroundSize:tamanoBarra, color:fondoVida}}>.</p>
+                </div>
+            </button>
+        </div>
     )
 }

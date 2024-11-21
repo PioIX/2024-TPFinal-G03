@@ -34,7 +34,8 @@ export default function PokemonesCombate(props){
             </div>
             <div style={{backgroundColor:"#dae5f0", width:"100%", fontSize:"100%"}}>
                 <div style={{padding:"2%"}}>
-                    <p style={{backgroundColor:fondoVida, fontSize:"100%", width:`100%`, backgroundSize:`${tamanoColor}%`}}>{props.vidaRestante}/{props.vidaPokemon}</p>                    
+                    <p style={{fontSize:"100%", width:`100%`,}}>{props.vidaRestante}/{props.vidaPokemon}</p>
+                    <p style={{backgroundColor:fondoVida, fontSize:"100%", width:`100%`, backgroundSize:`${tamanoColor}%`, color:fondoVida}}>.</p>                    
                 </div>
             </div>
             <img src={props.imagenPokemon} style={{width:"100%"}}></img>

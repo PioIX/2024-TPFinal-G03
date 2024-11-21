@@ -360,7 +360,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .fondo5{
-    width: 55%;
+    width: 50%;
     display: grid; 
     min-height: auto;
     max-width: auto;

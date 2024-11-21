@@ -399,54 +399,55 @@ export default function PaginaCombate() {
                                                 : <p>Esperando al otro jugador</p>
                                             }
                                         </div>
-                                        <div style={{width:"37%", display:"grid", paddingTop:"1%", paddingLeft:"7%"}}>
-                                            <div>
-                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                                    {equipoPropio.map((pokemon, i) => {
-                                                        if (i == 0 || i == 1) {
-                                                            return (
-                                                                <div key={i} >
-                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
-                                                                </div>
-                                                            )
-                                                        }
-                                                        else {
-                                                            return <></>
-                                                        }
-                                                    })}
-                                                </div>
-                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                                    {equipoPropio.map((pokemon, i) => {
-                                                        if (i == 2 || i == 3) {
-                                                            return (
-                                                                <div key={i} >
-                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
-                                                                </div>
-                                                            )
-                                                        }
-                                                        else {
-                                                            return <></>
-                                                        }
+                                            <div style={{width:"37%", display:"grid", paddingTop:"1%", paddingLeft:"5%"}}>
+                                                <div style={{display:"grid"}}>
+                                                    <div style={{display:"inline-flex"}}>
+                                                        {equipoPropio.map((pokemon, i) => {
+                                                            if (i == 0 || i == 1) {
+                                                                return (
+                                                                    <div key={i} style={{paddingLeft:"17%"}}>
+                                                                        <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            else {
+                                                                return <></>
+                                                            }
+                                                        })}
+                                                    </div>
+                                                    <div style={{display:"inline-flex"}}>
+                                                        {equipoPropio.map((pokemon, i) => {
+                                                            if (i == 2 || i == 3) {
+                                                                return (
+                                                                    <div key={i} style={{paddingLeft:"17%"}}>
+                                                                        <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            else {
+                                                                return <></>
+                                                            }
 
-                                                    })}
-                                                </div>
-                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
-                                                    {equipoPropio.map((pokemon, i) => {
-                                                        if (i == 4 || i == 5) {
-                                                            return (
-                                                                <div key={i} >
-                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
-                                                                </div>
-                                                            )
-                                                        }
-                                                        else {
-                                                            return <></>
-                                                        }
+                                                        })}
+                                                    </div>
+                                                    <div style={{display:"inline-flex"}}>
+                                                        {equipoPropio.map((pokemon, i) => {
+                                                            if (i == 4 || i == 5) {
+                                                                return (
+                                                                    <div key={i} style={{paddingLeft:"17%"}}>
+                                                                        <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                    </div>
+                                                                )
+                                                            }
+                                                            else {
+                                                                return <></>
+                                                            }
 
-                                                    })}
+                                                        })}
+
+                                                    </div>
                                                 </div>
                                         </div>
-                                    </div>
                                 </div>}
                             </div>
                         </div>
