@@ -286,13 +286,13 @@ export default function Teambuilder() {
                             >
                             </Equipospokemon>
                         </div>
-                        <select onChange={seleccionarSala}>
-                            <option selected disabled>Elegir sala</option>
-                            <option value={"CombateNormal"}>Combate contra otro usuario</option>
-                            <option value={"CombateRafta"}>Reto por un rafta</option>
-                        </select>
-                        <div style={{ width: "100%", justifyContent: "right", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
-                            <button className="botonCombate" onClick={botonCombate}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
+                        <div  style={{ width: "100%", justifyContent: "center", display: "flex", paddingRight: "2%", paddingBottom: "1%" }}>
+                                <select className="estiloSelectorMovimiento" onChange={seleccionarSala} style={{height:"20%", width:"30%"}}>
+                                    <option selected disabled>Elegir sala</option>
+                                    <option value={"CombateNormal"}>Combate contra otro usuario</option>
+                                    <option value={"CombateRafta"}>Reto por un rafta</option>
+                                </select>
+                                <button className="botonCombate" onClick={botonCombate} style={{height:"50%"}}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                         </div>
                     </div>
                     <div className='display' style={{ display: div2 }}>

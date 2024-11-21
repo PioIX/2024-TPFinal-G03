@@ -923,7 +923,6 @@ function movsDeEstado(pkm1, pkm2, mov) {
             heal(pkm1.stats[0] / 2, pkm1)
             break;
         case "protect":
-            heal(pkm1.stats[0] / 2, pkm1)
             break;
     }
 }

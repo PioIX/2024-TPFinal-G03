@@ -79,7 +79,7 @@ export default function PaginaCombate() {
             let equipo = datosObtenidos.equipoPropio
             let turnoEnviado = datosObtenidos.turno
             let mov = datosObtenidos.mov
-            console.log("MOVIMIENTO RECIBIDO: ",datosObtenidos)
+            console.log("MOVIMIENTO RECIBIDO: ", datosObtenidos)
             let cambioPokemonA = datosObtenidos.pokemonACambiar
             let retorno = []
             let envio = []
@@ -159,7 +159,7 @@ export default function PaginaCombate() {
                 }
             })
 
-          
+
         })
 
     }, [socket, isConnected]);
@@ -203,8 +203,8 @@ export default function PaginaCombate() {
             nuevoObjeto.mov = event.target.value
             nuevoObjeto.pokemonACambiar = {}
             nuevoObjeto.equipoPropio = equipoPropio
-            console.log("Event.target.value: ",event.target.value)
-            console.log("IdMovimientoElegido: ",pokemonPropio.moves[event.target.value])
+            console.log("Event.target.value: ", event.target.value)
+            console.log("IdMovimientoElegido: ", pokemonPropio.moves[event.target.value])
             console.log("MovimientoElegido: ", moves[pokemonPropio.moves[event.target.value]])
             setDatosLocales(nuevoObjeto)
             socket.emit('enviarMovimientoElegido', { datos: JSON.stringify(nuevoObjeto) });
@@ -276,12 +276,15 @@ export default function PaginaCombate() {
                                     <h1>Elige tu primer Pokemon</h1>
                                     <p style={{ paddingTop: "5%" }}></p>
                                 </div>
-                                <div style={{ width: "auto", display: "inline-flex", }}>
-                                    {equipoValidado.map((pokemon, i) => (
-                                        <div key={i}>
-                                            <PrimerPokemon Pokemon={pokemon.form.spriteFront} valor={i} Funcion={seleccionarPokemonInicial}></PrimerPokemon>
-                                        </div>
-                                    ))}
+                                <div style={{ width: "100%", display: "inline-flex", }}>
+                                    {equipoValidado.map((pokemon, i) => {
+                                        return (
+                                            <div key={i} style={{width:"20%"}}>
+                                                <PrimerPokemon Pokemon={pokemon.form.spriteFront} valor={i} Funcion={seleccionarPokemonInicial}></PrimerPokemon>
+                                            </div>
+                                        );
+                                        })
+                                        }
                                 </div>
                             </div>
                         </>
@@ -314,14 +317,14 @@ export default function PaginaCombate() {
                                     <div style={{ paddingLeft: "1%", paddingTop: "1%", paddingBottom: "1%", backgroundColor: "gray" }}>
                                         <div style={{ backgroundColor: "#dae5f0" }}>
                                             {Object.entries(informe)
-                                            .toSorted((a, b) => a - b)
-                                            .map(([key, value]) => {
-                                                return value.map((noticia, i)=>{
-                                                    return (
-                                                        <Comentario key={key + i} texto={noticia}></Comentario>
-                                                    )
-                                                })
-                                            })}
+                                                .toSorted((a, b) => a - b)
+                                                .map(([key, value]) => {
+                                                    return value.map((noticia, i) => {
+                                                        return (
+                                                            <Comentario key={key + i} texto={noticia}></Comentario>
+                                                        )
+                                                    })
+                                                })}
 
                                         </div>
                                     </div>
