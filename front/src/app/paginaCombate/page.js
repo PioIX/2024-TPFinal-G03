@@ -38,7 +38,7 @@ export default function PaginaCombate() {
     const [nuevoInforme, setNuevoInforme] = useState([])
 
     let switchParaElInforme = false
-    
+
     useEffect(() => {
         console.log(datosLocales)
     }, [datosLocales])
@@ -167,34 +167,34 @@ export default function PaginaCombate() {
     }, [socket, isConnected]);
 
     // NO PUEDO SOLUCIONAR EL INFORME DE TURNOS
-   /* useEffect(()=>{
-        let nuevoArray = [].concat(nuevoInforme)
-        for (let x = 0; x < nuevoInforme.length; x++) {
-            nuevoArray.push(nuevoInforme[x])
-        }
-        setInforme(nuevoArray)
-    },[nuevoInforme])*/
+    /* useEffect(()=>{
+         let nuevoArray = [].concat(nuevoInforme)
+         for (let x = 0; x < nuevoInforme.length; x++) {
+             nuevoArray.push(nuevoInforme[x])
+         }
+         setInforme(nuevoArray)
+     },[nuevoInforme])*/
 
-    function actualizarInforme(array){
-            console.log("INFORME: ",informe)
-            let nuevoArray = []
-            if (switchParaElInforme == false) {
-                /*for (let x = 0; x < array.length; x++) {
-                    console.log(array[x])
+    function actualizarInforme(array) {
+        console.log("INFORME: ", informe)
+        let nuevoArray = []
+        if (switchParaElInforme == false) {
+            /*for (let x = 0; x < array.length; x++) {
+                console.log(array[x])
+                nuevoArray.push(array[x])
+            }
+            setInforme(nuevoArray)
+            switchParaElInforme = true*/
+            setInforme((informeActual) => {
+                nuevoArray = [].concat(informeActual)
+                for (let x = 0; x < array.length; x++) {
                     nuevoArray.push(array[x])
                 }
                 setInforme(nuevoArray)
-                switchParaElInforme = true*/
-                setInforme((informeActual)=>{
-                    nuevoArray = [].concat(informeActual)
-                    for (let x = 0; x < array.length; x++) {
-                        nuevoArray.push(array[x])
-                    }
-                    setInforme(nuevoArray)
-                    switchParaElInforme = true
-                })
-            }
-            
+                switchParaElInforme = true
+            })
+        }
+
     }
 
     useEffect(() => {
@@ -319,12 +319,12 @@ export default function PaginaCombate() {
                                 <div style={{ width: "100%", display: "inline-flex", }}>
                                     {equipoValidado.map((pokemon, i) => {
                                         return (
-                                            <div key={i} style={{width:"20%"}}>
+                                            <div key={i} style={{ width: "20%" }}>
                                                 <PrimerPokemon Pokemon={pokemon.form.spriteFront} valor={i} Funcion={seleccionarPokemonInicial}></PrimerPokemon>
                                             </div>
                                         );
-                                        })
-                                        }
+                                    })
+                                    }
                                 </div>
                             </div>
                         </>
@@ -381,34 +381,73 @@ export default function PaginaCombate() {
                                             </>
                                         }
                                     </>
-                                    : <>
+                                    : <div style={{ width: "100%", display: "inline-flex", backgroundColor: "gray" }}>
                                         <div className="fondo5">
                                             {datosLocales.turno == ""
-                                                ? <><div style={{ width: "100%", display: "inline-flex", paddingTop: "3%", paddingLeft: "3%", paddingRight: "3%", height:"auto" }}>
-                                                    <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[0]].name} valor={0} desabilitado={pokemonPropio.pps[0] == 0}></Movimientos>
-                                                    <p style={{ width: "5%" }}></p>
-                                                    <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[1]].name} valor={1} desabilitado={pokemonPropio.pps[1] == 0}></Movimientos>
-                                                </div>
-                                                    <div style={{ width: "100%", display: "inline-flex", paddingBottom: "3%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                ? <>
+                                                    <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                                        <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[0]].name} valor={0} desabilitado={pokemonPropio.pps[0] == 0}></Movimientos>
+                                                        <p style={{ width: "5%" }}></p>
+                                                        <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[1]].name} valor={1} desabilitado={pokemonPropio.pps[1] == 0}></Movimientos>
+                                                    </div>
+                                                    <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
                                                         <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[2]].name} valor={2} desabilitado={pokemonPropio.pps[2] == 0}></Movimientos>
                                                         <p style={{ width: "5%" }}></p>
                                                         <Movimientos funcion={seleccionarAtaquePropio} nombre={moves[pokemonPropio.moves[3]].name} valor={3} desabilitado={pokemonPropio.pps[3] == 0}></Movimientos>
-                                                    </div></>
+                                                    </div>
+                                                </>
                                                 : <p>Esperando al otro jugador</p>
                                             }
                                         </div>
-                                        <div style={{ width: "37%", display: "grid", paddingTop: "1%", paddingLeft: "7%" }}>
+                                        <div style={{width:"37%", display:"grid", paddingTop:"1%", paddingLeft:"7%"}}>
                                             <div>
-                                                {equipoPropio.map((pokemon, i) => (
-                                                    <div key={i}>
-                                                        <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    </>
-                                }
+                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                                    {equipoPropio.map((pokemon, i) => {
+                                                        if (i == 0 || i == 1) {
+                                                            return (
+                                                                <div key={i} >
+                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        else {
+                                                            return <></>
+                                                        }
+                                                    })}
+                                                </div>
+                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                                    {equipoPropio.map((pokemon, i) => {
+                                                        if (i == 2 || i == 3) {
+                                                            return (
+                                                                <div key={i} >
+                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        else {
+                                                            return <></>
+                                                        }
 
+                                                    })}
+                                                </div>
+                                                <div style={{width:"100%", display:"inline-flex", paddingTop:"3%", paddingBottom:"3%", paddingLeft:"3%", paddingRight:"3%"}}>
+                                                    {equipoPropio.map((pokemon, i) => {
+                                                        if (i == 4 || i == 5) {
+                                                            return (
+                                                                <div key={i} >
+                                                                    <PokemonesCambio valor={i} funcion={setPokemonACambiarPropioF} NombrePokemon={equipoPropio[i].apodo} VidaTotal={equipoPropio[i].stats[0]} VidaRestante={equipoPropio[i].life} PokemonCambio={pokemon.form.spriteFront} desabilitado={(pokemon.id == pokemonPropio.id || pokemon.isDefeated == true)}></PokemonesCambio>
+                                                                </div>
+                                                            )
+                                                        }
+                                                        else {
+                                                            return <></>
+                                                        }
+
+                                                    })}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>}
                             </div>
                         </div>
                     </div>
