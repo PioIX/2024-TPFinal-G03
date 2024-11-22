@@ -64,6 +64,12 @@ export default function Teambuilder() {
         nuevoArray[3] = pokemonForms[148]
         nuevoArray[4] = pokemonForms[447]
         nuevoArray[5] = pokemonForms[881]
+       /* nuevoArray[0] = pokemonForms[0]
+        nuevoArray[1] = pokemonForms[1]
+        nuevoArray[2] = pokemonForms[2]
+        nuevoArray[3] = pokemonForms[3]
+        nuevoArray[4] = pokemonForms[4]
+        nuevoArray[5] = pokemonForms[5]*/
         setEquipo(nuevoArray)
         console.log(localStorage.getItem("equipo"))
         if ((localStorage.getItem("equipo")) != null) {
