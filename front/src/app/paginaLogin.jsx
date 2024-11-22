@@ -21,7 +21,7 @@ export default function PaginaLoginRegistro(){
             ?<div>
             <Image 
                 style={{paddingLeft:"300px"}}
-                src="/imagenes/pokemonLogo.png"
+                src='/pokemonLogo.png'
                 width={850}
                 height={205}
                 alt='hols'

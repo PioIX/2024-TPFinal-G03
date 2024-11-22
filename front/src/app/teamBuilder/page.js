@@ -252,7 +252,7 @@ export default function Teambuilder() {
                         <div className="imagenChiquita">
                             <div>
                                 <Image
-                                    src="/front/src/ap/imagenes/pokemonLogo.png"
+                                    src='/pokemonLogo.png'
                                     width={280}
                                     height={100}
                                     alt='hols'
@@ -285,7 +285,7 @@ export default function Teambuilder() {
                         <div className="imagenChiquita">
                             <div>
                                 <Image
-                                    src="/imagenes/pokemonLogo.png"
+                                src='/pokemonLogo.png'
                                     width={280}
                                     height={100}
                                     alt='hols'
