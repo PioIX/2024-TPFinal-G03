@@ -47,6 +47,7 @@ export class Pokemon {
         this.critical = false
         this.idUser = idUser
         this.flinched = false
+        this.protect = false
         idPokemon++;
     }
 }

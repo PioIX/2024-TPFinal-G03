@@ -13,10 +13,9 @@ export class Move {
 }
 
 export let moves = [
-    new Move("water gun",40,100,25,"special","water","",0),
+    new Move("water gun",40,100,25,"special","water","",0), 
     new Move("dragon-pulse",85,100,10,"special","dragon", "",0),
     new Move("dragon-claw",80,100,15,"physical","dragon", "",0),
-    new Move("thunderbolt",90,100,10,"special","electric","paralisys",10),
     new Move("Sape",900,100,10,"physical","normal"),
     new Move("power-up-punch",40,100,20,"physical","fighting","raiseAtk1",100),
     new Move("toxic",0,90,15,"status","poison","",""),
@@ -35,6 +34,7 @@ export let moves = [
     new Move("energy-ball",90,100,24,"special","grass","lowSPD",10), 
     new Move("leaf-storm",130,90,8,"special","grass","low2SPA",100), 
     new Move("brave-bird",120,100,24,"physical","flying","lowBothDef",100),
+    new Move("dragon-ascent",120,100,24,"physical","flying","lowBothDef",100),
     new Move("hurricane",110,70,24,"special","flying","",0),
     new Move("air-slash",75,95,24,"special","flying", "flinch",10),
     new Move("roost",0,100,8,"status","flying","",""),
@@ -93,7 +93,6 @@ export let moves = [
     new Move("shadow-sneak",40,100,24,"physical","ghost","priority",100), 
     new Move("shadow-claw",70,100,24,"special","ghost","highCritical",100),
     new Move("curse",0,100,32,"status","ghost","",""),
-    new Move("confuse-ray",0,100,32,"status","ghost","",""),
     new Move("glare",0,100,32,"status","normal","",""),
     new Move("sword-dance",0,100,32,"status","normal","",""),
     new Move("boomburst",140,100,8,"special","normal", "",0),
@@ -101,9 +100,15 @@ export let moves = [
     new Move("extreme-speed",70,100,8,"physical","normal","priority",100), 
     new Move("facade",70,100,8,"physical","normal","facade",100), 
     new Move("double-edge",120,100,24,"physical","normal","lowBothDef",100),
-    new Move("dark pulse",80,100,8,"special","dark", "flinch",20),
+    new Move("dark-pulse",80,100,8,"special","dark", "flinch",20),
     new Move("knock-off",85,100,8,"physical","dark", "",0),
     new Move("crunch",80,100,8,"physical","dark", "lowDef",20), 
     new Move("sucker-punch",70,100,8,"physical","dark", "suckerPriority",100), 
-    new Move("night-slash",70,100,8,"physical","dark", "highCritical",100), 
+    new Move("night-slash",70,100,8,"physical","dark", "highCritical",100),
+    new Move("smart-strike",70,100,8,"physical","steel", "highCritical",100),
+    new Move("smart-strike",70,100,8,"physical","steel", "highCritical",100),
+    new Move("trailblaze",50,100,8,"physical","grass", "raiseSpe",100),
+    new Move("flame-charge",50,100,8,"physical","fire", "raiseSpe",100),
+    new Move("drain-punch",75,100,8,"physical","fighting", "heal",100),
+    
 ]

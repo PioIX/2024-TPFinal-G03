@@ -41,13 +41,14 @@ export default function Teambuilder() {
     }
     // ------------------------- FIN Cosas del html ---------------
     // ------------------------- FUNCIONALIDADES ---------------
-    const [equipo, setEquipo] = useState(["", pokemonForms[1], pokemonForms[3], pokemonForms[4], pokemonForms[5], pokemonForms[6]])
-    const [apodosEquipo, setApodosEquipos] = useState(["raul", "uwu", "skibidi", "Raul2", "Raulito3", "Simon"])
-    const [evsEquipo, setEvsEquipo] = useState([[252, 0, 252, 0, 0, 0], [252, 252, 0, 0, 0, 0], [252, 0, 252, 0, 0, 0], [252, 0, 0, 252, 0, 0], [0, 252, 0, 0, 0, 252], [0, 252, 0, 0, 0, 252]])
+    const [equipo, setEquipo] = useState(["", pokemonForms[24], pokemonForms[93], pokemonForms[864], pokemonForms[148], pokemonForms[447]])
+    const [apodosEquipo, setApodosEquipos] = useState(["pikachu", "gengar", "sirfetch", "Raul2", "dragonite", "lucario"])
+    const [evsEquipo, setEvsEquipo] = useState([[0, 0, 0, 252, 0, 252], [0, 252, 0, 0, 0, 252], [0, 0, 0, 252, 0, 252], [0, 252, 0, 0, 0, 252], [0, 252, 0, 252, 0, 0], [0, 252, 0, 0, 0, 252]])
     const [statEquipo, setStatEquipo] = useState([[0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]])
-    const [movsEquipo, setMovsEquipo] = useState([[0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4], [0, 1, 2, 4]])
+    const [movsEquipo, setMovsEquipo] = useState([[40, 43, 13, 39], [20, 52, 16, 74], [76, 73, 65, 90], [84, 37, 81, 2], [56, 30, 52, 1], [15, 2, 28, 89]])
     const [textoValidar, setTextoValidar] = useState("Si editás a tu equipo, vas a tener que validarlo.")
     const [validacion, setValidacion] = useState(true)
+    const [seEligioSala, setSeEligioSala] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
@@ -55,36 +56,14 @@ export default function Teambuilder() {
         let movsLocal = {}
         let evsLocal = {}
         let apodosLocal = {}
-        /*descargarPokemonsBaseDeDatos().then((listaFormasPokemon) => {
-            let nuevoArray = [].concat(equipo)
-            //PONER AL EQUIPO PREDETERMINADO
-            nuevoArray[0] = pokemonForms[0]
-            nuevoArray[1] = pokemonForms[1]
-            nuevoArray[2] = pokemonForms[2]
-            nuevoArray[3] = pokemonForms[3]
-            nuevoArray[4] = pokemonForms[4]
-            nuevoArray[5] = pokemonForms[5]
-            setEquipo(nuevoArray)
-            console.log(localStorage.getItem("equipo"))
-            if ((localStorage.getItem("equipo")) != null) {
-                equipoLocal = JSON.parse(localStorage.getItem("equipo"))
-                movsLocal = JSON.parse(localStorage.getItem("movs"))
-                evsLocal = JSON.parse(localStorage.getItem("evs"))
-                apodosLocal = JSON.parse(localStorage.getItem("apodos"))
-                setEquipo(equipoLocal)
-                setApodosEquipos(apodosLocal)
-                setMovsEquipo(movsLocal)
-                setEvsEquipo(evsLocal)
-            }
-        })*/
         let nuevoArray = [].concat(equipo)
         //PONER AL EQUIPO PREDETERMINADO
-        nuevoArray[0] = pokemonForms[0]
-        nuevoArray[1] = pokemonForms[1]
-        nuevoArray[2] = pokemonForms[2]
-        nuevoArray[3] = pokemonForms[3]
-        nuevoArray[4] = pokemonForms[4]
-        nuevoArray[5] = pokemonForms[5]
+        nuevoArray[0] = pokemonForms[24]
+        nuevoArray[1] = pokemonForms[864]
+        nuevoArray[2] = pokemonForms[93]
+        nuevoArray[3] = pokemonForms[148]
+        nuevoArray[4] = pokemonForms[447]
+        nuevoArray[5] = pokemonForms[881]
         setEquipo(nuevoArray)
         console.log(localStorage.getItem("equipo"))
         if ((localStorage.getItem("equipo")) != null) {
@@ -255,6 +234,7 @@ export default function Teambuilder() {
 
     function seleccionarSala(event) {
         salaElegida = event.target.value
+        setSeEligioSala(true)
         console.log(salaElegida)
     }
 
@@ -292,7 +272,7 @@ export default function Teambuilder() {
                                     <option value={"CombateNormal"}>Combate contra otro usuario</option>
                                     <option value={"CombateRafta"}>Reto por un rafta</option>
                                 </select>
-                                <button className="botonCombate" onClick={botonCombate} style={{height:"50%"}}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
+                                <button disabled={!seEligioSala} className="botonCombate" onClick={botonCombate} style={{height:"50%"}}><img style={{ width: "90%" }} src="https://img.icons8.com/?size=100&id=63311&format=png&color=000000"></img></button>
                         </div>
                     </div>
                     <div className='display' style={{ display: div2 }}>
